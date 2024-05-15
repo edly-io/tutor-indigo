@@ -321,6 +321,23 @@ body.view-statictab, body.view-instructordash, body.view-teams, body.view-wiki {
         background: no-repeat;
     }
   }
+  .container.about {
+    color: $text-color-primary;
+    h1 {
+      color: $primary-d;
+    }
+    a {
+      color: $primary-d;
+    }
+    .graphic-img {
+      img {
+        display: none;
+        &.dark {
+          display: block;
+        }
+      }
+    }
+  } 
 }
 body.view-teams {
   .container {
