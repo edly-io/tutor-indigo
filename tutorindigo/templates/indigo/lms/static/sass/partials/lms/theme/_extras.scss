@@ -324,6 +324,26 @@ body.view-statictab, body.view-instructordash, body.view-teams, body.view-wiki {
         background: no-repeat;
     }
   }
+  &.view-statictab {
+    .wrapper-course-material {
+      .tabs.course-tabs {
+        border-bottom: 1px solid $primary-light-d;
+        li {
+          a {
+            color: $text-color-d;
+            &:hover, &:visited {
+              color: $text-color-primary;
+              border-color: transparent;
+            }
+            &.active {
+              color: $text-color-d;
+              border-color: $text-color-d;
+            }
+          }
+        }
+      }
+    }
+  }
   .container.about {
     color: $text-color-primary;
     h1 {
@@ -647,6 +667,6 @@ body.view-wiki{
 @import '../../../home/home';
 @import '../../../programs/programs';
 @import '../../../certificates/certificate';
-
+@import '../../../xblock/xblock';
 
 
