@@ -14,6 +14,15 @@ body, body.view-profile {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
 }
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: $drak;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: none;
+}
 .page-content-container {
   max-width: 1600px;
   margin: 0 auto;
