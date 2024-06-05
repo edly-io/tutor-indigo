@@ -4,7 +4,9 @@ $content_padding_top: 24px;
 $content-padding-bottom: 10px;
 $header-height: 75px;
 $footer-height: 125.5px;
-
+body, h1, h2, h3, h4, h5, h6, p, label, button {
+  font-family: $font-family-title !important;
+}
 body, body.view-profile {
   min-height: initial;
   background-color: #fff;
@@ -343,7 +345,223 @@ body.view-statictab, body.view-instructordash, body.view-teams, body.view-wiki {
         }
       }
     }
+    .instructor-dashboard-content-2 {
+      a.instructor-info-action {
+        background: $primary-d;
+        color: $btn-color-d;
+      }
+      .ui-widget-content {
+        background: none;
+        color: $text-color-d;
+        border: 1px solid $primary-light-d;
+      }
+      .ui-accordion-header {
+        background: $primary-d;
+        color: $btn-color-d;
+        font-size: 14px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+      .ecommerce-wrapper span.tip,
+      .proctoring-wrapper span.tip {
+        background: $primary-light-d;
+        color: $text-color-d;
+        border: none;
+        a.blue-button {
+          background: $primary-d;
+          border-color: $primary-d;
+          color: $btn-color-d !important;
+          text-shadow: none;
+          box-shadow: none;
+          font-weight: 500;
+        }
+      }
+      .enrollment-button, input[type=button], button.btn {
+        background: $primary-d;
+        border-color: $primary-d;
+        color: $btn-color-d !important;
+        text-shadow: none;
+      }
+      .instructor-nav {
+        border: 1px solid #E5E7EB;
+        li {
+          &:first-child {
+            button {
+              border: none;
+            }
+          }
+          button {
+            border: none !important;
+            border-radius: 0 !important;
+            border-left: 1px solid #E5E7EB !important;
+            color: $text-color-primary;
+            &.active-section {
+              background: $primary-d !important;
+              color: $btn-color-d !important;
+            }
+            &:hover {
+              color: $text-color-d;
+            }
+          }
+        }
+      }
+      .enrollment-wrapper {
+        table {
+          th, td {
+            color: $text-color-d;
+          }
+          .total {
+            border-top: 1px solid #E5E7EB;
+            th, td {
+              color: $primary-d;
+            }
+          }
+        }
+      }
+      .info-holder, .basic-wrapper, .course-errors-wrapper, .running-tasks-container {
+        background: $primary-light-d;
+        h4 {
+          color: $text-color-d;
+          span  {
+            color: $text-color-primary;
+          }
+        }
+      }
+      .list-input {
+        li {
+          label, b {
+            color: $text-color-d;
+          }
+        }
+      }
+      .open-response-assessment-block .open-response-assessment-main-table {
+        th {
+          background: $primary-light-d;
+          color: $text-color-d !important;
+          button {
+            text-shadow: none !important;
+            color: $text-color-d !important;
+          }
+        }
+        tbody tr:nth-child(odd) {
+          background: $primary-light-d;
+          color: $text-color-d !important;
+        }
+      }
+    }
   }
+  &.view-wiki{
+    .CodeMirror-scroll {
+      background: $body-bg-d;
+      * {
+        color: $text-color-d !important;
+      }
+    }
+    .wiki-wrapper label {
+      color: $text-color-d !important;
+      section.wiki .main-article {
+        color: $text-color-d;
+      }
+    }
+    .wiki-wrapper section.wiki .btn {
+      background: none;
+      color: $text-color-d !important;
+      border-color: $text-color-d !important;
+      text-shadow: none !important;
+    }
+    .wiki-wrapper section.wiki .btn.btn-primary, .wiki-wrapper section.wiki .btn.btn-brand {
+      background: $primary-d !important;
+      border-color: $primary-d !important;
+      color: $btn-color-d !important;
+      box-shadow: none;
+    }
+    .wiki-wrapper section.wiki.history .accordion {
+      background: $primary-light-d;
+      border: none;
+      small {
+        color: $text-color-d;
+      }
+    } 
+    .container{
+     .wiki {
+       .breadcrumbs-header {
+         background: $primary-light-d;
+         .global-functions {
+           a.add-article-btn {
+             background: $primary-d;
+             color: $btn-color-d !important;
+           }
+         }
+         .breadcrumb {
+           li {
+             &:after {
+               color: $text-color-primary;
+             }
+             a {
+               color: $text-color-primary;
+             }
+           }
+         }
+       }
+       .main-article {
+        color: $text-color-d
+       }
+     }
+     .article-wrapper {
+       border: 1px solid $primary-light-d;
+       .main-article {
+          color: $text-color-d !important;
+         p {
+           color: $text-color-d;
+         }
+         h3.entry-title {
+          color: $text-color-d;
+         }
+       }
+       .article-functions {
+         .nav-tabs {
+           li {
+             a {
+               color: $primary-d;
+               &:hover {
+                 background: $primary-light-d;
+                 color: $text-color-d;
+               }
+               .icon {
+                 color: $text-color-primary;
+               }
+             }
+             &.active {
+               a {
+                 background: $primary-light-d;
+                 color: $text-color-d;
+               }
+             }
+           }
+         }
+         .timestamp {
+           border: 1px solid $primary-light-d;
+           border-left: 6px solid $primary-light-d;
+           .label {
+             color: $text-color-d;
+           }
+           .date {
+             color: $text-color-d;
+           }
+         }
+         .see-children {
+           a {
+             background: $primary-d;
+             color: $btn-color-d;
+             &:hover, &:focus {
+               color: $btn-color-d;
+             }
+           }
+         }
+       }
+     }
+   }
+ }
   .container.about {
     color: $text-color-primary;
     h1 {
@@ -359,6 +577,51 @@ body.view-statictab, body.view-instructordash, body.view-teams, body.view-wiki {
           display: block;
         }
       }
+    }
+  }
+  .modal {
+    background: $primary-light-d !important;
+    .modal-header {
+      color: $text-color-d !important
+    }
+    select, textarea {
+      background: transparent;
+      color: white;
+    }
+    input[type=submit] {
+      background: $primary-d;
+      border-color: $primary-d;
+      color: $btn-color-d !important;
+      text-shadow: none;
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+  .wrapper-member-select {
+    background: $primary-light-d !important;
+    select {
+      background: none;
+      color: $text-color-d;
+    }
+  }
+  .auth-list-container .info {
+    color: $text-color-d !important
+  }
+  .member-list {
+    .label {
+      color: $text-color-d !important;
+      background: $primary-light-d !important;
+    }
+  }
+  .bottom-bar {
+    background: $primary-light-d !important;
+    input[type="button"] {
+      background: $primary-d !important;
+      border-color: $primary-d !important;
+      color: $btn-color-d !important;
+      text-shadow: none !important;
+      font-size: 14px;
+      font-weight: 500;
     }
   } 
 }
