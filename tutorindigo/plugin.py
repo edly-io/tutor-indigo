@@ -107,7 +107,7 @@ hooks.Filters.ENV_PATCHES.add_items(
             """
 RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^1.0.0'
 """,
-        # remove indigo-header and indigo-footer due to incompatible version deps of MFEs
+            # remove indigo-header and indigo-footer due to incompatible version deps of MFEs
         ),
         (
             "mfe-dockerfile-post-npm-install-authn",
@@ -122,14 +122,14 @@ RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^1.0.0'
             """
 RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^1.0.0'
 """,
-        # remove indigo-header and indigo-footer due to incompatible version deps of MFEs
+            # remove indigo-header and indigo-footer due to incompatible version deps of MFEs
         ),
         (
             "mfe-dockerfile-post-npm-install-learner-dashboard",
             """
 RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^1.0.0'
 """,
-        # remove indigo-footer due to incompatible version deps of MFEs
+            # remove indigo-footer due to incompatible version deps of MFEs
         ),
         (
             "mfe-dockerfile-post-npm-install-profile",
