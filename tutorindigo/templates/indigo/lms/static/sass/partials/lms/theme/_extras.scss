@@ -934,11 +934,11 @@ body.view-wiki{
 }
 body.indigo-dark-theme {
   input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active{
-    -webkit-text-fill-color: $text-color-d;
-}
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus, 
+  input:-webkit-autofill:active{
+      -webkit-text-fill-color: $text-color-d;
+  }
   input::placeholder {
       opacity: .9;
       color: $text-color-d;
