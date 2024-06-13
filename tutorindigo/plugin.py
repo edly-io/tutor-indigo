@@ -22,8 +22,9 @@ config: t.Dict[str, t.Dict[str, t.Any]] = {
     "defaults": {
         "VERSION": __version__,
         "WELCOME_MESSAGE": "The place for all your online learning",
-        "PRIMARY_COLOR": "#3b85ff",  # cool blue
-        "ENABLE_DARK_THEME": False,
+
+        "ENABLE_DARK_THEME": True,
+        "PRIMARY_COLOR": "#15376D",  # Indigo
         # Footer links are dictionaries with a "title" and "url"
         # To remove all links, run:
         # tutor config save --set INDIGO_FOOTER_NAV_LINKS=[]
@@ -75,7 +76,7 @@ with open(
 
 
 # Override openedx & mfe docker image names
-@hooks.Filters.CONFIG_DEFAULTS.add(priority=hooks.priorities.LOW)
+@hooks.Filters.CONFIG_DEFAULTS.add(priority=hooks.priorities.LOW)  # type: ignore
 def _override_openedx_docker_image(
     items: list[tuple[str, t.Any]]
 ) -> list[tuple[str, t.Any]]:
@@ -109,9 +110,8 @@ hooks.Filters.ENV_PATCHES.add_items(
             "mfe-dockerfile-post-npm-install-learning",
             """
 RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^1.0.0'
-RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^1.0.0'
-RUN npm install '@edx/frontend-component-footer@npm:@edly-io/indigo-frontend-component-footer@^1.0.0'
 """,
+            # remove indigo-header and indigo-footer due to incompatible version deps of MFEs
         ),
         (
             "mfe-dockerfile-post-npm-install-authn",
@@ -125,32 +125,27 @@ RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^1.0.0{% if INDIGO
             "mfe-dockerfile-post-npm-install-discussions",
             """
 RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^1.0.0'
-RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^1.0.0'
-RUN npm install '@edx/frontend-component-footer@npm:@edly-io/indigo-frontend-component-footer@^1.0.0'
 """,
+            # remove indigo-header and indigo-footer due to incompatible version deps of MFEs
         ),
         # Indigo-brand-openedx package currently supports dark theme for learner-dashboard only
         (
             "mfe-dockerfile-post-npm-install-learner-dashboard",
             """
-RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^1.0.0{% if INDIGO_ENABLE_DARK_THEME %} --theme=dark{% endif %}'
-RUN npm install '@edx/frontend-component-footer@npm:@edly-io/indigo-frontend-component-footer@^1.0.0'
+RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^1.0.0'
 """,
+            # remove indigo-footer due to incompatible version deps of MFEs
         ),
         (
             "mfe-dockerfile-post-npm-install-profile",
             """
 RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^1.0.0'
-RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^1.0.0'
-RUN npm install '@edx/frontend-component-footer@npm:@edly-io/indigo-frontend-component-footer@^1.0.0'
 """,
         ),
         (
             "mfe-dockerfile-post-npm-install-account",
             """
 RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^1.0.0'
-RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^1.0.0'
-RUN npm install '@edx/frontend-component-footer@npm:@edly-io/indigo-frontend-component-footer@^1.0.0'
 """,
         ),
     ]
