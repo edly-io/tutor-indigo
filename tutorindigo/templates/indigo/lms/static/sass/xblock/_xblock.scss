@@ -61,8 +61,11 @@
     .xmodule_display.xmodule_ProblemBlock div.problem-progress {
         color: $text-color-d;
     }
-    .btn-link {
+    .content-wrapper #main .btn-link {
         color: $primary-d;
+        &:hover {
+            color: $primary-d !important;
+        }
     }
     .xblock--drag-and-drop .problem-progress {
         color: $text-color-d;
@@ -160,6 +163,13 @@
         border-color: $danger-d;
     }
     .xmodule_display.xmodule_ProblemBlock div.problem .indicator-container .status.incorrect .status-icon::after, .xmodule_display.xmodule_ProblemBlock div.problem .notification.error .icon {
+        color: $danger-d;
+    }
+    .xmodule_display.xmodule_ProblemBlock .problem .capa_inputtype.textline > .incorrect input, .xmodule_display.xmodule_ProblemBlock .problem .inputtype.formulaequationinput > .incorrect input {
+        border-color: $danger-d;
+    }
+    .xmodule_display.xmodule_ProblemBlock .problem .capa_inputtype.textline > .incorrect .status .status-icon:after, 
+    .xmodule_display.xmodule_ProblemBlock .problem .inputtype.formulaequationinput > .incorrect .status .status-icon:after {
         color: $danger-d;
     }
     .xmodule_display.xmodule_ProblemBlock div.problem .choicegroup input+label.choicegroup_correct, .xmodule_display.xmodule_ProblemBlock div.problem .choicetextgroup input+label.choicegroup_correct, .xmodule_display.xmodule_ProblemBlock div.problem .choicetextgroup .choicegroup input+label.choicetextgroup_correct, .xmodule_display.xmodule_ProblemBlock div.problem .choicetextgroup input+label.choicetextgroup_correct, .xmodule_display.xmodule_ProblemBlock div.problem .choicetextgroup .choicegroup input+section.choicetextgroup_correct, .xmodule_display.xmodule_ProblemBlock div.problem .choicetextgroup input+section.choicetextgroup_correct, .xmodule_display.xmodule_ProblemBlock div.problem .choicegroup input:focus+label.choicegroup_correct, .xmodule_display.xmodule_ProblemBlock div.problem .choicetextgroup input:focus+label.choicegroup_correct, .xmodule_display.xmodule_ProblemBlock div.problem .choicetextgroup .choicegroup input:focus+label.choicetextgroup_correct, .xmodule_display.xmodule_ProblemBlock div.problem .choicetextgroup input:focus+label.choicetextgroup_correct, .xmodule_display.xmodule_ProblemBlock div.problem .choicetextgroup .choicegroup input:focus+section.choicetextgroup_correct, .xmodule_display.xmodule_ProblemBlock div.problem .choicetextgroup input:focus+section.choicetextgroup_correct, .xmodule_display.xmodule_ProblemBlock div.problem .choicegroup input:hover+label.choicegroup_correct, .xmodule_display.xmodule_ProblemBlock div.problem .choicetextgroup input:hover+label.choicegroup_correct, .xmodule_display.xmodule_ProblemBlock div.problem .choicetextgroup .choicegroup input:hover+label.choicetextgroup_correct, .xmodule_display.xmodule_ProblemBlock div.problem .choicetextgroup input:hover+label.choicetextgroup_correct, .xmodule_display.xmodule_ProblemBlock div.problem .choicetextgroup .choicegroup input:hover+section.choicetextgroup_correct, .xmodule_display.xmodule_ProblemBlock div.problem .choicetextgroup input:hover+section.choicetextgroup_correct {

@@ -111,7 +111,7 @@
                 }
             }
         }
-        a.register, a strong {
+        a.register, a strong, >span.register, a.add-to-cart {
             display: inline-block;
             vertical-align: top;
             padding: 8px 15px;
@@ -385,7 +385,7 @@ body.indigo-dark-theme {
                     border: 1px solid $text-color-d;
                 }
             }
-            a.register, a strong {
+            a.register, a strong, >span.register, a.add-to-cart {
                 color: $btn-color-d;
                 background: $primary-d;
             }

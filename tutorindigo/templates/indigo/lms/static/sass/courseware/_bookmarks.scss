@@ -182,6 +182,7 @@ body.indigo-dark-theme {
                 }
                 a {
                     color: $text-color-d;
+                    border-color: transparent;
                 }
             }
         }
@@ -198,10 +199,15 @@ body.indigo-dark-theme {
             box-shadow: 0px 0px 0px 1px rgba(#fff, .08);
             color: $text-color-d;
             h3 {
-                color: $text-color-d;
+                color: $text-color-d !important;
                 .bookmarks-empty-header-icon {
                     color: $primary-d;
                 }
+            }
+        }
+        .search-results {
+            .search-count {
+                color: $text-color-primary;
             }
         }
     }
@@ -211,7 +217,7 @@ body.indigo-dark-theme {
                 border: 1px solid $primary-light-d;
                 border-left: 8px solid $primary-light-d;
                 h3 {
-                    color: $text-color-d;
+                    color: $text-color-d !important;
                     .icon {
                         border: 2px solid $border-color-d;
                     }
@@ -232,6 +238,7 @@ body.indigo-dark-theme {
         }
         .current-page, .page-number-input, .total-pages {
             color: $text-color-d;
+            background: none !important;
         }
         .page-divider {
             color: $text-color-d;
