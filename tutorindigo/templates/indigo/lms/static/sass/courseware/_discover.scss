@@ -226,6 +226,7 @@
                         background: $primary;
                         font-family: $font-family-title;
                         border: none;
+                        box-shadow: none !important;
                         @include media-breakpoint-up(sm) {
                             min-width: 100px;
                         }
