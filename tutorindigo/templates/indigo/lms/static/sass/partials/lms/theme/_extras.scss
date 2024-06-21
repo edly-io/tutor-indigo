@@ -1094,10 +1094,53 @@ body.indigo-dark-theme {
         color: $text-color-d !important;
       }
     }
-    .wiki-wrapper label {
-      color: $text-color-d !important;
-      section.wiki .main-article {
+    .wiki-wrapper {
+      label {
+        color: $text-color-d !important;
+          section.wiki .main-article {
+            color: $text-color-d;
+          }
+      }
+      #alert_stat_bar {
+        .paragon__alert-warning {
+          color: $text-color-d;
+          background: $primary-light-d;
+          border: none;
+          button.paragon__close {
+            background: none !important;
+            box-shadow: none !important;
+            color: $text-color-d !important;
+            opacity: 1 !important;
+            font-size: 1.2rem;
+          }
+        }
+      }
+      section.wiki {
+        .table.table-striped {
+          tr:nth-child(2n) {
+            background: $primary-light-d;
+          }
+        }
+        .directory-toolbar {
+          background: $primary-light-d;
+        }
+      }
+      #cheatsheet-body {
+        background: $primary-light-d;
         color: $text-color-d;
+        pre {
+          background: $body-bg-d;
+          color: $text-color-d;
+        }
+      }
+      #cheatsheetModal {
+        .inner-wrapper {
+          background: $primary-light-d;
+          box-shadow: none;
+          button.close-modal {
+            color: $text-color-d !important;
+          }
+        }
       }
     }
     .wiki-wrapper section.wiki .btn {
@@ -1105,6 +1148,10 @@ body.indigo-dark-theme {
       color: $text-color-d !important;
       border-color: $text-color-d !important;
       text-shadow: none !important;
+      box-shadow: none !important;
+      &:hover {
+        background: none !important;
+      }
     }
     .wiki-wrapper section.wiki .btn.btn-primary, .wiki-wrapper section.wiki .btn.btn-brand {
       background: $primary-d !important;

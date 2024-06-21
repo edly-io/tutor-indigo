@@ -1,6 +1,22 @@
 // Include custom xblocks
-
+.wrap-instructor-info a.instructor-info-action {
+    background: $primary !important;
+    color: white !important;
+}
 .indigo-dark-theme { 
+    .xblock--drag-and-drop {
+        .keyboard-help-dialog {
+            .modal-window {
+                background: $primary-light-d;
+            }
+            .modal-content {
+                background: $primary-light-d;
+            }
+            .modal-dismiss-button {
+                color: $text-color-d;
+            }
+        }
+    }
     .xmodule_display.xmodule_AboutBlock a:link, 
     .xmodule_display.xmodule_AboutBlock a:visited, 
     .xmodule_display.xmodule_AboutBlock a:hover, 
@@ -214,5 +230,35 @@
     .step--student-training .student-training__assessment .question__answers .answer--feedback .answer__value, .openassessment .step--self-assessment .self-assessment__assessment .question__answers .answer--feedback .answer__value, 
     .openassessment .step--peer-assessment .peer-assessment__assessment .question__answers .answer--feedback .answer__value, .openassessment .staff-assessment__assessment .question__answers .answer--feedback .answer__value {
         overflow-y: auto;
+    }
+    .xmodule_display.xmodule_ProblemBlock div.problem .notification.warning {
+        border-color: $danger-d;
+    }
+    .xmodule_display.xmodule_ProblemBlock div.problem .notification.warning .icon {
+        color: $danger-d;
+    }
+    .xmodule_display.xmodule_ProblemBlock div.problem .notification.problem-hint {
+        background: $primary-light-d;
+        border-color: $primary-light-d;
+        .icon {
+            color: $text-color-d;
+        }
+        .notification-message {
+            ol {
+                li {
+                    color: $text-color-d;
+                    strong {
+                        color: $text-color-d;
+                    }
+                }
+            }
+        }
+        .notification-btn-wrapper {
+            button {
+                border-color: $primary-d !important;
+                background: none !important;
+                color: $primary-d;
+            }
+        }
     }
 }
