@@ -462,118 +462,6 @@ body.view-statictab, body.view-instructordash, body.view-teams, body.view-wiki {
       }
     }
   }
-  &.view-wiki{
-    .CodeMirror-scroll {
-      background: $body-bg-d;
-      * {
-        color: $text-color-d !important;
-      }
-    }
-    .wiki-wrapper label {
-      color: $text-color-d !important;
-      section.wiki .main-article {
-        color: $text-color-d;
-      }
-    }
-    .wiki-wrapper section.wiki .btn {
-      background: none;
-      color: $text-color-d !important;
-      border-color: $text-color-d !important;
-      text-shadow: none !important;
-    }
-    .wiki-wrapper section.wiki .btn.btn-primary, .wiki-wrapper section.wiki .btn.btn-brand {
-      background: $primary-d !important;
-      border-color: $primary-d !important;
-      color: $btn-color-d !important;
-      box-shadow: none;
-    }
-    .wiki-wrapper section.wiki.history .accordion {
-      background: $primary-light-d;
-      border: none;
-      small {
-        color: $text-color-d;
-      }
-    } 
-    .container{
-     .wiki {
-       .breadcrumbs-header {
-         background: $primary-light-d;
-         .global-functions {
-           a.add-article-btn {
-             background: $primary-d;
-             color: $btn-color-d !important;
-           }
-         }
-         .breadcrumb {
-           li {
-             &:after {
-               color: $text-color-primary;
-             }
-             a {
-               color: $text-color-primary;
-             }
-           }
-         }
-       }
-       .main-article {
-        color: $text-color-d
-       }
-     }
-     .article-wrapper {
-       border: 1px solid $primary-light-d;
-       .main-article {
-          color: $text-color-d !important;
-         p {
-           color: $text-color-d;
-         }
-         h3.entry-title {
-          color: $text-color-d;
-         }
-       }
-       .article-functions {
-         .nav-tabs {
-           li {
-             a {
-               color: $primary-d;
-               &:hover {
-                 background: $primary-light-d;
-                 color: $text-color-d;
-               }
-               .icon {
-                 color: $text-color-primary;
-               }
-             }
-             &.active {
-               a {
-                 background: $primary-light-d;
-                 color: $text-color-d;
-               }
-             }
-           }
-         }
-         .timestamp {
-           border: 1px solid $primary-light-d;
-           border-left: 6px solid $primary-light-d;
-           .label {
-             color: $text-color-d;
-           }
-           .date {
-             color: $text-color-d;
-           }
-         }
-         .see-children {
-           a {
-             background: $primary-d;
-             color: $btn-color-d;
-             &:hover, &:focus {
-               color: $btn-color-d;
-             }
-           }
-         }
-       }
-     }
-   }
- }
   .container.about {
     color: $text-color-primary;
     h1 {
@@ -785,6 +673,44 @@ body.view-wiki{
       background: none;
       box-shadow: none;
       border: none;
+    }
+    #alert_stat_bar {
+      .paragon__alert-warning {
+        color: $dark;
+        background: $primary-light;
+        border: none;
+        button.paragon__close {
+          background: none !important;
+          box-shadow: none !important;
+          color: $dark !important;
+          opacity: 1 !important;
+          font-size: 1.2rem;
+          border: none !important;
+        }
+      }
+    }
+    .wiki-wrapper section.wiki .btn.btn-large, .wiki-wrapper section.wiki .btn.btn-danger {
+      background: none;
+      color: $dark !important;
+      border-color: $dark !important;
+      text-shadow: none !important;
+      box-shadow: none !important;
+      &:hover {
+        background: none !important;
+        color: $dark !important;
+        border-color: $dark !important;
+      }
+    }
+    .wiki-wrapper section.wiki .btn.btn-primary, .wiki-wrapper section.wiki .btn.btn-brand {
+      background: $primary!important;
+      border-color: $primary !important;
+      color: white !important;
+      box-shadow: none;
+      &:hover {
+        background: $primary!important;
+        border-color: $primary !important;
+        color: white !important;
+      }
     }
     .wiki {
       .breadcrumbs-header {
@@ -1094,7 +1020,35 @@ body.indigo-dark-theme {
         color: $text-color-d !important;
       }
     }
+    #previewModal {
+      .inner-wrapper {
+        background: $primary-light-d;
+        iframe {
+          background: #fafafa;
+        }
+        .close-modal {
+          color: $text-color-d;
+        }
+        h1 {
+          color: $text-color-d;
+        }
+        header h2 {
+          color: $text-color-d;
+          text-shadow: none;
+        }
+      }
+    }
     .wiki-wrapper {
+      .alert.denied, .alert.alert-error {
+        color: $text-color-d;
+        background: $primary-light-d;
+        border: none;
+      }
+      section.wiki .main-article .alert {
+        color: $text-color-d;
+        background: $primary-light-d;
+        border: none;
+      }
       label {
         color: $text-color-d !important;
           section.wiki .main-article {
@@ -1116,9 +1070,24 @@ body.indigo-dark-theme {
         }
       }
       section.wiki {
+        .diff-container table {
+          tr.insert td {
+            background: $success-d;
+            color: $text-color-d;
+          }
+          tr.delete td {
+            background: $danger-d;
+            color: $text-color-d;
+          }
+        }
         .table.table-striped {
           tr:nth-child(2n) {
             background: $primary-light-d;
+          }
+          td {
+            a {
+              color: $primary-d !important;
+            }
           }
         }
         .directory-toolbar {
@@ -1143,7 +1112,7 @@ body.indigo-dark-theme {
         }
       }
     }
-    .wiki-wrapper section.wiki .btn {
+    .wiki-wrapper section.wiki .btn.btn-large, .wiki-wrapper section.wiki .btn.btn-danger {
       background: none;
       color: $text-color-d !important;
       border-color: $text-color-d !important;
@@ -1151,6 +1120,8 @@ body.indigo-dark-theme {
       box-shadow: none !important;
       &:hover {
         background: none !important;
+        color: $text-color-d !important;
+        border-color: $text-color-d !important;
       }
     }
     .wiki-wrapper section.wiki .btn.btn-primary, .wiki-wrapper section.wiki .btn.btn-brand {
@@ -1158,6 +1129,11 @@ body.indigo-dark-theme {
       border-color: $primary-d !important;
       color: $btn-color-d !important;
       box-shadow: none;
+      &:hover {
+        background: $primary-d !important;
+        border-color: $primary-d !important;
+        color: $btn-color-d !important;
+      }
     }
     .wiki-wrapper section.wiki.history .accordion {
       background: $primary-light-d;
@@ -1172,7 +1148,7 @@ body.indigo-dark-theme {
          background: $primary-light-d;
          .global-functions {
            a.add-article-btn {
-             background: $primary-d;
+             background: $primary-d !important;
              color: $btn-color-d !important;
            }
          }
