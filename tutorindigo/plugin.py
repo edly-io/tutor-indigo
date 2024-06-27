@@ -14,6 +14,8 @@ if __version_suffix__:
     __version__ += "-" + __version_suffix__
 
 
+FILES_NOT_TO_RENDER = ['indigo/lms/templates/main_django.html']
+
 ################# Configuration
 config: t.Dict[str, t.Dict[str, t.Any]] = {
     # Add here your new settings
@@ -21,6 +23,7 @@ config: t.Dict[str, t.Dict[str, t.Any]] = {
         "VERSION": __version__,
         "WELCOME_MESSAGE": "The place for all your online learning",
         "PRIMARY_COLOR": "#3b85ff",  # cool blue
+        "ENABLE_DARK_THEME": False,
         # Footer links are dictionaries with a "title" and "url"
         # To remove all links, run:
         # tutor config save --set INDIGO_FOOTER_NAV_LINKS=[]
@@ -113,7 +116,7 @@ RUN npm install '@edx/frontend-component-footer@npm:@edly-io/indigo-frontend-com
         (
             "mfe-dockerfile-post-npm-install-authn",
             """
-RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^1.0.0'
+RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^1.0.0{% if INDIGO_ENABLE_DARK_THEME %} --theme=dark{% endif %}'
 """,
         ),
         # Tutor-Indigo v2.1 targets the styling updations in discussions and learner-dashboard MFE
@@ -126,10 +129,11 @@ RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-com
 RUN npm install '@edx/frontend-component-footer@npm:@edly-io/indigo-frontend-component-footer@^1.0.0'
 """,
         ),
+        # Indigo-brand-openedx package currently supports dark theme for learner-dashboard only
         (
             "mfe-dockerfile-post-npm-install-learner-dashboard",
             """
-RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^1.0.0'
+RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^1.0.0{% if INDIGO_ENABLE_DARK_THEME %} --theme=dark{% endif %}'
 RUN npm install '@edx/frontend-component-footer@npm:@edly-io/indigo-frontend-component-footer@^1.0.0'
 """,
         ),
@@ -151,3 +155,11 @@ RUN npm install '@edx/frontend-component-footer@npm:@edly-io/indigo-frontend-com
         ),
     ]
 )
+
+
+@hooks.Filters.IS_FILE_RENDERED.add(priority=hooks.priorities.LOW)
+def _override_files_not_to_render(result: bool, path: str) -> bool:
+    if path in FILES_NOT_TO_RENDER:
+        return False
+    return result
+
