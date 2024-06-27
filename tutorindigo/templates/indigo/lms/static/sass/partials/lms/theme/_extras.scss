@@ -498,27 +498,24 @@ body.view-statictab, body.view-instructordash, body.view-teams, body.view-wiki {
     }
   }
   .wrapper-member-select {
-    background: $primary-light-d !important;
+    background: $primary-light !important;
     select {
       background: none;
-      color: $text-color-d;
+      color: dark;
     }
-  }
-  .auth-list-container .info {
-    color: $text-color-d !important
   }
   .member-list {
     .label {
-      color: $text-color-d !important;
-      background: $primary-light-d !important;
+      color: dark !important;
+      background: $primary-light !important;
     }
   }
   .bottom-bar {
-    background: $primary-light-d !important;
+    background: $primary-light !important;
     input[type="button"] {
-      background: $primary-d !important;
-      border-color: $primary-d !important;
-      color: $btn-color-d !important;
+      background: $primary !important;
+      border-color: $primary !important;
+      color: white !important;
       text-shadow: none !important;
       font-size: 14px;
       font-weight: 500;
@@ -686,6 +683,38 @@ body.view-wiki{
           opacity: 1 !important;
           font-size: 1.2rem;
           border: none !important;
+        }
+      }
+    }
+    section.wiki {
+      .diff-container table {
+        tr.insert td {
+          background: $success-d;
+          color: $text-color-d;
+        }
+        tr.delete td {
+          background: $danger-d;
+          color: $text-color-d;
+        }
+      }
+      .table.table-striped {
+        tr:nth-child(2n) {
+          background: $primary-light;
+        }
+        td {
+          a {
+            color: $primary !important;
+          }
+        }
+      }
+      .directory-toolbar {
+        background: $primary-light;
+        a.btn {
+          background: $primary !important;
+          border-color: $primary !important;
+          box-shadow: none !important;
+          color: white !important;
+          text-shadow: none;
         }
       }
     }
@@ -1092,6 +1121,18 @@ body.indigo-dark-theme {
         }
         .directory-toolbar {
           background: $primary-light-d;
+          a.btn {
+            background: $primary-d !important;
+            border-color: $primary-d !important;
+            box-shadow: none !important;
+            color: $btn-color-d !important;
+            text-shadow: none;
+          }
+          .filter-clear {
+            a {
+              color: $primary-d !important;
+            }
+          }
         }
       }
       #cheatsheet-body {
