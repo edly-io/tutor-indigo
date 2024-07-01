@@ -5,6 +5,10 @@
 }
 @media (prefers-color-scheme: dark) {
     body { 
+        select {
+            background: transparent;
+            color: $text-color-d;
+        }
         .xblock--drag-and-drop {
             .keyboard-help-dialog {
                 .modal-window {
@@ -78,9 +82,9 @@
         .xmodule_display.xmodule_ProblemBlock div.problem-progress {
             color: $text-color-d;
         }
-        .content-wrapper #main .btn-link {
+        .content-wrapper #main .xblock .btn-link {
             color: $primary-d;
-            &:hover {
+            &:hover, &:focus {
                 color: $primary-d !important;
             }
         }
