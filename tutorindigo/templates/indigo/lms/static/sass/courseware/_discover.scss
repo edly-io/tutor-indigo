@@ -391,98 +391,99 @@
         }
     }
 }
-
-body.indigo-dark-theme {
-    .course-heading-area {
-        color: $text-color-primary;
-        h2 {
-            color: $text-color-d;
-        }
-    }
-    .saerch-bar-discover {
-        .filters {
-            .filters-inner {
-                ul {
-                    li {
-                        button {
-                            background: $primary-d !important;
-                            color: $btn-color-d;
-                        }
-                    }
-                }
+@media (prefers-color-scheme: dark) {
+    body {
+        .course-heading-area {
+            color: $text-color-primary;
+            h2 {
+                color: $text-color-d;
             }
         }
-        .discover-search {
-            .wrapper-search-context {
-                .wrapper-search-input {
-                    .button-holder {
-                        button {
-                            background: $primary-d;
-                            color: $btn-color-d;
-                            &:hover {
-                                background: $primary-d;
+        .saerch-bar-discover {
+            .filters {
+                .filters-inner {
+                    ul {
+                        li {
+                            button {
+                                background: $primary-d !important;
                                 color: $btn-color-d;
                             }
                         }
                     }
-                    .input-holder {
-                        background: $primary-light-d;
-                        svg {
-                           path {
+                }
+            }
+            .discover-search {
+                .wrapper-search-context {
+                    .wrapper-search-input {
+                        .button-holder {
+                            button {
+                                background: $primary-d;
+                                color: $btn-color-d;
+                                &:hover {
+                                    background: $primary-d;
+                                    color: $btn-color-d;
+                                }
+                            }
+                        }
+                        .input-holder {
+                            background: $primary-light-d;
+                            svg {
+                            path {
+                                    color: $text-color-d;
+                            } 
+                            }
+                            input {
                                 color: $text-color-d;
-                           } 
-                        }
-                        input {
-                            color: $text-color-d;
+                            }
                         }
                     }
                 }
+                .search-status-label {
+                    color: $text-color-primary;
+                }
             }
-            .search-status-label {
-                color: $text-color-primary;
-            }
-        }
-        .filter-block {
-           
-            >a {
-                background-color: $primary-light-d;
-                color: $text-color-d;
-                &:hover {
+            .filter-block {
+            
+                >a {
+                    background-color: $primary-light-d;
                     color: $text-color-d;
-                }
-                svg {
-                    fill: transparent;
-                    stroke: $text-color-d;
-                    &.arrow {
-                        fill: $text-color-d;
-                        stroke: none;
-                    }
-                }
-            }
-            .dropdown-menu {
-                background: $primary-light-d;
-            }
-            .search-facets {
-                .search-facets-lists {
-                    h3 {
+                    &:hover {
                         color: $text-color-d;
                     }
-                    ul.facet-list {
-                        li {
-                            button.facet-option {
-                                color: $text-color-d;
-                                &.selected {
-                                    .count {
-                                        background: $primary-d;
-                                        border-color: $primary-d;
-                                        &:before {
-                                            color: $btn-color-d;
+                    svg {
+                        fill: transparent;
+                        stroke: $text-color-d;
+                        &.arrow {
+                            fill: $text-color-d;
+                            stroke: none;
+                        }
+                    }
+                }
+                .dropdown-menu {
+                    background: $primary-light-d;
+                }
+                .search-facets {
+                    .search-facets-lists {
+                        h3 {
+                            color: $text-color-d;
+                        }
+                        ul.facet-list {
+                            li {
+                                button.facet-option {
+                                    color: $text-color-d;
+                                    &.selected {
+                                        .count {
+                                            background: $primary-d;
+                                            border-color: $primary-d;
+                                            &:before {
+                                                color: $btn-color-d;
+                                            }
                                         }
                                     }
-                                }
-                                .count {
-                                    border: 1px solid $text-color-d;
-                                    background: $text-color-d;
+                                    .count {
+                                        border: 1px solid $text-color-d;
+                                        background: $text-color-d;
+                                    }
                                 }
                             }
                         }
@@ -490,33 +491,33 @@ body.indigo-dark-theme {
                 }
             }
         }
-    }
-    .courses-container {
-        .courses {
-            .courses-listing {
-                li {
-                    .course {
-                        box-shadow: none;
-                        border: 1px solid $border-color-d;
-                        background: $primary-light-d;
-                        .course-info {
-                            .course-title {
-                                color: $text-color-d;
-                            }
-                            .course-organization {
-                                color: $text-color-primary;
-                            }
-                            .learn-more {
-                                background: $primary-d;
-                                color: $btn-color-d;
-                            }
-                            .course-date {
-                                border-top: 1px solid $border-color-d;
-                                color: $text-color-primary;
-                                background: $light-overlay-d;
-                                svg {
-                                    path {
-                                        fill: $text-color-primary;
+        .courses-container {
+            .courses {
+                .courses-listing {
+                    li {
+                        .course {
+                            box-shadow: none;
+                            border: 1px solid $border-color-d;
+                            background: $primary-light-d;
+                            .course-info {
+                                .course-title {
+                                    color: $text-color-d;
+                                }
+                                .course-organization {
+                                    color: $text-color-primary;
+                                }
+                                .learn-more {
+                                    background: $primary-d;
+                                    color: $btn-color-d;
+                                }
+                                .course-date {
+                                    border-top: 1px solid $border-color-d;
+                                    color: $text-color-primary;
+                                    background: $light-overlay-d;
+                                    svg {
+                                        path {
+                                            fill: $text-color-primary;
+                                        }
                                     }
                                 }
                             }

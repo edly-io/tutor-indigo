@@ -358,92 +358,94 @@
         }
     }
 }
-body.indigo-dark-theme {
-    .course-info.about {
-        .intro-inner-wrapper .profile-top {
-            .info-profile {
-                h1 {
-                    color: $text-color-d;
-                }
-                .org {
-                    color: $text-color-primary;
-                }
-            }
-            .media {
-                .hero {
-                    &:after {
-                        border-color: $border-color-d;
-                    }
-                }
-            }
-        }
-        .main-cta {
-            a {
-                span {
-                    color: $text-color-d;
-                    background: none;
-                    border: 1px solid $text-color-d;
-                }
-            }
-            a.register, a strong, >span.register, a.add-to-cart {
-                color: $btn-color-d;
-                background: $primary-d;
-            }
-            span.closed {
-                background: $primary-light-d;
-            }
-        }
-        .about-content {
-            .details {
-                .about, .prerequisites, .course-staff, .faq {
-                    color: $text-color-d;
-                    border: 1px solid $primary-light-d;
-                    border-left: 14px solid $primary-light-d;
-                    h2 {
+@media (prefers-color-scheme: dark) {
+    body {
+        .course-info.about {
+            .intro-inner-wrapper .profile-top {
+                .info-profile {
+                    h1 {
                         color: $text-color-d;
                     }
-                    h3 {
-                        color: $text-color-d;
+                    .org {
+                        color: $text-color-primary;
                     }
-                    .teacher {
-                        &.update {
-                            @include media-breakpoint-up(md) {
-                                &:after {
-                                    background: $primary-light-d;
+                }
+                .media {
+                    .hero {
+                        &:after {
+                            border-color: $border-color-d;
+                        }
+                    }
+                }
+            }
+            .main-cta {
+                a {
+                    span {
+                        color: $text-color-d;
+                        background: none;
+                        border: 1px solid $text-color-d;
+                    }
+                }
+                a.register, a strong, >span.register, a.add-to-cart {
+                    color: $btn-color-d;
+                    background: $primary-d;
+                }
+                span.closed {
+                    background: $primary-light-d;
+                }
+            }
+            .about-content {
+                .details {
+                    .about, .prerequisites, .course-staff, .faq {
+                        color: $text-color-d;
+                        border: 1px solid $primary-light-d;
+                        border-left: 14px solid $primary-light-d;
+                        h2 {
+                            color: $text-color-d;
+                        }
+                        h3 {
+                            color: $text-color-d;
+                        }
+                        .teacher {
+                            &.update {
+                                @include media-breakpoint-up(md) {
+                                    &:after {
+                                        background: $primary-light-d;
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-        }
-        .course-sidebar {
-            background: $primary-light-d;
-            h2 {
-                color: $text-color-d;
-            }
-            header {
-                .social-sharing {
-                    .sharing-message {
-                        background: $primary-light-d;
-                        border-top: 4px solid $primary-d;
-                        color: $text-color-d;
-                    }
+            .course-sidebar {
+                background: $primary-light-d;
+                h2 {
+                    color: $text-color-d;
                 }
-            }
-            .important-dates {
-                li {
-                    svg, .fa {
-                        color: $text-color-primary;
-                        path {
-                            fill: $text-color-primary;
+                header {
+                    .social-sharing {
+                        .sharing-message {
+                            background: $primary-light-d;
+                            border-top: 4px solid $primary-d;
+                            color: $text-color-d;
                         }
                     }
-                    p {
-                        color: $text-color-primary;
-                    }
-                    .important-dates-item-text {
-                        color: $text-color-primary;
+                }
+                .important-dates {
+                    li {
+                        svg, .fa {
+                            color: $text-color-primary;
+                            path {
+                                fill: $text-color-primary;
+                            }
+                        }
+                        p {
+                            color: $text-color-primary;
+                        }
+                        .important-dates-item-text {
+                            color: $text-color-primary;
+                        }
                     }
                 }
             }

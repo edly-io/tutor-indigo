@@ -36,7 +36,10 @@ body.certificate {
             }
         }
     }
-    &.indigo-dark-theme {
+    
+}
+@media (prefers-color-scheme: dark) {
+    body.certificate {
         background: $body-bg-d;
         color: $text-color-d;
         .banner-user .message-actions .action {
@@ -59,20 +62,20 @@ body.certificate {
             color: $text-color-d;
         }
     }
-}
-@media print {
-    body.indigo-dark-theme.certificate {
-        background: white;
-        color: black;
-        &.layout-accomplishment.certificate-honor .accomplishment-main {
+    @media print {
+        body.certificate {
             background: white;
-        }
-        .depth-card, .accomplishment-brief, .accomplishment-rendering {
-            background: white;
-        }
-        .accomplishment-rendering .accomplishment-type-label,
-        .accomplishment-metadata .metadata .value {
             color: black;
+            &.layout-accomplishment.certificate-honor .accomplishment-main {
+                background: white;
+            }
+            .depth-card, .accomplishment-brief, .accomplishment-rendering {
+                background: white;
+            }
+            .accomplishment-rendering .accomplishment-type-label,
+            .accomplishment-metadata .metadata .value {
+                color: black;
+            }
         }
     }
 }
