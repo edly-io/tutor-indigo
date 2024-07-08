@@ -141,7 +141,7 @@ body.indigo-dark-theme {
     }
     p a:not(.btn), a:not(.btn) {
         color: $primary-d;
-        &:hover {
+        &:hover, &:focus, &:active, a:visited:not(.btn):focus {
             color: $primary-d;
         }
     }

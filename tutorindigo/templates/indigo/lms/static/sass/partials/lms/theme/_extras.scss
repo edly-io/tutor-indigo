@@ -358,6 +358,9 @@ body.view-statictab, body.view-instructordash, body.view-teams, body.view-wiki {
       }
     }
     .instructor-dashboard-content-2 {
+      section.idash-section#membership .batch-beta-testers .request-res-section h3 {
+        color: $text-color-d;
+      }
       a.instructor-info-action {
         background: $primary-d;
         color: $btn-color-d;
@@ -1322,6 +1325,11 @@ body.indigo-dark-theme {
     color: $text-color-d !important
   }
   .instructor-dashboard-wrapper-2 {
+    .msg-error {
+      background: $primary-light-d !important;
+      border-color: $danger-d !important;
+      color: $danger-d  !important;
+    }
     .msg-confirm {
       background: $primary-light-d;
       border-top: 2px solid $success-d;
