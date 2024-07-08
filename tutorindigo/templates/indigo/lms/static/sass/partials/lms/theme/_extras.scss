@@ -909,6 +909,14 @@ body.indigo-dark-theme {
   .find-courses, .university-profile {
     background-color: $body-bg-d;
   }
+  .ui-state-default,
+  .ui-widget-content
+  .ui-state-default,
+  .ui-widget-header
+  .ui-state-default {
+    background: $primary-light-d;
+    color: $text-color-d;
+  }
   .idash-section .no-pending-tasks-message p {
     color: $text-color-d;
   }
@@ -942,6 +950,9 @@ body.indigo-dark-theme {
         background: $primary-d;
         color: $btn-color-d;
       }
+      .request-response-error {
+        color: $danger-d;
+      }
       .ui-widget-content {
         background: none;
         color: $text-color-d;
@@ -973,6 +984,7 @@ body.indigo-dark-theme {
         border-color: $primary-d;
         color: $btn-color-d !important;
         text-shadow: none;
+        box-shadow: none !important;
       }
       .instructor-nav {
         border: 1px solid #E5E7EB;
@@ -1169,6 +1181,7 @@ body.indigo-dark-theme {
       background: $primary-d !important;
       border-color: $primary-d !important;
       color: $btn-color-d !important;
+      text-shadow: none !important;
       box-shadow: none;
       &:hover {
         background: $primary-d !important;
@@ -1307,6 +1320,98 @@ body.indigo-dark-theme {
   }
   .auth-list-container .info {
     color: $text-color-d !important
+  }
+  .instructor-dashboard-wrapper-2 {
+    .msg-confirm {
+      background: $primary-light-d;
+      border-top: 2px solid $success-d;
+      color: $success-d;
+    }
+    .copy-error {
+      color: $danger-d;
+    }
+    .message-error{
+        background: $primary-light-d;
+        border-color: $danger-d;
+        .message-title {
+          color: $danger-d;
+        }
+      .message-copy {
+        color: $text-color-d;
+      }
+    }
+    .idash-section .message-confirmation {
+      background: $body-bg-d;
+      border-color: $success-d;
+      .message-title { 
+        color: $success-d;
+      }
+    }
+    section.idash-section#cohort_management .cohort-management-settings .cohort-management-details .cohort-management-settings {
+      background: transparent;
+    }
+    section.idash-section#cohort_management .cohort-management-group-header {
+      background: $primary-light-d;
+    }
+    section.idash-section#cohort_management .cohort-management-group-setup  {
+      color: $text-color-d;
+    }
+    section.idash-section#cohort_management .cohort-management-settings .cohort-management-details,
+    section.idash-section#cohort_management .cohort-management-settings .cohort-management-group-add {
+      background: $primary-light-d;
+    }
+    section.idash-section#cohort_management .wrapper-tabs .tab .toggle-button {
+      text-shadow: none;
+      color: $text-color-d;
+    }
+    section.idash-section#cohort_management .wrapper-tabs .tab.is-selected .toggle-button {
+      background: $primary-d;
+      border-color: $primary-d;
+      color: $btn-color-d;
+      text-decoration: none;
+    }
+    section.idash-section#cohort_management .cohort-management-settings .form-submit,
+    section.idash-section#cohort_management .cohort-management-nav .action-create,
+    section.idash-section#cohort_management .file-upload-form .action-submit {
+      background: $primary-d !important;
+      border-color: $primary-d !important;
+      color: $btn-color-d !important;
+      text-shadow: none !important;
+      box-shadow: none !important;
+    }
+    section.idash-section#cohort_management .cohort-management-supplemental {
+      background: $primary-light-d;
+      button {
+        color: $text-color-d;
+        text-decoration: underline;
+      }
+    }
+    section.idash-section#cohort_management .file-upload-form .form-fields .input-file {
+      color: $text-color-d;
+    }
+    section.idash-section#cohort_management .toggle-cohort-management-secondary,
+    section.idash-section#cohort_management .toggle-cohort-management-discussions {
+      color: $primary-d;
+    }
+    section.idash-section#cohort_management .cohort-management-settings, section.idash-section#cohort_management .cohort-management-settings .form-title {
+      background: $primary-light-d;
+    }
+    section.idash-section#data_download .problem-browser .block-browser {
+      background: $primary-light-d;
+    }
+    section.idash-section#membership .batch-enrollment .request-res-section h3 {
+      color: $danger-d;
+    }
+    section.idash-section#membership .enroll-option .hint, section.idash-section#membership .enroll-option .hint {
+      background: $primary-light-d;
+      p {
+        color: inherit !important;
+      }
+      .hint-caret {
+        border-right: 8px solid $primary-light-d;
+        border-top: 8px solid $primary-light-d;
+      }
+    }
   }
   .member-list {
     .label {

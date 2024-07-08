@@ -141,6 +141,9 @@ body.indigo-dark-theme {
     }
     p a:not(.btn), a:not(.btn) {
         color: $primary-d;
+        &:hover {
+            color: $primary-d;
+        }
     }
     .global-header .nav-links .secondary {
         .btn-holder {
