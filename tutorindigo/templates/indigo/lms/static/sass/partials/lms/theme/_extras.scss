@@ -338,133 +338,6 @@ body.view-statictab, body.view-instructordash, body.view-teams, body.view-wiki {
         background: no-repeat;
     }
   }
-  &.view-statictab {
-    .wrapper-course-material {
-      .tabs.course-tabs {
-        border-bottom: 1px solid $primary-light-d;
-        li {
-          a {
-            color: $text-color-d;
-            &:hover, &:visited {
-              color: $text-color-primary;
-              border-color: transparent;
-            }
-            &.active {
-              color: $text-color-d;
-              border-color: $text-color-d;
-            }
-          }
-        }
-      }
-    }
-    .instructor-dashboard-content-2 {
-      section.idash-section#membership .batch-beta-testers .request-res-section h3 {
-        color: $text-color-d;
-      }
-      a.instructor-info-action {
-        background: $primary-d;
-        color: $btn-color-d;
-      }
-      .ui-widget-content {
-        background: none;
-        color: $text-color-d;
-        border: 1px solid $primary-light-d;
-      }
-      .ui-accordion-header {
-        background: $primary-d;
-        color: $btn-color-d;
-        font-size: 14px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-      }
-      .ecommerce-wrapper span.tip,
-      .proctoring-wrapper span.tip {
-        background: $primary-light-d;
-        color: $text-color-d;
-        border: none;
-        a.blue-button {
-          background: $primary-d;
-          border-color: $primary-d;
-          color: $btn-color-d !important;
-          text-shadow: none;
-          box-shadow: none;
-          font-weight: 500;
-        }
-      }
-      .enrollment-button, input[type=button], button.btn {
-        background: $primary-d;
-        border-color: $primary-d;
-        color: $btn-color-d !important;
-        text-shadow: none;
-      }
-      .instructor-nav {
-        border: 1px solid #E5E7EB;
-        li {
-          &:first-child {
-            button {
-              border: none;
-            }
-          }
-          button {
-            border: none !important;
-            border-radius: 0 !important;
-            border-left: 1px solid #E5E7EB !important;
-            color: $text-color-primary;
-            &.active-section {
-              background: $primary-d !important;
-              color: $btn-color-d !important;
-            }
-            &:hover {
-              color: $text-color-d;
-            }
-          }
-        }
-      }
-      .enrollment-wrapper {
-        table {
-          th, td {
-            color: $text-color-d;
-          }
-          .total {
-            border-top: 1px solid #E5E7EB;
-            th, td {
-              color: $primary-d;
-            }
-          }
-        }
-      }
-      .info-holder, .basic-wrapper, .course-errors-wrapper, .running-tasks-container {
-        background: $primary-light-d;
-        h4 {
-          color: $text-color-d;
-          span  {
-            color: $text-color-primary;
-          }
-        }
-      }
-      .list-input {
-        li {
-          label, b {
-            color: $text-color-d;
-          }
-        }
-      }
-      .open-response-assessment-block .open-response-assessment-main-table {
-        th {
-          background: $primary-light-d;
-          color: $text-color-d !important;
-          button {
-            text-shadow: none !important;
-            color: $text-color-d !important;
-          }
-        }
-        tbody tr:nth-child(odd) {
-          background: $primary-light-d;
-          color: $text-color-d !important;
-        }
-      }
-    }
-  }
   .container.about {
     color: $text-color-primary;
     h1 {
@@ -482,24 +355,7 @@ body.view-statictab, body.view-instructordash, body.view-teams, body.view-wiki {
       }
     }
   }
-  .modal {
-    background: $primary-light-d !important;
-    .modal-header {
-      color: $text-color-d !important
-    }
-    select, textarea {
-      background: transparent;
-      color: white;
-    }
-    input[type=submit] {
-      background: $primary-d;
-      border-color: $primary-d;
-      color: $btn-color-d !important;
-      text-shadow: none;
-      font-size: 14px;
-      font-weight: 500;
-    }
-  }
+
   .wrapper-member-select {
     background: $primary-light !important;
     select {
@@ -1325,6 +1181,9 @@ body.indigo-dark-theme {
     color: $text-color-d !important
   }
   .instructor-dashboard-wrapper-2 {
+    section.idash-section#membership .batch-beta-testers .request-res-section h3 {
+      color: $text-color-d;
+    }
     .msg-error {
       background: $primary-light-d !important;
       border-color: $danger-d !important;
