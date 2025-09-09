@@ -121,7 +121,7 @@ for mfe in indigo_styled_mfes:
                 f"mfe-dockerfile-post-npm-install-{mfe}",
                 """
 RUN npm install @edly-io/indigo-frontend-component-footer@^3.0.0
-RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^4.0.0'
+RUN npm install @edx/frontend-component-header@npm:@waleed-mujahid/indigo-frontend-component-header@^2.0.0
 RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
 
 """,
@@ -177,6 +177,7 @@ MFE_CONFIG['INDIGO_ENABLE_DARK_TOGGLE'] = {{ INDIGO_ENABLE_DARK_TOGGLE }}
             "openedx-lms-production-settings",
             """
 MFE_CONFIG['INDIGO_ENABLE_DARK_TOGGLE'] = {{ INDIGO_ENABLE_DARK_TOGGLE }}
+MFE_CONFIG['DARK_THEME_COOKIE_DOMAIN'] = '{{ INDIGO_DARK_THEME_COOKIE_DOMAIN }}'
 """,
         ),
     ]

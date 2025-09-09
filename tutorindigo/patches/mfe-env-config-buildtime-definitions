@@ -13,8 +13,8 @@ const AddDarkTheme = () => {
   };
 
   const getCookieOptions = () => {
-    const serverURL = new URL(getConfig().LMS_BASE_URL);
-    const options = { domain: serverURL.hostname, path: '/', expires: getCookieExpiry() };
+    const cookieDomain = getConfig().DARK_THEME_COOKIE_DOMAIN;
+    const options = { domain: cookieDomain, path: '/', expires: getCookieExpiry() };
     return options;
   };
 
