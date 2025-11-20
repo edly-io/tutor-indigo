@@ -111,6 +111,7 @@ indigo_styled_mfes = [
     "profile",
     "account",
     "discussions",
+    "authoring"
 ]
 
 
@@ -192,7 +193,33 @@ for path in glob(
 
 
 for mfe in indigo_styled_mfes:
-    PLUGIN_SLOTS.add_item(
+
+    if mfe == "authoring":
+        PLUGIN_SLOTS.add_item(
+            (
+                mfe,
+                "studio_footer_slot",
+                """ 
+                {
+                    op: PLUGIN_OPERATIONS.Hide,
+                    widgetId: 'default_contents',
+                },
+                {
+                    op: PLUGIN_OPERATIONS.Insert,
+                    widget: {
+                        id: 'default_contents',
+                        type: DIRECT_PLUGIN,
+                        priority: 1,
+                        RenderWidget: <FooterWidget />,
+                    },
+                },
+        """,
+            ),
+        )
+        continue
+
+    else:
+        PLUGIN_SLOTS.add_item(
         (
             mfe,
             "footer_slot",
