@@ -111,7 +111,10 @@ indigo_styled_mfes = [
     "profile",
     "account",
     "discussions",
-    "authoring"
+    "authoring", 
+    "gradebook",
+    "ora-grading",
+    "communications"
 ]
 
 
