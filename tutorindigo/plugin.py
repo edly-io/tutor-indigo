@@ -117,8 +117,28 @@ indigo_styled_mfes = [
     "communications"
 ]
 
+brand_styled_mfes = [
+    "learning",
+    "learner-dashboard",
+    "profile",
+    "account",
+    "discussions",
+]
+
 
 for mfe in indigo_styled_mfes:
+    if mfe in brand_styled_mfes:
+        hooks.Filters.ENV_PATCHES.add_items(
+            [
+                (
+                    f"mfe-dockerfile-post-npm-install-{mfe}",
+                    """
+                    RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
+                    """,
+                ),
+            ]
+        )
+
     hooks.Filters.ENV_PATCHES.add_items(
         [
             (
