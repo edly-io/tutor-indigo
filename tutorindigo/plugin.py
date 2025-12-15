@@ -121,7 +121,7 @@ for mfe in indigo_styled_mfes:
                 f"mfe-dockerfile-post-npm-install-{mfe}",
                 """
 RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^4.0.0'
-RUN npm install '@edx/brand@git+https://github.com/edly-io/brand-openedx.git#test-theme'
+RUN npm install '@edx/brand@git+https://github.com/edly-io/brand-openedx.git#feature/theme-branding-updates'
 
 """,  # noqa: E501
             )
