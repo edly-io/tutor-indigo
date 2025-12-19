@@ -111,26 +111,47 @@ indigo_styled_mfes = [
     "profile",
     "account",
     "discussions",
+    "authoring", 
+    "gradebook",
+    "ora-grading",
+    "communications"
+]
+
+brand_styled_mfes = [
+    "learning",
+    "learner-dashboard",
+    "profile",
+    "account",
+    "discussions",
 ]
 
 
 for mfe in indigo_styled_mfes:
+    if mfe in brand_styled_mfes:
+        hooks.Filters.ENV_PATCHES.add_items(
+            [
+                (
+                    f"mfe-dockerfile-post-npm-install-{mfe}",
+                    """
+                    RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
+                    """,
+                ),
+            ]
+        )
+
     hooks.Filters.ENV_PATCHES.add_items(
         [
             (
                 f"mfe-dockerfile-post-npm-install-{mfe}",
                 """
-RUN npm install @edly-io/indigo-frontend-component-footer@^3.0.0
-RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^4.0.0'
-RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
-
-""",
+                RUN npm install '@anas_hameed/edly-saas-widget'
+                """,
             ),
             (
                 f"mfe-env-config-runtime-definitions-{mfe}",
                 """
-const { default: IndigoFooter } = await import('@edly-io/indigo-frontend-component-footer');
-""",
+                const { HeaderWidget, FooterWidget } = require("@anas_hameed/edly-saas-widget");
+                """,
             ),
         ]
     )
@@ -197,7 +218,33 @@ for path in glob(
 
 
 for mfe in indigo_styled_mfes:
-    PLUGIN_SLOTS.add_item(
+
+    if mfe == "authoring":
+        PLUGIN_SLOTS.add_item(
+            (
+                mfe,
+                "studio_footer_slot",
+                """ 
+                {
+                    op: PLUGIN_OPERATIONS.Hide,
+                    widgetId: 'default_contents',
+                },
+                {
+                    op: PLUGIN_OPERATIONS.Insert,
+                    widget: {
+                        id: 'default_contents',
+                        type: DIRECT_PLUGIN,
+                        priority: 1,
+                        RenderWidget: <FooterWidget />,
+                    },
+                },
+        """,
+            ),
+        )
+        continue
+
+    else:
+        PLUGIN_SLOTS.add_item(
         (
             mfe,
             "footer_slot",
@@ -212,7 +259,7 @@ for mfe in indigo_styled_mfes:
                     id: 'default_contents',
                     type: DIRECT_PLUGIN,
                     priority: 1,
-                    RenderWidget: <IndigoFooter />,
+                    RenderWidget: <FooterWidget />,
                 },
             },
             {
@@ -227,3 +274,49 @@ for mfe in indigo_styled_mfes:
   """,
         ),
     )
+
+
+    if mfe == "learning":
+        PLUGIN_SLOTS.add_item(
+            (
+                mfe,
+                "header_slot",
+                """ 
+                {
+                    op: PLUGIN_OPERATIONS.Hide,
+                    widgetId: 'default_contents',
+                },
+                {
+                    op: PLUGIN_OPERATIONS.Insert,
+                    widget: {
+                        id: 'custom_desktop_header_component',
+                        type: DIRECT_PLUGIN,
+                        priority: 1,
+                        RenderWidget: () => <HeaderWidget />
+                    },
+                },
+                """,
+            ),
+        )
+    else:
+        PLUGIN_SLOTS.add_item(
+            (
+                mfe,
+                "desktop_header_slot",
+                """ 
+                {
+                    op: PLUGIN_OPERATIONS.Hide,
+                    widgetId: 'default_contents',
+                },
+                {
+                    op: PLUGIN_OPERATIONS.Insert,
+                    widget: {
+                        id: 'custom_desktop_header_component',
+                        type: DIRECT_PLUGIN,
+                        priority: 1,
+                        RenderWidget: () => <HeaderWidget />
+                    },
+                },
+                """,
+            ),
+        )
