@@ -114,16 +114,49 @@ indigo_styled_mfes = [
     "profile",
     "account",
     "discussions",
+    "authoring",
+    "gradebook",
+    "ora-grading",
+    "communications",
+    "learner-record",
+]
+
+# Edly: MFEs that get the base brand CSS overrides (standard 5)
+brand_styled_mfes = [
+    "learning",
+    "learner-dashboard",
+    "profile",
+    "account",
+    "discussions",
 ]
 
 for mfe in indigo_styled_mfes:
+    if mfe in brand_styled_mfes:
+        hooks.Filters.ENV_PATCHES.add_items(
+            [
+                (
+                    f"mfe-dockerfile-post-npm-install-{mfe}",
+                    """
+RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
+""",
+                ),
+            ]
+        )
+
     hooks.Filters.ENV_PATCHES.add_items(
         [
             (
                 f"mfe-dockerfile-post-npm-install-{mfe}",
                 """
+RUN npm install '@anas_hameed/edly-saas-widget'
 RUN npm install '@edx/brand@github:@edly-io/brand-openedx#indigo-2.5.3'
 """,  # noqa: E501
+            ),
+            (
+                f"mfe-env-config-runtime-definitions-{mfe}",
+                """
+const { HeaderWidget, FooterWidget, MultiSiteBannerWidget } = require("@anas_hameed/edly-saas-widget");
+""",
             ),
         ]
     )
@@ -131,7 +164,10 @@ RUN npm install '@edx/brand@github:@edly-io/brand-openedx#indigo-2.5.3'
 hooks.Filters.ENV_PATCHES.add_item(
     (
         "mfe-dockerfile-post-npm-install-authn",
-        "RUN npm install '@edx/brand@github:@edly-io/brand-openedx#indigo-2.5.3'",
+        """
+RUN npm install '@edx/brand@github:@edly-io/brand-openedx#indigo-2.5.3'
+RUN npm install @anas_hameed/edly-saas-widget
+""",
     )
 )
 
@@ -188,7 +224,100 @@ for path in itertools.chain(
         hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))
 
 
+# Edly: Custom header/footer widget slot configs (SaaS widget injection)
+FOOTER_WIDGET = """
+{
+    op: PLUGIN_OPERATIONS.Hide,
+    widgetId: 'default_contents',
+},
+{
+    op: PLUGIN_OPERATIONS.Insert,
+    widget: {
+        id: 'default_contents',
+        type: DIRECT_PLUGIN,
+        priority: 1,
+        RenderWidget: <FooterWidget />,
+    },
+},
+"""
+
+ACCOUNT_FOOTER_WIDGET = FOOTER_WIDGET + """
+{
+    op: PLUGIN_OPERATIONS.Insert,
+    widget: {
+        id: 'multi_site_banner_injector',
+        type: DIRECT_PLUGIN,
+        RenderWidget: MultiSiteBannerWidget,
+    },
+},
+"""
+
+HEADER_WIDGET = """
+{
+    op: PLUGIN_OPERATIONS.Hide,
+    widgetId: 'default_contents',
+},
+{
+    op: PLUGIN_OPERATIONS.Insert,
+    widget: {
+        id: 'custom_desktop_header_component',
+        type: DIRECT_PLUGIN,
+        priority: 1,
+        RenderWidget: () => <HeaderWidget />
+    },
+},
+"""
+
+CERTIFICATE_WIDGET = """
+{
+    op: PLUGIN_OPERATIONS.Modify,
+    widgetId: 'default_contents',
+    fn: (widget) => {
+        const { RenderWidget } = widget;
+        if (RenderWidget.props.id === "notAvailable_certificate_status") {
+            widget.RenderWidget = <></>;
+        }
+
+        return widget;
+    },
+},
+"""
+
+MFE_CONFIG = {
+    "learning": {
+        "footer_slot": FOOTER_WIDGET,
+        "header_slot": HEADER_WIDGET,
+        "progress_certificate_status_slot": CERTIFICATE_WIDGET,
+    },
+    "authoring": {
+        "studio_footer_slot": FOOTER_WIDGET,
+    },
+    "account": {
+        "footer_slot": ACCOUNT_FOOTER_WIDGET,
+        "desktop_header_slot": HEADER_WIDGET,
+    },
+}
+
+DEFAULT_CONFIG = {
+    "footer_slot": FOOTER_WIDGET,
+    "desktop_header_slot": HEADER_WIDGET,
+}
+
 for mfe in indigo_styled_mfes:
+    mfe_config = MFE_CONFIG.get(mfe, DEFAULT_CONFIG)
+
+    for slot_name, slot_content in mfe_config.items():
+        PLUGIN_SLOTS.add_item(
+            (
+                mfe,
+                slot_name,
+                slot_content,
+            )
+        )
+
+
+# Upstream: Indigo footer, theme toggle, and mobile header slots
+for mfe in ["learning", "learner-dashboard", "profile", "account", "discussions"]:
     PLUGIN_SLOTS.add_item(
         (
             mfe,
@@ -239,7 +368,6 @@ for mfe in indigo_styled_mfes:
         PLUGIN_SLOTS.add_items(
             [
                 (
-                    # Hide the default mobile header as it only shows logo
                     mfe,
                     "mobile_header_slot",
                     """
@@ -269,7 +397,6 @@ for mfe in indigo_styled_mfes:
 PLUGIN_SLOTS.add_items(
     [
         (
-            # Hide the default Help Link added in plugin slot
             "learning",
             "learning_help_slot",
             """
