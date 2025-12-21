@@ -52,10 +52,10 @@ header.global-header {
             height: auto;
             @include media-breakpoint-up(lg) {
                 margin: 0;
-                margin: 20px 0 0;
+                margin: 5px 0 0;
             }
             .logo {
-                height: 24px;
+                height: 50px;
                 margin: 0;
             }
         }
@@ -258,7 +258,7 @@ header.global-header {
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background-color: $light-theme-switch-bg-color;
+                background-color: $primary;
                 transition: .4s;
 
                 &::before{

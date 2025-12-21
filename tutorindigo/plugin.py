@@ -7,7 +7,7 @@ from glob import glob
 import importlib_resources
 from tutor import hooks
 from tutor.__about__ import __version_suffix__
-from tutormfe.hooks import PLUGIN_SLOTS
+from tutormfe.hooks import PLUGIN_SLOTS,MFE_APPS
 
 from .__about__ import __version__
 
@@ -22,7 +22,7 @@ config: t.Dict[str, t.Dict[str, t.Any]] = {
     "defaults": {
         "VERSION": __version__,
         "WELCOME_MESSAGE": "The place for all your online learning",
-        "PRIMARY_COLOR": "#15376D",  # Indigo
+        "PRIMARY_COLOR": "#dd1e26",  # Indigo
         "ENABLE_DARK_TOGGLE": True,
         # Footer links are dictionaries with a "title" and "url"
         # To remove all links, run:
@@ -120,16 +120,9 @@ for mfe in indigo_styled_mfes:
             (
                 f"mfe-dockerfile-post-npm-install-{mfe}",
                 """
-RUN npm install @edly-io/indigo-frontend-component-footer@^3.0.0
 RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^4.0.0'
-RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
+RUN npm install '@edx/brand@git+https://github.com/edly-io/brand-openedx.git#sales-demo-theming'
 
-""",  # noqa: E501
-            ),
-            (
-                f"mfe-env-config-runtime-definitions-{mfe}",
-                """
-const { default: IndigoFooter } = await import('@edly-io/indigo-frontend-component-footer');
 """,  # noqa: E501
             ),
         ]
@@ -212,7 +205,7 @@ for mfe in indigo_styled_mfes:
                     id: 'default_contents',
                     type: DIRECT_PLUGIN,
                     priority: 1,
-                    RenderWidget: <IndigoFooter />,
+                    RenderWidget: <CustomFooter />
                 },
             },
             {

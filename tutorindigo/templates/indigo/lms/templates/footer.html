@@ -1,152 +1,117 @@
-## mako
-<%page expression_filter="h"/>
-<%!
-  from datetime import datetime
-  from django.urls import reverse
-  from django.utils.translation import gettext as _
-  from lms.djangoapps.branding.api import get_footer
-  from openedx.core.djangoapps.lang_pref.api import footer_language_selector_is_enabled
-%>
-<% footer = get_footer(is_secure=is_secure) %>
-<% icp_license_info = getattr(settings, 'ICP_LICENSE_INFO', {})%>
-<%namespace name='static' file='static_content.html'/>
-<!-- NEW IN INDIGO update footer -->
-% if uses_bootstrap:
-<div class="wrapper wrapper-footer">
-  <footer id="footer" class="tutor-container"
-    ## When rendering the footer through the branding API,
-    ## the direction may not be set on the parent element,
-    ## so we set it here.
-    % if bidi:
-      dir=${bidi}
-    % endif
-  >
-  <div class="footer-top">
-    <div class="powered-area">
-      ## Please leave this link and use one of the logos provided
-      ## The OpenEdX link may be hidden when this view is served
-      ## through an API to partner sites (such as marketing sites or blogs),
-      ## which are not technically powered by OpenEdX.
-      % if not hide_openedx_link:
-      <ul class="logo-list">
-        <li>Powered by:</li>
-        <li>
-          <a href="https://docs.tutor.edly.io" rel="noopener" target="_blank">
-            <img src="${static.url('images/tutor-logo.png')}" alt="Runs on Tutor" width="80" />
-          </a>
-        </li>
-        <li>
-          <a href="${footer['openedx_link']['url']}" rel="noopener" target="_blank">
-            <img src="${static.url('images/openedx-logo.png')}" alt="${footer['openedx_link']['title']}" width="79" />
-          </a>
-        </li>
-      </ul>
-    </div>
-    {% if INDIGO_FOOTER_NAV_LINKS %}
-    <nav class="nav-colophon" aria-label="${_('About')}">
-      <ol>
-          {% for link in INDIGO_FOOTER_NAV_LINKS %}
-          <li>
-            <a href="{{ link['url'] }}">{{ link['title'] }}</a>
-          </li>
-          {% endfor %}
-      </ol>
-    </nav>
-    {% endif %}
-  </div>
-  <span class="copyright-site">Copyrights ©${datetime.now().year}. All Rights Reserved.</span>
-  % endif
-    <div class="colophon">
+<%page expression_filter="h"/> 
+<%! from datetime import datetime %> 
+<%namespace name='static' file='static_content.html'/>  
 
-      % if context.get('include_language_selector', footer_language_selector_is_enabled()):
-          <%include file="${static.get_template_path('widgets/footer-language-selector.html')}"/>
-      % endif
+<div class="wrapper wrapper-footer edx-footer">
+  <footer>
+    <div class="edx-footer-inner">
+      
+      <!-- Main Footer Content -->
+      <div class="edx-footer-main">
 
-      ## Site operators: Please do not remove this paragraph! This attributes back to edX and makes your acknowledgement of edX's trademarks clear.
-        <p class="copyright">${footer['copyright']}
-            % if icp_license_info.get('icp_license'):
-              ${u" | {text}".format(text=icp_license_info.get('text'))}
-              <a href="${icp_license_info.get('icp_license_link', '#')}">
-                  ${u" {icp}".format(icp=icp_license_info.get('icp_license'))}
-              </a>
-            % endif
-        </p>
+        <!-- Brand -->
+        <div class="edx-footer-brand">
+          <a href="/" class="edx-footer-logo">
+            <img
+              src="${static.url('indigo/images/logo.png')}"
+              alt="Teach SIM"
+              class="edx-footer-logo-img"
+            />
+          </a>
+        </div>
+
+        <!-- Industries -->
+        <div class="edx-footer-column">
+          <h3 class="edx-footer-heading">Industries</h3>
+          <ul class="edx-footer-links">
+            <li><a href="https://edly.io/k12-lms/">K12</a></li>
+            <li><a href="https://edly.io/higher-education-lms/">Higher Ed</a></li>
+            <li><a href="https://edly.io/corporate-lms/">Corporate</a></li>
+            <li><a href="https://edly.io/nonprofit-lms/">Non Profit</a></li>
+            <li><a href="https://edly.io/business-lms/">Business</a></li>
+          </ul>
+        </div>
+
+        <!-- Services -->
+        <div class="edx-footer-column">
+          <h3 class="edx-footer-heading">Services</h3>
+          <ul class="edx-footer-links">
+            <li><a href="https://edly.io/services/open-edx-managed-hosting/">Managed Hosting</a></li>
+            <li><a href="https://edly.io/services/open-edx-installation/">Open edX Installation</a></li>
+            <li><a href="https://edly.io/services/open-edx-custom-solutions/">Open edX Custom Solutions</a></li>
+            <li><a href="https://edly.io/services/instructional-design/">Instructional Design</a></li>
+            <li><a href="https://edly.io/services/lms-training-support/">LMS Training and Support</a></li>
+            <li><a href="https://edly.io/services/lms-data-migration/">Data Migration</a></li>
+          </ul>
+        </div>
+
+        <!-- Resources -->
+        <div class="edx-footer-column">
+          <h3 class="edx-footer-heading">Resources</h3>
+          <ul class="edx-footer-links">
+            <li><a href="https://edly.io/resources/blog/">Blog</a></li>
+            <li><a href="https://edly.io/resources/case-studies/">Case Studies</a></li>
+            <li><a href="https://edly.io/resources/guides-and-whitepapers/">Guides and Whitepapers</a></li>
+            <li><a href="https://edly.io/resources/news-and-updates/">Product Updates</a></li>
+            <li><a href="https://edly.io/resources/faqs/">FAQs</a></li>
+          </ul>
+        </div>
+
+        <!-- About -->
+        <div class="edx-footer-column">
+          <h3 class="edx-footer-heading">About</h3>
+          <ul class="edx-footer-links">
+            <li><a href="https://edly.io/why-edly/">Why Edly</a></li>
+            <li><a href="https://edly.io/customers/">Our Customers</a></li>
+            <li><a href="https://edly.io/features/">Features</a></li>
+            <li><a href="https://edly.io/pricing-and-plans/">Edly Plans</a></li>
+            <li><a href="https://edly.io/contact-us/">Contact us</a></li>
+            <li><a href="https://panel.edly.io/">Sign In</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <hr class="edx-footer-divider"/>
+
+      <!-- Bottom -->
+      <div class="edx-footer-bottom">
+
+        <div class="edx-footer-copyright">
+          <p>EDX, Open EDX are registered trademarks of edX Inc. All Rights Reserved.</p>
+          <p>© Edly ${datetime.now().year}. All rights reserved.</p>
+        </div>
+
+        <div class="edx-footer-legal">
+          <a href="https://edly.io/privacy-policy/">Privacy Policy</a>
+          <a href="https://edly.io/refund-policy/">Refund Policy</a>
+          <a href="https://edly.io/cancellation-policy/">Cancellation Policy</a>
+          <a href="https://edly.io/terms-and-conditions/">Terms & Conditions</a>
+        </div>
+
+      </div>
+
+      <!-- Social -->
+      <div class="edx-footer-social">
+        <a href="https://twitter.com/edly_inc"
+           target="_blank"
+           class="edx-social-link"
+           aria-label="Twitter">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231z"/>
+          </svg>
+        </a>
+
+        <a href="https://www.linkedin.com/company/edly"
+           target="_blank"
+           class="edx-social-link"
+           aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M22.23 0H1.77C.79 0 0 .774 0 1.727v20.545C0 23.227.79 24 1.77 24h20.46C23.2 24 24 23.227 24 22.272V1.727C24 .774 23.2 0 22.23 0zM7.09 20.45H3.56V9h3.53v11.45zM5.32 7.43c-1.13 0-2.05-.92-2.05-2.05 0-1.13.92-2.05 2.05-2.05s2.05.92 2.05 2.05c0 1.13-.92 2.05-2.05 2.05zM20.45 20.45h-3.53v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.15 1.45-2.15 2.94v5.67H9.39V9h3.39v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.58 0 4.24 2.36 4.24 5.44v6.3z"/>
+          </svg>
+        </a>
+      </div>
+
     </div>
   </footer>
 </div>
-% else:
-<!-- NEW IN INDIGO update footer -->
-  <div class="wrapper wrapper-footer">
-    <footer id="footer" class="tutor-container"
-      ## When rendering the footer through the branding API,
-      ## the direction may not be set on the parent element,
-      ## so we set it here.
-      % if bidi:
-        dir=${bidi}
-      % endif
-    >
-    <div class="footer-top">
-      <div class="powered-area">
-        ## Please leave this link and use one of the logos provided
-        ## The OpenEdX link may be hidden when this view is served
-        ## through an API to partner sites (such as marketing sites or blogs),
-        ## which are not technically powered by OpenEdX.
-        % if not hide_openedx_link:
-        <ul class="logo-list">
-          <li>Powered by:</li>
-          <li>
-            <a href="https://docs.tutor.edly.io" rel="noopener" target="_blank">
-              <img src="${static.url('images/tutor-logo.png')}" alt="Runs on Tutor" width="80" />
-            </a>
-          </li>
-          <li>
-            <a href="${footer['openedx_link']['url']}" rel="noopener" target="_blank">
-              <img src="${static.url('images/openedx-logo.png')}" alt="${footer['openedx_link']['title']}" width="79" />
-            </a>
-          </li>
-        </ul>
-      </div>
-      {% if INDIGO_FOOTER_NAV_LINKS %}
-      <nav class="nav-colophon" aria-label="${_('About')}">
-        <ol>
-            {% for link in INDIGO_FOOTER_NAV_LINKS %}
-            <li>
-              <a href="{{ link['url'] }}">{{ link['title'] }}</a>
-            </li>
-            {% endfor %}
-        </ol>
-      </nav>
-      {% endif %}
-    </div>
-    <span class="copyright-site">Copyrights ©${datetime.now().year}. All Rights Reserved.</span>
-    % endif
-      <div class="colophon">
-
-        % if context.get('include_language_selector', footer_language_selector_is_enabled()):
-            <%include file="${static.get_template_path('widgets/footer-language-selector.html')}"/>
-        % endif
-
-        ## Site operators: Please do not remove this paragraph! This attributes back to edX and makes your acknowledgement of edX's trademarks clear.
-          <p class="copyright">${footer['copyright']}
-              % if icp_license_info.get('icp_license'):
-                ${u" | {text}".format(text=icp_license_info.get('text'))}
-                <a href="${icp_license_info.get('icp_license_link', '#')}">
-                    ${u" {icp}".format(icp=icp_license_info.get('icp_license'))}
-                </a>
-              % endif
-          </p>
-      </div>
-    </footer>
-  </div>
-% endif
-% if include_dependencies:
-  <%static:js group='base_vendor'/>
-  <%static:css group='style-vendor'/>
-  <%include file="widgets/segment-io.html" />
-  <%include file="widgets/segment-io-footer.html" />
-% endif
-% if footer_css_urls:
-  % for url in footer_css_urls:
-    <link rel="stylesheet" type="text/css" href="${url}"></link>
-  % endfor
-% endif
