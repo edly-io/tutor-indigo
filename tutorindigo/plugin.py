@@ -301,6 +301,27 @@ for mfe in indigo_styled_mfes:
                 """,
             ),
         )
+        PLUGIN_SLOTS.add_item(
+            (
+                mfe,
+                "progress_certificate_status_slot",
+                """
+                {
+                    op: PLUGIN_OPERATIONS.Modify,
+                    widgetId: 'default_contents',
+                    fn: (widget) => {
+                        const { RenderWidget } = widget;
+                        if (RenderWidget.props.id === "notAvailable_certificate_status") {
+                            widget.RenderWidget = <></>;
+                        }
+
+                        return widget;
+                    },
+                    
+                },
+                """,
+            ),
+        )
     else:
         PLUGIN_SLOTS.add_item(
             (
