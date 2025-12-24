@@ -114,7 +114,8 @@ indigo_styled_mfes = [
     "authoring", 
     "gradebook",
     "ora-grading",
-    "communications"
+    "communications",
+    "learner-record"
 ]
 
 brand_styled_mfes = [
