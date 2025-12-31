@@ -70,7 +70,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
         decoding="async"
       />
     </a>
-    <header id="#header-container" class="site-header main-navigation">
+    <header id="header-container" class="site-header main-navigation">
     </header>
   </div>
 </div>
@@ -136,26 +136,30 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
     let isOpen = false;
     const menuBtn = $('#header-menu-btn');
 
-    $.ajax({
-      url: discoveryUrl,
-      type: 'GET',
-      dataType: 'json',
-      xhrFields: {
-        withCredentials: true
-      },
-      success: function(jsonData) {
-        if (typeof jsonData === 'object') {
-          const cleanHtml = DOMPurify.sanitize(jsonData.primary, {
-            ADD_ATTR: ['target', 'class'],
-          });
-          $('#header-container').html(cleanHtml);
-        }
-      },
-      error: function(xhr, status, error) {
-        console.error('Error:', error);
-        console.error('Status:', status);
-        console.error('Response:', xhr.responseText);
+    fetch(discoveryUrl, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json'
       }
+    })
+    .then(response => {
+      if (!response.ok) {
+        console.error('HTTP error! status: '+ response?.status);
+        return;
+      }
+      return response.json();
+    })
+    .then(jsonData => {
+      if (typeof jsonData === 'object') {
+        const cleanHtml = DOMPurify.sanitize(jsonData.primary, {
+            ADD_ATTR: ['target', 'class'],
+        });
+        $('#header-container').html(cleanHtml);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
     });
 
     function updatePrimaryColor() {

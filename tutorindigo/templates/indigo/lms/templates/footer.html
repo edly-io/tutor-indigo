@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossOrigin="anonymous"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css">
 <!-- NEW IN INDIGO update footer -->
-<footer id="#footer-container" class="site-footer">
+<footer id="footer-container" class="site-footer">
 </footer>
 % if include_dependencies:
   <%static:js group='base_vendor'/>
@@ -33,25 +33,31 @@
     let primaryColor = "${settings.COLORS['primary']}"; 
     let discoveryUrl = "${settings.MKTG_URLS['ROOT']}" + "/wp-json/edly-wp-routes/footer";
 
-    $.ajax({
-      url: discoveryUrl,
-      type: 'GET',
-      dataType: 'json',
-      xhrFields: {
-        withCredentials: true
-      },
-      success: function(jsonData) {
-        const cleanHtml = DOMPurify.sanitize(jsonData, {
-          ADD_ATTR: ['target', 'class'],
-        });
-        $('#footer-container').html(cleanHtml);
-      },
-      error: function(xhr, status, error) {
-        console.error('Error:', error);
-        console.error('Status:', status);
-        console.error('Response:', xhr.responseText);
+    fetch(discoveryUrl, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json'
       }
+    })
+    .then(response => {
+      if (!response.ok) {
+        console.error('HTTP error! status: '+ response?.status);
+        return;
+      }
+      return response.json();
+    })
+    .then(jsonData => {
+      const cleanHtml = DOMPurify.sanitize(jsonData, {
+          ADD_ATTR: ['target', 'class'],
+      });
+      $('#footer-container').html(cleanHtml);
+      
+    })
+    .catch(error => {
+      console.error('Error:', error);
     });
+
 
     function updatePrimaryColor() {
       document.documentElement.style.setProperty(
