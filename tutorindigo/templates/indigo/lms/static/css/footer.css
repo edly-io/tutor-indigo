@@ -1,8 +1,8 @@
 .site-footer {
   background-color: var(--primary-color);
-  padding: 0px 10px;
+  padding: 10px;
   color: #fff;
-  margin-top: 30px;
+  margin-top: 12px;
 }
 
 .site-footer .container > div {
