@@ -33,6 +33,10 @@
     let primaryColor = "${settings.COLORS['primary']}"; 
     let discoveryUrl = "${settings.MKTG_URLS['ROOT']}" + "/wp-json/edly-wp-routes/footer";
 
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     fetch(discoveryUrl, {
       method: 'GET',
       credentials: 'include',
@@ -52,7 +56,8 @@
           ADD_ATTR: ['target', 'class'],
       });
       $('#footer-container').html(cleanHtml);
-      
+      $('#scrollToTop').on('click', scrollToTop);
+      $('#scrollToTop').hide();
     })
     .catch(error => {
       console.error('Error:', error);
@@ -65,10 +70,6 @@
         primaryColor
       );
     }
-
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
     $(window).on('scroll', function() {
       if ($(this).scrollTop() > 200){
         $('#scrollToTop').fadeIn(); 
@@ -76,12 +77,9 @@
         $('#scrollToTop').fadeOut();
       }
     });
-
     
 
     // Main function start here 
-    $('#scrollToTop').on('click', scrollToTop);
-    $('#scrollToTop').hide();
     updatePrimaryColor();
   })
 </script>
