@@ -248,10 +248,26 @@ HEADER_WIDGET = """
 },
 """
 
+CERTIFICATE_WIDGET =  """
+{
+    op: PLUGIN_OPERATIONS.Modify,
+    widgetId: 'default_contents',
+    fn: (widget) => {
+        const { RenderWidget } = widget;
+        if (RenderWidget.props.id === "notAvailable_certificate_status") {
+            widget.RenderWidget = <></>;
+        }
+
+        return widget;
+    },
+},
+"""
+
 MFE_CONFIG = {
     "learning": {
         "footer_slot": FOOTER_WIDGET,
         "header_slot": HEADER_WIDGET,
+        "progress_certificate_status_slot": CERTIFICATE_WIDGET
     },
     "authoring": {
         "studio_footer_slot": FOOTER_WIDGET
