@@ -8,7 +8,6 @@ license = { text = "AGPLv3" }
 requires-python = ">=3.9"
 authors = [{ name = "Edly" }, { email = "hello@edly.io" }]
 maintainers = [
-    { name = "Ahmed Khalid" }, { email = "ahmed.khalid@arbisoft.com" },
     { name = "Hammad Yousaf" }, { email = "hammad.yousaf@arbisoft.com" }
 ]
 classifiers = [
@@ -23,8 +22,8 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
-  "tutor-mfe>=20.0.0,<21.0.0", 
-  "tutor>=20.0.0,<21.0.0"
+  "tutor-mfe>=21.0.0,<22.0.0", 
+  "tutor>=21.0.0,<22.0.0"
 ]
 
 # hatch_build.py will set it later
@@ -32,9 +31,8 @@ dynamic = ["version"]
 
 [project.optional-dependencies]
 dev = [
-  "tutor[dev]>=20.0.0,<21.0.0",
-  "pylint",
-  "black"
+  "tutor[dev]>=21.0.0,<22.0.0",
+  "ruff",
 ]
 
 [project.entry-points."tutor.plugin.v1"]
@@ -66,3 +64,19 @@ packages = ["/tutorindigo"]
 
 [tool.hatch.metadata.hooks.custom]
 path = ".hatch_build.py"
+
+[tool.ruff]
+exclude = ["templates", "docs/_ext"]
+
+[tool.ruff.lint]
+# E: pycodestyle errors
+# I: isort
+# N: pep8-naming
+select = ["E", "I", "N"]
+
+# F401: unused-import
+# F841: unused-variable
+# W292: missing-newline-at-end-of-file
+extend-select = ["F401", "F841", "W292"]
+
+[tool.ruff.format]

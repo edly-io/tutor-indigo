@@ -53,7 +53,8 @@ hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
     ],
 )
 
-# Force the rendering of scss files, even though they are included in a "partials" directory
+# Force the rendering of scss files, even though they are included in a
+# "partials" directory
 hooks.Filters.ENV_PATTERNS_INCLUDE.add_items(
     [
         r"indigo/lms/static/sass/partials/lms/theme/",
@@ -126,7 +127,6 @@ brand_styled_mfes = [
     "discussions",
 ]
 
-
 for mfe in indigo_styled_mfes:
     if mfe in brand_styled_mfes:
         hooks.Filters.ENV_PATCHES.add_items(
@@ -146,13 +146,8 @@ for mfe in indigo_styled_mfes:
                 f"mfe-dockerfile-post-npm-install-{mfe}",
                 """
                 RUN npm install '@anas_hameed/edly-saas-widget'
-                """,
-            ),
-            (
-                f"mfe-env-config-runtime-definitions-{mfe}",
-                """
-                const { HeaderWidget, FooterWidget } = require("@anas_hameed/edly-saas-widget");
-                """,
+                RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'
+""",  # noqa: E501
             ),
         ]
     )
@@ -162,7 +157,7 @@ hooks.Filters.ENV_PATCHES.add_item(
     (
         "mfe-dockerfile-post-npm-install-authn",
         """
-        RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
+        RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'
         RUN npm install @anas_hameed/edly-saas-widget
         """,
     )
