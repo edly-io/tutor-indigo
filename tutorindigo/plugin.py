@@ -114,7 +114,8 @@ indigo_styled_mfes = [
     "authoring", 
     "gradebook",
     "ora-grading",
-    "communications"
+    "communications",
+    "learner-record"
 ]
 
 brand_styled_mfes = [
@@ -220,127 +221,61 @@ for path in glob(
         hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))
 
 
+FOOTER_WIDGET = """
+{
+    op: PLUGIN_OPERATIONS.Hide,
+    widgetId: 'default_contents',
+},
+{
+    op: PLUGIN_OPERATIONS.Insert,
+    widget: {
+        id: 'default_contents',
+        type: DIRECT_PLUGIN,
+        priority: 1,
+        RenderWidget: <FooterWidget />,
+    },
+},
+"""
+
+HEADER_WIDGET = """
+{
+    op: PLUGIN_OPERATIONS.Hide,
+    widgetId: 'default_contents',
+},
+{
+    op: PLUGIN_OPERATIONS.Insert,
+    widget: {
+        id: 'custom_desktop_header_component',
+        type: DIRECT_PLUGIN,
+        priority: 1,
+        RenderWidget: () => <HeaderWidget />
+    },
+},
+"""
+
+MFE_CONFIG = {
+    "learning": {
+        "footer_slot": FOOTER_WIDGET,
+        "header_slot": HEADER_WIDGET,
+    },
+    "authoring": {
+        "studio_footer_slot": FOOTER_WIDGET
+    },
+}
+
+DEFAULT_CONFIG = {
+    "footer_slot": FOOTER_WIDGET,
+    "desktop_header_slot": HEADER_WIDGET,
+}
+
 for mfe in indigo_styled_mfes:
+    config = MFE_CONFIG.get(mfe, DEFAULT_CONFIG)
 
-    if mfe == "authoring":
+    for slot_name, slot_content in config.items():
         PLUGIN_SLOTS.add_item(
             (
                 mfe,
-                "studio_footer_slot",
-                """ 
-                {
-                    op: PLUGIN_OPERATIONS.Hide,
-                    widgetId: 'default_contents',
-                },
-                {
-                    op: PLUGIN_OPERATIONS.Insert,
-                    widget: {
-                        id: 'default_contents',
-                        type: DIRECT_PLUGIN,
-                        priority: 1,
-                        RenderWidget: <FooterWidget />,
-                    },
-                },
-        """,
-            ),
-        )
-        continue
-
-    else:
-        PLUGIN_SLOTS.add_item(
-        (
-            mfe,
-            "footer_slot",
-            """ 
-            {
-                op: PLUGIN_OPERATIONS.Hide,
-                widgetId: 'default_contents',
-            },
-            {
-                op: PLUGIN_OPERATIONS.Insert,
-                widget: {
-                    id: 'default_contents',
-                    type: DIRECT_PLUGIN,
-                    priority: 1,
-                    RenderWidget: <FooterWidget />,
-                },
-            },
-            {
-                op: PLUGIN_OPERATIONS.Insert,
-                widget: {
-                    id: 'read_theme_cookie',
-                    type: DIRECT_PLUGIN,
-                    priority: 2,
-                    RenderWidget: AddDarkTheme,
-                },
-            },
-  """,
-        ),
-    )
-
-
-    if mfe == "learning":
-        PLUGIN_SLOTS.add_item(
-            (
-                mfe,
-                "header_slot",
-                """ 
-                {
-                    op: PLUGIN_OPERATIONS.Hide,
-                    widgetId: 'default_contents',
-                },
-                {
-                    op: PLUGIN_OPERATIONS.Insert,
-                    widget: {
-                        id: 'custom_desktop_header_component',
-                        type: DIRECT_PLUGIN,
-                        priority: 1,
-                        RenderWidget: () => <HeaderWidget />
-                    },
-                },
-                """,
-            ),
-        )
-        PLUGIN_SLOTS.add_item(
-            (
-                mfe,
-                "progress_certificate_status_slot",
-                """
-                {
-                    op: PLUGIN_OPERATIONS.Modify,
-                    widgetId: 'default_contents',
-                    fn: (widget) => {
-                        const { RenderWidget } = widget;
-                        if (RenderWidget.props.id === "notAvailable_certificate_status") {
-                            widget.RenderWidget = <></>;
-                        }
-
-                        return widget;
-                    },
-                    
-                },
-                """,
-            ),
-        )
-    else:
-        PLUGIN_SLOTS.add_item(
-            (
-                mfe,
-                "desktop_header_slot",
-                """ 
-                {
-                    op: PLUGIN_OPERATIONS.Hide,
-                    widgetId: 'default_contents',
-                },
-                {
-                    op: PLUGIN_OPERATIONS.Insert,
-                    widget: {
-                        id: 'custom_desktop_header_component',
-                        type: DIRECT_PLUGIN,
-                        priority: 1,
-                        RenderWidget: () => <HeaderWidget />
-                    },
-                },
-                """,
-            ),
+                slot_name,
+                slot_content,
+            )
         )

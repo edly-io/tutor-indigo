@@ -1,0 +1,131 @@
+.site-footer {
+  background-color: var(--primary-color);
+  padding: 10px;
+  color: #fff;
+  margin-top: 12px;
+}
+
+.site-footer .container > div {
+  display: flex;
+  box-shadow: none; 
+}
+
+.site-footer .container {
+  max-width: 1240px;
+}
+.site-footer p {
+  font-size: 1em;
+}
+.site-footer h2,
+.site-footer h3 {
+  margin-bottom: 20px;
+  color: white;
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 600;
+}
+
+.widget.widget_block.widget_text {
+  font-size: 1em;
+}
+
+.wp-block-image img {
+  max-width: 80px;
+}
+
+#menu-footer-menu {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  column-count: 2;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: block !important;
+  max-height: max-content !important;
+}
+#menu-footer-menu li {
+  margin-bottom: 5px;
+  list-style: none;
+  font-size: 16px;
+  font-weight: 600;
+}
+#menu-footer-menu li a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.social-link {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+}
+.social-link li {
+  margin: 0 16px 10px 0;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+}
+.social-link li a {
+  color: white;
+  position: relative;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+}
+.social-link li a i,
+.social-link li a span {
+  display: none;
+}
+.social-link li a:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  display: block !important;
+}
+.social-link li a.facebook:after {
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path stroke='none' d='M0 0h24v24H0z' fill='none'/><path d='M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3'/></svg>")
+    no-repeat bottom;
+}
+.social-link li a.twitter:after {
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path stroke='none' d='M0 0h24v24H0z' fill='none'/><path d='M4 4l11.733 16h4.267l-11.733 -16z'/><path d='M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772'/></svg>")
+    no-repeat bottom;
+}
+
+#scrollToTop {
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+  background-color: #ffffff;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 6px;
+}
+#scrollToTop svg {
+  width: 40px;
+  height: 40px;
+}
+
+.copyright-area {
+  padding-top: 20px;
+}
+.copyright-area p {
+  margin: 0;
+  font-size: 12px;
+}
+
+/* Mobile Menu */
+@media (max-width: 1230px) {
+  #menu-footer-menu {
+    margin-bottom: 20px;
+  }
+  .site-footer {
+    padding: 30px 20px;
+  }
+}
+
+/*# sourceMappingURL=main.css.map */
