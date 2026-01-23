@@ -238,6 +238,17 @@ FOOTER_WIDGET = """
 },
 """
 
+ACCOUNT_FOOTER_WIDGET = FOOTER_WIDGET + """
+{
+    op: PLUGIN_OPERATIONS.Insert,
+    widget: {
+        id: 'multi_site_banner_injector',
+        type: DIRECT_PLUGIN,
+        RenderWidget: MultiSiteBannerWidget,
+    },
+},
+"""
+
 HEADER_WIDGET = """
 {
     op: PLUGIN_OPERATIONS.Hide,
@@ -277,6 +288,9 @@ MFE_CONFIG = {
     },
     "authoring": {
         "studio_footer_slot": FOOTER_WIDGET
+    },
+    "account": {
+        "footer_slot": ACCOUNT_FOOTER_WIDGET,
     },
 }
 
