@@ -42,37 +42,39 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
   </script>
 % endif
 
+<%block name="headextra">
+  <link rel="stylesheet" href="${static.url('css/main.css')}">
+</%block>
 
 <%block name="js_extra">
   <script src="${static.url('js/responsive-nav.js')}"></script>
 </%block>
 
-<header class="global-header ${'slim' if course else ''}">
-    <div class="header-container">
-    % if settings.FEATURES.get('ENABLE_COOKIE_POLICY_BANNER', use_cookie_banner):
-        ${static.renderReact(
-            component="CookiePolicyBanner",
-            id="frontend-component-cookie-policy-banner",
-            props={}
-        )}
-    % endif
-    <div class="main-header">
-      <button class="hamburger-menu" role="button" aria-label=${_("Options Menu")} aria-expanded="false" aria-controls="mobile-menu" tabindex="0">
-        <span class="line"></span>
-        <span class="line"></span>
-        <span class="line"></span>
-        <span class="line"></span>
-      </button>
-      <%include file="navbar-logo-header.html" args="online_help_token=online_help_token"/>
-        % if user.is_authenticated:
-            <%include file="navbar-authenticated.html" args="online_help_token=online_help_token"/>
-        % else:
-            <%include file="navbar-not-authenticated.html" args="online_help_token=online_help_token"/>
-        % endif
-    </div>
-    <div class="mobile-menu hidden" aria-label=${_("More Options")} role="menu" id="mobile-menu"></div>
-    </div>
-</header>
+
+<div id="indigo-legacy-header" class="shadow-sm">
+  <button
+    id="header-menu-btn"
+    class="menuOpner is-btn-hidden"
+    type="button"
+    style="background: none; border: none; cursor: pointer; font-size: 24px;">
+    ☰
+  </button>
+  <div id="indigo-header-holder" class="header-holder mobile-hide">
+    <a href="/" class="custom-logo-link">
+      <img
+        width="216"
+        height="140"
+        src="${branding_api.get_logo_url(is_secure)}"
+        class="custom-logo"
+        alt="Venus"
+        decoding="async"
+      />
+    </a>
+    <header id="header-container" class="site-header main-navigation">
+    </header>
+  </div>
+</div>
+
 
 % if course:
 <!--[if lte IE 9]>
@@ -113,3 +115,93 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
         </form>
     % endif
 % endif
+
+% if settings.FEATURES.get('ENABLE_COOKIE_POLICY_BANNER', use_cookie_banner):
+<div style="position: absolute; bottom: 10;">
+  ${static.renderReact(
+      component="CookiePolicyBanner",
+      id="frontend-component-cookie-policy-banner",
+      props={}
+  )}
+</div>
+% endif
+
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.3.1/dist/purify.min.js"></script>
+<script>
+  $(document).ready(function () {
+    let primaryColor = "${settings.COLORS['primary']}"; 
+    let discoveryUrl = "${settings.MKTG_URLS['ROOT']}" + "/wp-json/edly-wp-routes/nav-menu";
+    const WIDTH = 1230;
+    let isMobile = window.innerWidth < WIDTH;
+    let isOpen = false;
+    const menuBtn = $('#header-menu-btn');
+
+    fetch(discoveryUrl, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        console.error('HTTP error! status: '+ response?.status);
+        return;
+      }
+      return response.json();
+    })
+    .then(jsonData => {
+      if (typeof jsonData === 'object') {
+        const cleanHtml = DOMPurify.sanitize(jsonData.primary, {
+            ADD_ATTR: ['target', 'class'],
+        });
+        $('#header-container').html(cleanHtml);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+
+    function updatePrimaryColor() {
+      document.documentElement.style.setProperty(
+        "--primary-color",
+        primaryColor
+      );
+    }
+
+
+  function handleResize() {
+    isMobile = window.innerWidth < WIDTH;
+    if(isMobile){
+      $('#indigo-legacy-header').addClass('header-frame');
+      $('#header-menu-btn').removeClass('is-btn-hidden');
+      $('#indigo-header-holder').addClass('indigo-mobile-menu');     
+    }
+    else{
+      $('#indigo-legacy-header').removeClass('header-frame');
+      $('#header-menu-btn').addClass('is-btn-hidden');
+      $('#indigo-header-holder').removeClass('indigo-mobile-menu');
+    }
+    if (window.innerWidth >= WIDTH) {
+      isOpen = false;
+    }
+  }
+
+  function toggleMenu(){
+    isOpen = !isOpen;
+    if(isOpen){
+      menuBtn.text('✖');
+      $('#indigo-header-holder').removeClass('mobile-hide');
+    }else{
+      menuBtn.text('☰');
+      $('#indigo-header-holder').addClass('mobile-hide');
+    }
+  };
+
+    // Initialize: set the color and add event listener
+    updatePrimaryColor();
+    handleResize();
+    $(window).on('resize', handleResize);
+    menuBtn.on('click', toggleMenu);
+  })
+</script>
