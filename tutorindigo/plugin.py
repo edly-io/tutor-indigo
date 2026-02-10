@@ -149,6 +149,12 @@ for mfe in indigo_styled_mfes:
                 RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'
 """,  # noqa: E501
             ),
+            (
+                f"mfe-env-config-runtime-definitions-{mfe}",
+                """
+                const { HeaderWidget, FooterWidget, MultiSiteBannerWidget } = require("@anas_hameed/edly-saas-widget");
+                """,
+            )
         ]
     )
 
