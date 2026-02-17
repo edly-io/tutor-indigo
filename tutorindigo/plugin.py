@@ -24,7 +24,7 @@ config: t.Dict[str, t.Dict[str, t.Any]] = {
     "defaults": {
         "VERSION": __version__,
         "WELCOME_MESSAGE": "The place for all your online learning",
-        "PRIMARY_COLOR": "#15376D",  # Indigo
+        "PRIMARY_COLOR": "#dd1e26",  # Edly Primary Red
         "ENABLE_DARK_TOGGLE": True,
         # Footer links are dictionaries with a "title" and "url"
         # To remove all links, run:
@@ -122,7 +122,7 @@ for mfe in indigo_styled_mfes:
             (
                 f"mfe-dockerfile-post-npm-install-{mfe}",
                 """
-RUN npm install '@edx/brand@github:@edly-io/brand-openedx#indigo-2.5.0'
+RUN npm install '@edx/brand@git+https://github.com/edly-io/brand-openedx.git#sales-demo-theming-ulmo'
 """,  # noqa: E501
             ),
         ]
@@ -131,7 +131,7 @@ RUN npm install '@edx/brand@github:@edly-io/brand-openedx#indigo-2.5.0'
 hooks.Filters.ENV_PATCHES.add_item(
     (
         "mfe-dockerfile-post-npm-install-authn",
-        "RUN npm install '@edx/brand@github:@edly-io/brand-openedx#indigo-2.5.0'",
+        "RUN npm install '@edx/brand@git+https://github.com/edly-io/brand-openedx.git#sales-demo-theming-ulmo'",
     )
 )
 
