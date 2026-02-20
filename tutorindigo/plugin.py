@@ -112,24 +112,60 @@ indigo_styled_mfes = [
     "profile",
     "account",
     "discussions",
+    "authoring", 
+    "gradebook",
+    "ora-grading",
+    "communications",
+    "learner-record"
+]
+
+brand_styled_mfes = [
+    "learning",
+    "learner-dashboard",
+    "profile",
+    "account",
+    "discussions",
 ]
 
 for mfe in indigo_styled_mfes:
+    if mfe in brand_styled_mfes:
+        hooks.Filters.ENV_PATCHES.add_items(
+            [
+                (
+                    f"mfe-dockerfile-post-npm-install-{mfe}",
+                    """
+                    RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.2.2'
+                    """,
+                ),
+            ]
+        )
+
     hooks.Filters.ENV_PATCHES.add_items(
         [
             (
                 f"mfe-dockerfile-post-npm-install-{mfe}",
                 """
-RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'
+                RUN npm install '@anas_hameed/edly-saas-widget'
+                RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'
 """,  # noqa: E501
             ),
+            (
+                f"mfe-env-config-runtime-definitions-{mfe}",
+                """
+                const { HeaderWidget, FooterWidget, MultiSiteBannerWidget } = require("@anas_hameed/edly-saas-widget");
+                """,
+            )
         ]
     )
+
 
 hooks.Filters.ENV_PATCHES.add_item(
     (
         "mfe-dockerfile-post-npm-install-authn",
-        "RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'",
+        """
+        RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'
+        RUN npm install @anas_hameed/edly-saas-widget
+        """,
     )
 )
 
@@ -186,113 +222,77 @@ for path in glob(
         hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))
 
 
+FOOTER_WIDGET = """
+{
+    op: PLUGIN_OPERATIONS.Hide,
+    widgetId: 'default_contents',
+},
+{
+    op: PLUGIN_OPERATIONS.Insert,
+    widget: {
+        id: 'default_contents',
+        type: DIRECT_PLUGIN,
+        priority: 1,
+        RenderWidget: <FooterWidget />,
+    },
+},
+"""
+
+HEADER_WIDGET = """
+{
+    op: PLUGIN_OPERATIONS.Hide,
+    widgetId: 'default_contents',
+},
+{
+    op: PLUGIN_OPERATIONS.Insert,
+    widget: {
+        id: 'custom_desktop_header_component',
+        type: DIRECT_PLUGIN,
+        priority: 1,
+        RenderWidget: () => <HeaderWidget />
+    },
+},
+"""
+
+CERTIFICATE_WIDGET =  """
+{
+    op: PLUGIN_OPERATIONS.Modify,
+    widgetId: 'default_contents',
+    fn: (widget) => {
+        const { RenderWidget } = widget;
+        if (RenderWidget.props.id === "notAvailable_certificate_status") {
+            widget.RenderWidget = <></>;
+        }
+
+        return widget;
+    },
+},
+"""
+
+MFE_CONFIG = {
+    "learning": {
+        "footer_slot": FOOTER_WIDGET,
+        "header_slot": HEADER_WIDGET,
+        "progress_certificate_status_slot": CERTIFICATE_WIDGET
+    },
+    "authoring": {
+        "studio_footer_slot": FOOTER_WIDGET
+    },
+}
+
+DEFAULT_CONFIG = {
+    "footer_slot": FOOTER_WIDGET,
+    "desktop_header_slot": HEADER_WIDGET,
+}
+
 for mfe in indigo_styled_mfes:
-    # TODO: move plugins from these patches(mfe-env-config-buildtime-definitions,
-    # mfe-env-config-runtime-definitions) into separate files and generate these
-    # patches on the fly to improve readability.
-    PLUGIN_SLOTS.add_item(
-        (
-            mfe,
-            "org.openedx.frontend.layout.footer.v1",
-            """ 
-            {
-                op: PLUGIN_OPERATIONS.Hide,
-                widgetId: 'default_contents',
-            },
-            {
-                op: PLUGIN_OPERATIONS.Insert,
-                widget: {
-                    id: 'custom_footer',
-                    type: DIRECT_PLUGIN,
-                    priority: 1,
-                    RenderWidget: IndigoFooter,
-                },
-            },
-            {
-                op: PLUGIN_OPERATIONS.Insert,
-                widget: {
-                    id: 'read_theme_cookie',
-                    type: DIRECT_PLUGIN,
-                    priority: 2,
-                    RenderWidget: AddDarkTheme,
-                },
-            },
-  """,
-        ),
-    )
-    if mfe != "learning":
+    config = MFE_CONFIG.get(mfe, DEFAULT_CONFIG)
+
+    for slot_name, slot_content in config.items():
         PLUGIN_SLOTS.add_item(
             (
                 mfe,
-                "desktop_secondary_menu_slot",
-                """ 
-                {
-                    op: PLUGIN_OPERATIONS.Insert,
-                    widget: {
-                        id: 'theme_switch_button',
-                        type: DIRECT_PLUGIN,
-                        RenderWidget: ToggleThemeButton,
-                    },
-                },
-        """,
+                slot_name,
+                slot_content,
             )
         )
-        PLUGIN_SLOTS.add_items(
-            [
-                (
-                    # Hide the default mobile header as it only shows logo
-                    mfe,
-                    "mobile_header_slot",
-                    """
-                {
-                    op: PLUGIN_OPERATIONS.Hide,
-                    widgetId: 'default_contents',
-                }
-                """,
-                ),
-                (
-                    mfe,
-                    "mobile_header_slot",
-                    """ 
-                {
-                    op: PLUGIN_OPERATIONS.Insert,
-                    widget: {
-                        id: 'theme_switch_button',
-                        type: DIRECT_PLUGIN,
-                        RenderWidget: MobileViewHeader,
-                    },
-                },
-                """,
-                ),
-            ]
-        )
-
-PLUGIN_SLOTS.add_items(
-    [
-        (
-            # Hide the default Help Link added in plugin slot
-            "learning",
-            "learning_help_slot",
-            """
-        {
-            op: PLUGIN_OPERATIONS.Hide,
-            widgetId: 'default_contents',
-        }
-        """,
-        ),
-        (
-            "learning",
-            "learning_help_slot",
-            """ 
-        {
-            op: PLUGIN_OPERATIONS.Insert,
-            widget: {
-                id: 'theme_switch_button',
-                type: DIRECT_PLUGIN,
-                RenderWidget: ToggleThemeButton,
-            },
-        },
-        """,
-        ),
-    ]
-)
