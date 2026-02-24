@@ -1,0 +1,11 @@
+{% raw %}
+{% load i18n %}{% autoescape off %}
+{% blocktrans %}Welcome to {{ platform_name }}{% endblocktrans %}
+
+{% blocktrans %}Start your learning journey with {{ platform_name }}.{% endblocktrans %}
+
+{% blocktrans %}Please note that your account is linked to your account on {{ source_site }}.{% endblocktrans %}
+
+{% trans "Sign in" %}: {{ login_url }}
+{% endautoescape %}
+{% endraw %}

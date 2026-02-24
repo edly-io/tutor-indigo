@@ -1,0 +1,12 @@
+{% raw %}
+{% load i18n %}{% autoescape off %}
+{% blocktrans %}You have been invited to {{ platform_name }}.{% endblocktrans %}
+
+{% blocktrans %}To begin your learning journey, simply sign in using the login details you set up for {{ source_site }}.{% endblocktrans %}
+
+{% trans "In case you've forgotten your password, you may click reset password. You may also request your organization admin to send you a reset password link." %}
+
+{% if login_url %}{{ login_url }}{% endif %}
+{% if reset_password_url %}{% trans "Forgot Password" %}: {{ reset_password_url }}{% endif %}
+{% endautoescape %}
+{% endraw %}
