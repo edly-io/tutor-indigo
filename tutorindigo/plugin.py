@@ -321,34 +321,33 @@ MFE_CONFIG["PARAGON_THEME_URLS"] = {json.dumps(paragon_theme_urls)}
 hooks.Filters.ENV_PATCHES.add_item(("mfe-lms-common-settings", fstring))
 
 
-PLUGIN_SLOTS.add_items(
-    [
-        (
-            "learning",
-            "logo_slot",
-            """
-            {
-                op: PLUGIN_OPERATIONS.Hide,
-                widgetId: 'default_contents',
-            }
-            """,
-        ),
-        (
-            "learning",
-            "logo_slot",
-            """
-            {
-                op: PLUGIN_OPERATIONS.Insert,
-                widget: {
-                    id: 'custom_logo',
-                    type: DIRECT_PLUGIN,
-                    RenderWidget: ThemedLogo,
+@MFE_APPS.add()  # type: ignore
+def _add_themed_logo(
+    mfes: dict[str, MFE_ATTRS_TYPE],
+) -> dict[str, MFE_ATTRS_TYPE]:
+    for mfe in mfes:
+        PLUGIN_SLOTS.add_item(
+            (
+                str(mfe),
+                "logo_slot",
+                """
+                {
+                    op: PLUGIN_OPERATIONS.Hide,
+                    widgetId: 'default_contents',
+                },
+                {
+                    op: PLUGIN_OPERATIONS.Insert,
+                    widget: {
+                        id: 'custom_logo',
+                        type: DIRECT_PLUGIN,
+                        RenderWidget: ThemedLogo,
+                    }
                 }
-            }
-            """,
-        ),
-    ]
-)
+                """,
+            )
+        )
+
+    return mfes
 
 PLUGIN_SLOTS.add_item(
     (
