@@ -114,6 +114,7 @@ indigo_styled_mfes = [
     "profile",
     "account",
     "discussions",
+    "authoring",
 ]
 
 for mfe in indigo_styled_mfes:
@@ -342,8 +343,29 @@ def _add_themed_logo(
                         RenderWidget: ThemedLogo,
                     }
                 }
-            """,
+                """,
             )
         )
 
     return mfes
+
+PLUGIN_SLOTS.add_item(
+    (
+        "authoring",
+        "org.openedx.frontend.layout.studio_footer.v1",
+        """
+        {
+            op: PLUGIN_OPERATIONS.Hide,
+            widgetId: 'default_contents',
+        },
+        {
+            op: PLUGIN_OPERATIONS.Insert,
+            widget: {
+                id: 'custom_studio_footer',
+                type: DIRECT_PLUGIN,
+                priority: 1,
+                RenderWidget: IndigoFooter,
+            },
+        },""",
+    )
+)
