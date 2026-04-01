@@ -1,8 +1,4 @@
 
-if (config.pluginSlots && config.pluginSlots['logo_slot']) {
-  config.pluginSlots['logo_slot'].keepDefault = false;
-}
-
 if (config.pluginSlots && config.pluginSlots['org.openedx.frontend.layout.footer.v1']) {
   const footerPluginsToInsert =
     config.pluginSlots['org.openedx.frontend.layout.footer.v1'].plugins.filter(plugin => plugin.op === 'insert');
