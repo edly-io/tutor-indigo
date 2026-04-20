@@ -1,0 +1,12 @@
+@import '../../../../../../edx-platform/lms/static/sass/vendor/bi-app/bi-app-ltr';
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+
+@import '../../../../../../edx-platform/lms/static/certificates/sass/build';
+
+// EDLY CUSTOM: Show logo/signature on honor certificates (core hides via display:none)
+.layout-accomplishment.certificate-honor .accomplishment-rendering .accomplishment-signatories .signatory-signature,
+.layout-accomplishment.certificate-honor .accomplishment-rendering .accomplishment-type-symbol {
+    display: block !important;
+}
