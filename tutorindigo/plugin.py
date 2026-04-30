@@ -298,6 +298,7 @@ MFE_CONFIG = {
     },
     "account": {
         "footer_slot": ACCOUNT_FOOTER_WIDGET,
+        "desktop_header_slot": HEADER_WIDGET,
     },
 }
 
