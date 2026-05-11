@@ -1,5 +1,5 @@
 $primary: {{ INDIGO_PRIMARY_COLOR }};
-$secondary: #F2F7F8;
+$secondary: {{ INDIGO_SECONDARY_COLOR }};
 
 $blue: $primary !default;
 $m-blue-d1: mix(white, $primary, 5%) !default;
