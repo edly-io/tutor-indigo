@@ -18,6 +18,11 @@ if __version_suffix__:
     __version__ += "-" + __version_suffix__
 
 
+hooks.Filters.MOUNTED_DIRECTORIES.add_items([
+    ("openedx", "rwaq-features"),
+])
+
+
 ################# Configuration
 config: t.Dict[str, t.Dict[str, t.Any]] = {
     # Add here your new settings
