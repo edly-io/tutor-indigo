@@ -1,0 +1,1 @@
+{% raw %}{% load i18n %}{% autoescape off %}{% blocktrans with platform_name=platform_name %}Welcome to {{ platform_name }} — Set Your Password{% endblocktrans %}{% endautoescape %}{% endraw %}

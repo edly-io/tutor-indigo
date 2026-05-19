@@ -1,0 +1,1 @@
+{% raw %}{% load i18n %}{% autoescape off %}{{ platform_name }}{% endautoescape %}{% endraw %}

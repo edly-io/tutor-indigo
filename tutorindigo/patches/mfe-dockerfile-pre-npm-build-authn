@@ -1,0 +1,37 @@
+{% raw %}RUN git apply <<'EOF'
+--- a/src/reset-password/ResetPasswordPage.jsx
++++ b/src/reset-password/ResetPasswordPage.jsx
+@@ -37,2 +37,4 @@
+
++  const isWelcomeFlow = new URLSearchParams(window.location.search).get('welcome') === 'true';
++
+   const [newPassword, setNewPassword] = useState('');
+@@ -158,4 +160,4 @@
+               <ResetPasswordFailure errorCode={errorCode} errorMsg={props.errorMsg} />
+-              <h4>{formatMessage(messages['reset.password'])}</h4>
+-              <p className="mb-4">{formatMessage(messages['reset.password.page.instructions'])}</p>
++              <h4>{formatMessage(isWelcomeFlow ? messages['set.password'] : messages['reset.password'])}</h4>
++              <p className="mb-4">{formatMessage(isWelcomeFlow ? messages['set.password.page.instructions'] : messages['reset.password.page.instructions'])}</p>
+               <Form id="set-reset-password-form" name="set-reset-password-form">
+@@ -187,3 +189,3 @@
+                   labels={{
+-                    default: formatMessage(messages['reset.password']),
++                    default: formatMessage(isWelcomeFlow ? messages['set.password'] : messages['reset.password']),
+                     pending: '',
+--- a/src/reset-password/messages.js
++++ b/src/reset-password/messages.js
+@@ -18,2 +18,12 @@
+   },
++  'set.password': {
++    id: 'set.password',
++    defaultMessage: 'Set your password',
++    description: 'Heading and button text when setting password for the first time from a welcome email.',
++  },
++  'set.password.page.instructions': {
++    id: 'set.password.page.instructions',
++    defaultMessage: 'Welcome! Please set a password to activate your account.',
++    description: 'Instructions shown to newly created users setting their password for the first time.',
++  },
+   'reset.password.page.instructions': {
+EOF
+{% endraw %}
