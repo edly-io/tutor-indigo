@@ -6,3 +6,4 @@ INSTALLED_APPS.append('rwaq_features')
 # (e.g. ace_common, common/templates) which are otherwise found first by the app
 # directories loader before the comprehensive theme loader gets a chance.
 TEMPLATES[0]["DIRS"].insert(0, "/openedx/themes/indigo/lms/templates")
+TEMPLATES[0]["DIRS"].insert(0, "/openedx/venv/src/rwaq-features/rwaq_features/templates")
