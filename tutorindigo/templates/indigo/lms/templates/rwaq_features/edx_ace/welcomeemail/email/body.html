@@ -1,14 +1,11 @@
 {% raw %}{% extends 'ace_common/edx_ace/common/base_body.html' %}
-{% load i18n %}
 
 {% block preview_text %}
-    {% filter force_escape %}
-    {% blocktrans with platform_name=platform_name %}Welcome to {{ platform_name }}! Click the link below to set your password and get started.{% endblocktrans %}
-    {% endfilter %}
+مرحباً بك في {{ platform_name }}! انقر على الرابط أدناه لتعيين كلمة المرور والبدء.
 {% endblock %}
 
 {% block content %}
-<table width="100%" align="left" border="0" cellpadding="0" cellspacing="0" role="presentation">
+<table width="100%" align="right" dir="rtl" border="0" cellpadding="0" cellspacing="0" role="presentation">
     <!-- Hero banner -->
     <tr>
         <td style="
@@ -22,11 +19,9 @@
                 font-size: 26px;
                 font-weight: 700;
                 margin: 0;
-                letter-spacing: -0.3px;
+                letter-spacing: 0;
             ">
-                {% filter force_escape %}
-                {% blocktrans with platform_name=platform_name %}Welcome to {{ platform_name }}{% endblocktrans %}
-                {% endfilter %}
+                مرحباً بك في {{ platform_name }}
             </h1>
         </td>
     </tr>
@@ -36,19 +31,14 @@
         <td style="
             background-color: #ffffff;
             padding: 36px 40px 20px;
+            text-align: right;
         ">
             <p style="color: #333333; font-size: 16px; margin: 0 0 16px;">
-                {% filter force_escape %}
-                {% blocktrans with full_name=full_name %}Hi {{ full_name }},{% endblocktrans %}
-                {% endfilter %}
+                مرحباً {{ full_name }}،
             </p>
 
             <p style="color: #555555; font-size: 15px; line-height: 1.6; margin: 0 0 16px;">
-                {% filter force_escape %}
-                {% blocktrans with platform_name=platform_name %}
-                An account has been created for you on {{ platform_name }}. To get started, you need to set a password for your account.
-                {% endblocktrans %}
-                {% endfilter %}
+                تم إنشاء حساب لك على {{ platform_name }}. للبدء، تحتاج إلى تعيين كلمة مرور لحسابك.
             </p>
 
             <!-- CTA button -->
@@ -70,7 +60,7 @@
                             font-size: 15px;
                             font-weight: 600;
                         ">
-                            <font color="#ffffff"><b>{% trans "Set My Password" %}</b></font>
+                            <font color="#ffffff"><b>تعيين كلمة المرور</b></font>
                         </a>
                     </td>
                 </tr>
@@ -79,11 +69,7 @@
             <hr style="border: none; border-top: 1px solid #eeeeee; margin: 0 0 24px;" />
 
             <p style="color: #aaaaaa; font-size: 12px; line-height: 1.5; margin: 0;">
-                {% filter force_escape %}
-                {% blocktrans with platform_name=platform_name %}
-                If you did not expect this email, you can safely ignore it. Your account will remain inactive until a password is set.
-                {% endblocktrans %}
-                {% endfilter %}
+                إذا لم تكن تتوقع هذا البريد، يمكنك تجاهله بأمان. سيظل حسابك غير نشط حتى يتم تعيين كلمة المرور.
             </p>
         </td>
     </tr>
