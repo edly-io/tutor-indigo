@@ -450,5 +450,109 @@ li.menu-item-object-menu_openedx {
     display: block;
   }
 }
+#menu-primary-menu > li.menu_openedx {
+  order: 2;
+  margin: 0;
+}
 
+@media (min-width: 1230px) {
+  #menu-primary-menu > li.signin_openedx {
+    order: 2;
+    padding-right: 10px !important;
+  }
+}
+
+#menu-primary-menu > li.signin_openedx a {
+  color: #fff;
+  background: var(--primary-color);
+  padding: 8px 16px;
+  border-radius: 6px;
+}
+
+#menu-primary-menu > li.signin_openedx a:hover::before {
+  display: none;
+}
+
+@media (min-width: 1230px) {
+  #menu-primary-menu > li.wpml-ls-item {
+    width: 100px;
+    margin-left: auto;
+    order: 1;
+    position: relative;
+    right: -30px;
+  }
+}
+
+#menu-primary-menu > li.wpml-ls-item > a {
+  pointer-events: none;
+}
+
+@media (min-width: 1230px) {
+  #menu-primary-menu > li.wpml-ls-item > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+#menu-primary-menu > li.wpml-ls-item > a::before,
+#menu-primary-menu > li.wpml-ls-item > a::after {
+  display: none;
+}
+
+#menu-primary-menu > li.wpml-ls-item > a img {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (min-width: 1230px) {
+  #menu-primary-menu > li.wpml-ls-item ul.sub-menu {
+    min-width: 80px;
+    max-width: 80px;
+  }
+}
+
+@media (min-width: 1230px) {
+  #menu-primary-menu > li.wpml-ls-item ul.sub-menu li a {
+    min-width: auto;
+    text-align: center;
+  }
+}
+
+@media (min-width: 1230px) {
+  #menu-primary-menu > li.wpml-ls-item ul.sub-menu li a {
+    padding-left: 0 !important;
+  }
+
+  #menu-primary-menu > li.wpml-ls-item ul.sub-menu li a:hover {
+    background: transparent;
+  }
+}
+
+#menu-primary-menu > li.wpml-ls-item ul.sub-menu li a img {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (min-width: 1230px) {
+  #menu-primary-menu:not(:has(.wpml-ls-item)) .menu_openedx,
+  #menu-primary-menu:not(:has(.wpml-ls-item)) .signin_openedx {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 1230px) {
+  #menu-primary-menu ul.sub-menu li.user_info_openedx {
+    display: none;
+  }
+  .main-navigation #menu-primary-menu > li .sub-menu {
+    display: block;
+  }
+}
 /*# sourceMappingURL=main.css.map */
