@@ -152,7 +152,7 @@ for mfe in indigo_styled_mfes:
             (
                 f"mfe-env-config-runtime-definitions-{mfe}",
                 """
-                const { HeaderWidget, FooterWidget, MultiSiteBannerWidget } = require("@anas_hameed/edly-saas-widget");
+                const { HeaderWidget, FooterWidget, MultiSiteBannerWidget, DiscussionSidebarWidget } = require("@anas_hameed/edly-saas-widget");
                 """,
             )
         ]
@@ -249,6 +249,17 @@ ACCOUNT_FOOTER_WIDGET = FOOTER_WIDGET + """
 },
 """
 
+LEARNING_FOOTER_WIDGET = FOOTER_WIDGET + """
+{
+    op: PLUGIN_OPERATIONS.Insert,
+    widget: {
+        id: 'discussion_sidebar_closed_by_default',
+        type: DIRECT_PLUGIN,
+        RenderWidget: DiscussionSidebarWidget,
+    },
+},
+"""
+
 HEADER_WIDGET = """
 {
     op: PLUGIN_OPERATIONS.Hide,
@@ -282,7 +293,7 @@ CERTIFICATE_WIDGET =  """
 
 MFE_CONFIG = {
     "learning": {
-        "footer_slot": FOOTER_WIDGET,
+        "footer_slot": LEARNING_FOOTER_WIDGET,
         "header_slot": HEADER_WIDGET,
         "progress_certificate_status_slot": CERTIFICATE_WIDGET
     },
