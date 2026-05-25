@@ -29,7 +29,7 @@
       ## which are not technically powered by OpenEdX.
       % if not hide_openedx_link:
       <ul class="logo-list">
-        <li>Powered by:</li>
+        <li>${_("Powered by:")}</li>
         <li>
           <a href="https://docs.tutor.edly.io" rel="noopener" target="_blank">
             <img src="${static.url('images/tutor-logo.png')}" alt="Runs on Tutor" width="80" />
@@ -54,7 +54,7 @@
     </nav>
     {% endif %}
   </div>
-  <span class="copyright-site">Copyrights ©${datetime.now().year}. All Rights Reserved.</span>
+  <span class="copyright-site">${_("Copyrights")} ©${datetime.now().year}. ${_("All Rights Reserved.")}</span>
   % endif
     <div class="colophon">
 
@@ -93,7 +93,7 @@
         ## which are not technically powered by OpenEdX.
         % if not hide_openedx_link:
         <ul class="logo-list">
-          <li>Powered by:</li>
+          <li>${_("Powered by:")}</li>
           <li>
             <a href="https://edly.io/tutor/" rel="noopener" target="_blank">
               <img src="${static.url('images/tutor-logo.png')}" alt="Runs on Tutor" width="80" />
@@ -118,7 +118,7 @@
       </nav>
       {% endif %}
     </div>
-    <span class="copyright-site">Copyrights ©${datetime.now().year}. All Rights Reserved.</span>
+    <span class="copyright-site">${_("Copyrights")} ©${datetime.now().year}. ${_("All Rights Reserved.")}</span>
     % endif
       <div class="colophon">
 

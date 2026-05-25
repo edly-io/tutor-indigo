@@ -23,9 +23,56 @@ const IndigoFooter = () => {
     },
     "footer.copyright.text": {
       id: "footer.copyright.text",
-      defaultMessage: `Copyrights ©${new Date().getFullYear()}. All Rights Reserved.`,
+      defaultMessage: "Copyrights ©{year}. All Rights Reserved.",
       description: "copyright text for the footer",
     },
+    "footer.navlink.aboutUs": {
+      id: "footer.navlink.aboutUs",
+      defaultMessage: "About Us",
+      description: "Footer navigation link",
+    },
+    "footer.navlink.blog": {
+      id: "footer.navlink.blog",
+      defaultMessage: "Blog",
+      description: "Footer navigation link",
+    },
+    "footer.navlink.donate": {
+      id: "footer.navlink.donate",
+      defaultMessage: "Donate",
+      description: "Footer navigation link",
+    },
+    "footer.navlink.termsOfService": {
+      id: "footer.navlink.termsOfService",
+      defaultMessage: "Terms of Service",
+      description: "Footer navigation link",
+    },
+    "footer.navlink.privacyPolicy": {
+      id: "footer.navlink.privacyPolicy",
+      defaultMessage: "Privacy Policy",
+      description: "Footer navigation link",
+    },
+    "footer.navlink.help": {
+      id: "footer.navlink.help",
+      defaultMessage: "Help",
+      description: "Footer navigation link",
+    },
+    "footer.navlink.contactUs": {
+      id: "footer.navlink.contactUs",
+      defaultMessage: "Contact Us",
+      description: "Footer navigation link",
+    },
+  };
+
+  // Map default English titles to message IDs so they get translated.
+  // Operator-defined custom titles that don't match will render as-is.
+  const navLinkMessageIds = {
+    "About Us": "footer.navlink.aboutUs",
+    "Blog": "footer.navlink.blog",
+    "Donate": "footer.navlink.donate",
+    "Terms of Service": "footer.navlink.termsOfService",
+    "Privacy Policy": "footer.navlink.privacyPolicy",
+    "Help": "footer.navlink.help",
+    "Contact Us": "footer.navlink.contactUs",
   };
 
   return (
@@ -65,14 +112,18 @@ const IndigoFooter = () => {
             <ol>
               {indigoFooterNavLinks.map((link) => (
                 <li key={link.url}>
-                  <a href={`${link.url.startsWith("http") ? link.url : config.LMS_BASE_URL + link.url}`}>{link.title}</a>
+                  <a href={`${link.url.startsWith("http") ? link.url : config.LMS_BASE_URL + link.url}`}>
+                    {navLinkMessageIds[link.title]
+                      ? intl.formatMessage(messages[navLinkMessageIds[link.title]])
+                      : link.title}
+                  </a>
                 </li>
               ))}
             </ol>
           </nav>
         </div>
         <span className="copyright-site">
-          {intl.formatMessage(messages["footer.copyright.text"])}
+          {intl.formatMessage(messages["footer.copyright.text"], { year: new Date().getFullYear() })}
         </span>
       </footer>
     </div>

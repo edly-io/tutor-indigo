@@ -13,7 +13,7 @@ footer.tutor-container {
     text-align: center;
     box-sizing: border-box;
     @include media-breakpoint-up(lg) {
-        text-align: left;
+        text-align: start;
     }
     .footer-top {
         margin: 0 0 15px;
@@ -28,7 +28,7 @@ footer.tutor-container {
                 margin: 0 0 15px;
             }
             @include media-breakpoint-up(lg) {
-                float: left;
+                float: inline-start;
             }
         }
     }
@@ -47,13 +47,13 @@ footer.tutor-container {
             line-height: 18px;
             color: #515661;
             &:first-child {
-                padding-left: 0;
+                padding-inline-start: 0;
             }
             &:last-child {
-                padding-left: 20px;
+                padding-inline-start: 20px;
                 &:after {
                     position: absolute;
-                    left: 5px;
+                    inset-inline-start: 5px;
                     top: 50%;
                     content: "";
                     width: 1px;
@@ -70,7 +70,7 @@ footer.tutor-container {
         ol {
             text-align: center;
             @include media-breakpoint-up(lg) {
-              text-align: right;
+              text-align: end;
             }
             li {
                 display: inline-block;
