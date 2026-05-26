@@ -9,17 +9,6 @@
 %>
 <% footer = get_footer(is_secure=is_secure) %>
 <% icp_license_info = getattr(settings, 'ICP_LICENSE_INFO', {})%>
-<%
-  nav_title_translations = {
-    "About Us": _("About Us"),
-    "Blog": _("Blog"),
-    "Donate": _("Donate"),
-    "Terms of Service": _("Terms of Service"),
-    "Privacy Policy": _("Privacy Policy"),
-    "Help": _("Help"),
-    "Contact Us": _("Contact Us"),
-  }
-%>
 <%namespace name='static' file='static_content.html'/>
 <!-- NEW IN INDIGO update footer -->
 % if uses_bootstrap:
@@ -53,17 +42,17 @@
         </li>
       </ul>
     </div>
-    % if INDIGO_FOOTER_NAV_LINKS:
     <nav class="nav-colophon" aria-label="${_('About')}">
       <ol>
-          % for link in INDIGO_FOOTER_NAV_LINKS:
-          <li>
-            <a href="${link['url']}">${nav_title_translations.get(link['title'], link['title'])}</a>
-          </li>
-          % endfor
+        <li><a href="/about">${_("About Us")}</a></li>
+        <li><a href="/blog">${_("Blog")}</a></li>
+        <li><a href="/donate">${_("Donate")}</a></li>
+        <li><a href="/tos">${_("Terms of Service")}</a></li>
+        <li><a href="/privacy">${_("Privacy Policy")}</a></li>
+        <li><a href="/help">${_("Help")}</a></li>
+        <li><a href="/contact">${_("Contact Us")}</a></li>
       </ol>
     </nav>
-    % endif
   </div>
   <span class="copyright-site">${_("Copyrights")} ©${datetime.now().year}. ${_("All Rights Reserved.")}</span>
   % endif
@@ -117,17 +106,17 @@
           </li>
         </ul>
       </div>
-      % if INDIGO_FOOTER_NAV_LINKS:
       <nav class="nav-colophon" aria-label="${_('About')}">
         <ol>
-            % for link in INDIGO_FOOTER_NAV_LINKS:
-            <li>
-              <a href="${link['url']}">${nav_title_translations.get(link['title'], link['title'])}</a>
-            </li>
-            % endfor
+          <li><a href="/about">${_("About Us")}</a></li>
+          <li><a href="/blog">${_("Blog")}</a></li>
+          <li><a href="/donate">${_("Donate")}</a></li>
+          <li><a href="/tos">${_("Terms of Service")}</a></li>
+          <li><a href="/privacy">${_("Privacy Policy")}</a></li>
+          <li><a href="/help">${_("Help")}</a></li>
+          <li><a href="/contact">${_("Contact Us")}</a></li>
         </ol>
       </nav>
-      % endif
     </div>
     <span class="copyright-site">${_("Copyrights")} ©${datetime.now().year}. ${_("All Rights Reserved.")}</span>
     % endif
