@@ -6,21 +6,20 @@
   from django.utils.translation import gettext as _
   from lms.djangoapps.branding.api import get_footer
   from openedx.core.djangoapps.lang_pref.api import footer_language_selector_is_enabled
-
-  def translate_nav_title(title):
-    known = {
-      "About Us": _("About Us"),
-      "Blog": _("Blog"),
-      "Donate": _("Donate"),
-      "Terms of Service": _("Terms of Service"),
-      "Privacy Policy": _("Privacy Policy"),
-      "Help": _("Help"),
-      "Contact Us": _("Contact Us"),
-    }
-    return known.get(title, title)
 %>
 <% footer = get_footer(is_secure=is_secure) %>
 <% icp_license_info = getattr(settings, 'ICP_LICENSE_INFO', {})%>
+<%
+  nav_title_translations = {
+    "About Us": _("About Us"),
+    "Blog": _("Blog"),
+    "Donate": _("Donate"),
+    "Terms of Service": _("Terms of Service"),
+    "Privacy Policy": _("Privacy Policy"),
+    "Help": _("Help"),
+    "Contact Us": _("Contact Us"),
+  }
+%>
 <%namespace name='static' file='static_content.html'/>
 <!-- NEW IN INDIGO update footer -->
 % if uses_bootstrap:
@@ -59,7 +58,7 @@
       <ol>
           % for link in INDIGO_FOOTER_NAV_LINKS:
           <li>
-            <a href="${link['url']}">${translate_nav_title(link['title'])}</a>
+            <a href="${link['url']}">${nav_title_translations.get(link['title'], link['title'])}</a>
           </li>
           % endfor
       </ol>
@@ -123,7 +122,7 @@
         <ol>
             % for link in INDIGO_FOOTER_NAV_LINKS:
             <li>
-              <a href="${link['url']}">${translate_nav_title(link['title'])}</a>
+              <a href="${link['url']}">${nav_title_translations.get(link['title'], link['title'])}</a>
             </li>
             % endfor
         </ol>
