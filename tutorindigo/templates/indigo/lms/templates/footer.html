@@ -6,6 +6,18 @@
   from django.utils.translation import gettext as _
   from lms.djangoapps.branding.api import get_footer
   from openedx.core.djangoapps.lang_pref.api import footer_language_selector_is_enabled
+
+  def translate_nav_title(title):
+    known = {
+      "About Us": _("About Us"),
+      "Blog": _("Blog"),
+      "Donate": _("Donate"),
+      "Terms of Service": _("Terms of Service"),
+      "Privacy Policy": _("Privacy Policy"),
+      "Help": _("Help"),
+      "Contact Us": _("Contact Us"),
+    }
+    return known.get(title, title)
 %>
 <% footer = get_footer(is_secure=is_secure) %>
 <% icp_license_info = getattr(settings, 'ICP_LICENSE_INFO', {})%>
@@ -42,17 +54,17 @@
         </li>
       </ul>
     </div>
-    {% if INDIGO_FOOTER_NAV_LINKS %}
+    % if INDIGO_FOOTER_NAV_LINKS:
     <nav class="nav-colophon" aria-label="${_('About')}">
       <ol>
-          {% for link in INDIGO_FOOTER_NAV_LINKS %}
+          % for link in INDIGO_FOOTER_NAV_LINKS:
           <li>
-            <a href="{{ link['url'] }}">{{ link['title'] }}</a>
+            <a href="${link['url']}">${translate_nav_title(link['title'])}</a>
           </li>
-          {% endfor %}
+          % endfor
       </ol>
     </nav>
-    {% endif %}
+    % endif
   </div>
   <span class="copyright-site">${_("Copyrights")} ©${datetime.now().year}. ${_("All Rights Reserved.")}</span>
   % endif
@@ -106,17 +118,17 @@
           </li>
         </ul>
       </div>
-      {% if INDIGO_FOOTER_NAV_LINKS %}
+      % if INDIGO_FOOTER_NAV_LINKS:
       <nav class="nav-colophon" aria-label="${_('About')}">
         <ol>
-            {% for link in INDIGO_FOOTER_NAV_LINKS %}
+            % for link in INDIGO_FOOTER_NAV_LINKS:
             <li>
-              <a href="{{ link['url'] }}">{{ link['title'] }}</a>
+              <a href="${link['url']}">${translate_nav_title(link['title'])}</a>
             </li>
-            {% endfor %}
+            % endfor
         </ol>
       </nav>
-      {% endif %}
+      % endif
     </div>
     <span class="copyright-site">${_("Copyrights")} ©${datetime.now().year}. ${_("All Rights Reserved.")}</span>
     % endif
