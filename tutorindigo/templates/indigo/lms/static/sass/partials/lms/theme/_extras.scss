@@ -130,9 +130,15 @@ header.global-header .nav-links .secondary .dropdown-user-menu {
 .home > header .title > .heading-group {
   width: 100%;
   text-align: center;
+  [dir="rtl"] & {
+    text-align: right;
+  }
 }
 .home > header .title > .heading-group h1 {
   text-align: center;
+  [dir="rtl"] & {
+    text-align: right;
+  }
 }
 
 .animation-home-header-pop-up, .home > header .outer-wrapper {
