@@ -119,6 +119,7 @@ indigo_styled_mfes = [
     "profile",
     "account",
     "discussions",
+    "authoring",
 ]
 
 for mfe in indigo_styled_mfes:
@@ -323,6 +324,7 @@ MFE_CONFIG["PARAGON_THEME_URLS"] = {json.dumps(paragon_theme_urls)}
 """
 
 hooks.Filters.ENV_PATCHES.add_item(("mfe-lms-common-settings", fstring))
+hooks.Filters.ENV_PATCHES.add_item(("mfe-cms-common-settings", fstring))
 
 
 @MFE_APPS.add()  # type: ignore
