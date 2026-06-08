@@ -3,6 +3,23 @@ const IndigoFooter = () => {
   const intl = useIntl();
   const config = getConfig();
 
+  useEffect(() => {
+    const linkId = 'indigo-footer-css';
+    if (!document.getElementById(linkId)) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = `${config.LMS_BASE_URL}/theming/asset/css/lms-footer.css`;
+      link.id = linkId;
+      document.head.appendChild(link);
+    }
+    return () => {
+      const existingLink = document.getElementById(linkId);
+      if (existingLink) {
+        existingLink.remove();
+      }
+    };
+  }, [config.LMS_BASE_URL]);
+
   const indigoFooterNavLinks = config.INDIGO_FOOTER_NAV_LINKS || [];
 
   const messages = {
