@@ -146,7 +146,7 @@ for mfe in indigo_styled_mfes:
                 f"mfe-dockerfile-post-npm-install-{mfe}",
                 """
                 RUN npm install '@anas_hameed/edly-saas-widget'
-                RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'
+                RUN npm install '@edx/brand@github:@edly-io/brand-openedx#fix/EDLYPRODUCT-8294-studio-header-title'
 """,  # noqa: E501
             ),
             (
@@ -163,7 +163,7 @@ hooks.Filters.ENV_PATCHES.add_item(
     (
         "mfe-dockerfile-post-npm-install-authn",
         """
-        RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'
+        RUN npm install '@edx/brand@github:@edly-io/brand-openedx#fix/EDLYPRODUCT-8294-studio-header-title'
         RUN npm install @anas_hameed/edly-saas-widget
         """,
     )
