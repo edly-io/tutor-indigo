@@ -107,6 +107,15 @@ hooks.Filters.CONFIG_UNIQUE.add_items(
 hooks.Filters.CONFIG_OVERRIDES.add_items(list(config["overrides"].items()))
 
 
+# Install the edl-features app into the openedx image
+hooks.Filters.ENV_PATCHES.add_item(
+    (
+        "openedx-dockerfile-post-python-requirements",
+        "RUN pip install 'edl-features @ git+https://github.com/edly-io/edl-features.git@master'",
+    )
+)
+
+
 #  MFEs that are styled using Indigo
 indigo_styled_mfes = [
     "learning",
