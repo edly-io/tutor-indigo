@@ -354,3 +354,14 @@ def _add_themed_logo(
         )
 
     return mfes
+
+
+@MFE_APPS.add()
+def _add_my_mfe(mfes):  # type: ignore[no-untyped-def]
+    mfes["authoring"] = {
+        "repository": "https://github.com/edly-io/frontend-app-authoring.git",
+        "port": 2001,
+        "version": "ulmo/rwaq",
+    }
+
+    return mfes
