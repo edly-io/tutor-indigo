@@ -1,7 +1,5 @@
 PAT = '{{ PAT }}'
 
-INSTALLED_APPS.append('rwaq_features')
-
 # Prepend the indigo theme templates dir so it overrides app-directories templates
 # (e.g. ace_common, common/templates) which are otherwise found first by the app
 # directories loader before the comprehensive theme loader gets a chance.
