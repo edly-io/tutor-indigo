@@ -5,3 +5,10 @@ PAT = '{{ PAT }}'
 # directories loader before the comprehensive theme loader gets a chance.
 TEMPLATES[0]["DIRS"].insert(0, "/openedx/themes/indigo/lms/templates")
 TEMPLATES[0]["DIRS"].insert(0, "/openedx/venv/src/rwaq-features/rwaq_features/templates")
+
+# Redirect unauthenticated users from LMS homepage to the WordPress landing page.
+# branding/views.py checks getattr(settings, 'ENABLE_MKTG_SITE') (top-level), not FEATURES.
+FEATURES['ENABLE_MKTG_SITE'] = True
+ENABLE_MKTG_SITE = True
+MKTG_URLS['ROOT'] = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}'
+MKTG_URLS['COURSES'] = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}/courses/'

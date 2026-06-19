@@ -229,6 +229,23 @@ for mfe in indigo_styled_mfes:
         PLUGIN_SLOTS.add_item(
             (
                 mfe,
+                "desktop_main_menu_slot",
+                """
+                {
+                    op: PLUGIN_OPERATIONS.Insert,
+                    widget: {
+                        id: 'home_nav_link',
+                        type: DIRECT_PLUGIN,
+                        priority: 1,
+                        RenderWidget: HomeNavLink,
+                    },
+                },
+        """,
+            )
+        )
+        PLUGIN_SLOTS.add_item(
+            (
+                mfe,
                 "desktop_secondary_menu_slot",
                 """
                 {
@@ -295,6 +312,21 @@ PLUGIN_SLOTS.add_items(
                 id: 'theme_switch_button',
                 type: DIRECT_PLUGIN,
                 RenderWidget: ToggleThemeButton,
+            },
+        },
+        """,
+        ),
+        (
+            "learning",
+            "org.openedx.frontend.layout.learning_header_actions.v1",
+            """
+        {
+            op: PLUGIN_OPERATIONS.Insert,
+            widget: {
+                id: 'home_nav_link',
+                type: DIRECT_PLUGIN,
+                priority: 1,
+                RenderWidget: HomeNavLink,
             },
         },
         """,

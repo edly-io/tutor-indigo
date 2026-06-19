@@ -21,6 +21,9 @@ from django.utils.translation import gettext as _
 <!-- NEW IN INDIGO update nav -->
 <nav class="nav-links" aria-label=${_("Supplemental Links")}>
   <div class="main">
+    <div class="mobile-nav-item hidden-mobile nav-item">
+      <a href="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}">${_("Home")}</a>
+    </div>
   % if mktg_site_enabled:
     <div class="mobile-nav-item hidden-mobile nav-item">
       <a href="${marketing_link('HOW_IT_WORKS')}">${_("How it Works")}</a>
@@ -37,7 +40,7 @@ from django.utils.translation import gettext as _
   % if allows_login:
     % if can_discover_courses:
       <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
-        <a href="/courses">${_('Discover courses')}</a>
+        <a href="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}/courses/">${_('Discover courses')}</a>
       </div>
     %endif
   % endif
