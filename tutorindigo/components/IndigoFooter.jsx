@@ -21,7 +21,7 @@ const IndigoFooter = () => {
     },
     "footer.copyright.text": {
       id: "footer.copyright.text",
-      defaultMessage: "{organisation} ©{year}. All Rights Reserved.",
+      defaultMessage: "{organization} ©{year}. All Rights Reserved.",
       description: "copyright text for the footer",
     },
     "footer.navlink.aboutUs": {
@@ -157,7 +157,7 @@ const IndigoFooter = () => {
         </div>
         <div className="footer-copyright-row">
           <div className="footer-container">
-            {intl.formatMessage(messages["footer.copyright.text"], { organisation: 'Rwaq', year: new Date().getFullYear() })}
+            {intl.formatMessage(messages["footer.copyright.text"], { organization: 'Rwaq', year: new Date().getFullYear() })}
           </div>
         </div>
       </footer>
