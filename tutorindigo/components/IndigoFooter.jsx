@@ -4,6 +4,11 @@ const IndigoFooter = () => {
   const config = getConfig();
 
   const messages = {
+    "footer.logo.altText": {
+      id: "footer.logo.altText",
+      defaultMessage: "Rwaq",
+      description: "Alt text for the footer logo",
+    },
     "footer.copyright.text": {
       id: "footer.copyright.text",
       defaultMessage: "{organization} ©{year}. All Rights Reserved.",
