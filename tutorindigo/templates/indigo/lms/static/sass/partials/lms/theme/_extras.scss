@@ -18,8 +18,8 @@ body, body.view-profile {
     text-rendering: optimizeLegibility;
 }
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
 input:-webkit-autofill:active{
     -webkit-background-clip: text;
     -webkit-text-fill-color: $dark;
@@ -78,7 +78,7 @@ h1, h2, h3, h1 span, h2 span, h3 span, .nav-item {
     padding-bottom: $content-padding-bottom;
     margin-top: $header-height;
   }
-  min-height: calc(100vh - #{$header-height + $content-padding-top + $content-padding-bottom + $footer-height}); // sticky footer
+  min-height: calc(100vh - #{$header-height + $content-padding-top + $content-padding-bottom + $footer-height - 12px}); // sticky footer
 }
 
 ////////////////// Fonts
@@ -424,7 +424,7 @@ body.view-student-notes {
       font-size: 14px;
       font-weight: 500;
     }
-  } 
+  }
 }
 body.view-teams {
   .container {
@@ -914,8 +914,8 @@ body div.book-wrapper{
 
 body.indigo-dark-theme {
   input:-webkit-autofill,
-  input:-webkit-autofill:hover, 
-  input:-webkit-autofill:focus, 
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
   input:-webkit-autofill:active{
       -webkit-text-fill-color: $text-color-d;
   }
@@ -1056,7 +1056,7 @@ body.indigo-dark-theme {
         background: $primary-light-d;
         color: $text-color-d;
       }
-      #course_info  .enrollment-wrapper { 
+      #course_info  .enrollment-wrapper {
         padding-top: 0;
         .tip {
           color: $text-color-primary;
@@ -1235,7 +1235,7 @@ body.indigo-dark-theme {
       small {
         color: $text-color-d;
       }
-    } 
+    }
     .container{
      .wiki {
        .breadcrumbs-header {
@@ -1401,7 +1401,7 @@ body.indigo-dark-theme {
     .idash-section .message-confirmation {
       background: $body-bg-d;
       border-color: $success-d;
-      .message-title { 
+      .message-title {
         color: $success-d;
       }
     }
@@ -1487,7 +1487,7 @@ body.indigo-dark-theme {
       font-size: 14px;
       font-weight: 500;
     }
-  } 
+  }
   &.view-teams {
     .page-header {
       .page-title {
@@ -1540,7 +1540,7 @@ body.indigo-dark-theme {
       .page-content-secondary{
         color: grey;
       }
-    } 
+    }
 
     .card {
       .card-type, .card-description{
@@ -1550,8 +1550,8 @@ body.indigo-dark-theme {
       .wrapper-card-meta{
         background: $primary-light-d;
         .meta-detail{ color: $text-color-primary; }
-      } 
-      
+      }
+
       .card-actions .action-view{
         border-color: $primary-d;
         color: $primary-d;
@@ -1606,7 +1606,7 @@ body.indigo-dark-theme {
         color: lightgrey;
       }
 
-      .tab.is-active{ 
+      .tab.is-active{
         .tab-label{
           color: $text-color-d;
           border-bottom-color: $text-color-primary;
@@ -1619,12 +1619,12 @@ body.indigo-dark-theme {
         border-color: transparent;
         box-shadow: none;
       }
-    } 
+    }
 
     .listing-tools{ color: lightgrey; }
 
-    .placeholder{ 
-      border-color: $primary-d; 
+    .placeholder{
+      border-color: $primary-d;
       background: $primary-light-d;
 
       .placeholder-title{ color: $text-color-d; }
@@ -1658,7 +1658,7 @@ body.indigo-dark-theme {
 
           .note-comments .note-comment-p{ color: $text-color-d; }
         }
-        &:hover{ 
+        &:hover{
           .note-excerpt{
             background: $danger-d;
           }
@@ -1666,10 +1666,10 @@ body.indigo-dark-theme {
 
         footer.reference .wrapper-reference-content{
           a.reference-meta{
-            color: $primary-d; 
+            color: $primary-d;
           }
-          .reference-meta{ 
-            color: $text-color-d; 
+          .reference-meta{
+            color: $text-color-d;
             &::after{ color: $text-color-primary; }
           }
         }
