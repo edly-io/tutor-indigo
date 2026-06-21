@@ -77,27 +77,27 @@ const IndigoFooter = () => {
             <nav className="privacy-nav">
               <ul>
                 <li>
-                  <a href={`${config.ENABLE_HTTPS ? 'https' : 'http'}://site.${config.BASE_URL}/about/`}>
+                  <a href={`${config.LMS_BASE_URL?.replace('://', '://site.')}/about/`}>
                     {intl.formatMessage(messages["footer.navlink.aboutUs"])}
                   </a>
                 </li>
                 <li>
-                  <a href={`${config.ENABLE_HTTPS ? 'https' : 'http'}://site.${config.BASE_URL}/policy/`}>
+                  <a href={`${config.LMS_BASE_URL?.replace('://', '://site.')}/policy/`}>
                     {intl.formatMessage(messages["footer.navlink.privacyPolicy"])}
                   </a>
                 </li>
                 <li>
-                  <a href={`${config.ENABLE_HTTPS ? 'https' : 'http'}://site.${config.BASE_URL}/partners-join/`}>
+                  <a href={`${config.LMS_BASE_URL?.replace('://', '://site.')}/partners-join/`}>
                     {intl.formatMessage(messages["footer.navlink.joinAsPartner"])}
                   </a>
                 </li>
                 <li>
-                  <a href={`${config.ENABLE_HTTPS ? 'https' : 'http'}://site.${config.BASE_URL}/instructor-join/`}>
+                  <a href={`${config.LMS_BASE_URL?.replace('://', '://site.')}/instructor-join/`}>
                     {intl.formatMessage(messages["footer.navlink.joinAsInstructor"])}
                   </a>
                 </li>
                 <li>
-                  <a href={`${config.ENABLE_HTTPS ? 'https' : 'http'}://site.${config.BASE_URL}/contact-us/`}>
+                  <a href={`${config.LMS_BASE_URL?.replace('://', '://site.')}/contact-us/`}>
                     {intl.formatMessage(messages["footer.navlink.contactUs"])}
                   </a>
                 </li>
