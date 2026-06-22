@@ -106,6 +106,8 @@ def _override_openedx_docker_image(
 hooks.Filters.CONFIG_DEFAULTS.add_items(
     [(f"INDIGO_{key}", value) for key, value in config["defaults"].items()]
 )
+hooks.Filters.CONFIG_DEFAULTS.add_item(("PAT", ""))
+hooks.Filters.CONFIG_DEFAULTS.add_item(("ENABLE_PROGRAMS", False))
 hooks.Filters.CONFIG_UNIQUE.add_items(
     [(f"INDIGO_{key}", value) for key, value in config["unique"].items()]
 )
