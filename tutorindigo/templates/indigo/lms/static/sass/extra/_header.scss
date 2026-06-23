@@ -84,12 +84,13 @@ header.global-header {
                     font-weight: 500;
                     line-height: 22px;
                     padding: 20px 0;
-                    color: $light-dark;
+                    color: $primary;
                     margin: 0 16px 0 0;
                     border-bottom: 2px solid transparent;
-                    &.active, &:hover {
+                    &:hover {
                         color: $dark;
                         border-bottom: 2px solid $primary;
+                        text-decoration: none;
                     }
                 }
             }
