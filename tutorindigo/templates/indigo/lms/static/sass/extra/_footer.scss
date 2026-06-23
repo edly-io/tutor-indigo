@@ -88,6 +88,9 @@ body.indigo-dark-theme {
       justify-content: flex-end;
       flex-wrap: wrap;
       gap: 5px 20px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
 
       @include media-breakpoint-up(xl) {
         gap: 30px;
@@ -95,6 +98,10 @@ body.indigo-dark-theme {
 
       li {
         white-space: nowrap;
+
+        &::before {
+          display: none;
+        }
       }
     }
   }
@@ -111,6 +118,11 @@ body.indigo-dark-theme {
     align-items: center;
     gap: 20px;
 
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
     svg {
       display: block;
     }
@@ -118,6 +130,13 @@ body.indigo-dark-theme {
     ul {
       display: flex;
       gap: 20px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li::before {
+        display: none;
+      }
     }
   }
 }
