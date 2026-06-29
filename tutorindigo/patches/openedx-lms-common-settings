@@ -12,3 +12,4 @@ FEATURES['ENABLE_MKTG_SITE'] = True
 ENABLE_MKTG_SITE = True
 MKTG_URLS['ROOT'] = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}'
 MKTG_URLS['COURSES'] = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}/courses/'
+MKTG_URLS['ABOUT'] = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}/about/'
