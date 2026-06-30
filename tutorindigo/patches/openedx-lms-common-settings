@@ -10,6 +10,7 @@ TEMPLATES[0]["DIRS"].insert(0, "/openedx/venv/src/rwaq-features/rwaq_features/te
 # branding/views.py checks getattr(settings, 'ENABLE_MKTG_SITE') (top-level), not FEATURES.
 FEATURES['ENABLE_MKTG_SITE'] = True
 FEATURES['CUSTOM_CERTIFICATE_TEMPLATES_ENABLED'] = True
+FEATURES['CERTIFICATES_HTML_VIEW'] = True
 CERTIFICATE_TEMPLATE_LANGUAGES['ar'] = 'العربية'
 ENABLE_MKTG_SITE = True
 MKTG_URLS['ROOT'] = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}'
