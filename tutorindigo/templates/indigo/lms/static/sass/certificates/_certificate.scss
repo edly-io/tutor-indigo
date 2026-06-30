@@ -60,7 +60,32 @@ body.certificate {
         }
     }
 }
+
+.banner-user {
+  .message-block {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .message-text {
+    width: auto;
+    flex: 1;
+
+    .rtl & {
+      text-align: right;
+    }
+  }
+
+  .message-actions {
+    width: auto;
+  }
+}
+
 @media print {
+    body.certificate {
+        margin-top: 40pt;
+    }
     body.indigo-dark-theme.certificate {
         background: white;
         color: black;
