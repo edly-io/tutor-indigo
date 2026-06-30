@@ -1,0 +1,6 @@
+{% raw %}
+{% load i18n %}
+{% autoescape off %}
+{% blocktrans trimmed %}Login Verification Code - {{ platform_name }}{% endblocktrans %}
+{% endautoescape %}
+{% endraw %}

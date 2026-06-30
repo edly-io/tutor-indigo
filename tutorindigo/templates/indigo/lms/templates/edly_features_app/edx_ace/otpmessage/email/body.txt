@@ -1,0 +1,10 @@
+{% raw %}
+{% load i18n %}{% autoescape off %}{% blocktrans %}Your verification code for {{ platform_name }} is:{% endblocktrans %}
+
+{{ otp_code }}
+
+{% blocktrans %}This code will expire in a few minutes. If you did not attempt to log in, you can safely ignore this email.{% endblocktrans %}
+
+----
+{% blocktrans %}This email was automatically sent from {{ platform_name }}.{% endblocktrans %}{% endautoescape %}
+{% endraw %}

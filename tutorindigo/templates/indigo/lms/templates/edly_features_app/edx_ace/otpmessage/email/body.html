@@ -1,0 +1,37 @@
+{% raw %}
+{% extends 'ace_common/edx_ace/common/base_body.html' %}
+
+{% load i18n %}
+{% block content %}
+<table width="100%" align="left" border="0" cellpadding="0" cellspacing="0" role="presentation">
+    <tr>
+        <td>
+            <h1>
+                {% autoescape off %}
+                {# xss-lint: disable=django-blocktrans-missing-escape-filter #}
+                {% blocktrans %}Your verification code for {{ platform_name }}{% endblocktrans %}
+                {% endautoescape %}
+            </h1>
+
+            <p style="font-size: 28px; font-weight: bold; letter-spacing: 4px; color: rgba(0,0,0,.85);">
+                {{ otp_code }}
+            </p>
+
+            <p style="color: rgba(0,0,0,.75);">
+                {% filter force_escape %}
+                {% blocktrans %}This code will expire in a few minutes. If you did not attempt to log in, you can safely ignore this email.{% endblocktrans %}
+                {% endfilter %}
+                <br />
+            </p>
+
+            <p style="color: rgba(0,0,0,.75);">
+                {% filter force_escape %}
+                {% blocktrans %}This email was automatically sent from {{ platform_name }}.{% endblocktrans %}
+                {% endfilter %}
+                <br />
+            </p>
+        </td>
+    </tr>
+</table>
+{% endblock %}
+{% endraw %}
