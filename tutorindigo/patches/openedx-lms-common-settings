@@ -9,6 +9,8 @@ TEMPLATES[0]["DIRS"].insert(0, "/openedx/venv/src/rwaq-features/rwaq_features/te
 # Redirect unauthenticated users from LMS homepage to the WordPress landing page.
 # branding/views.py checks getattr(settings, 'ENABLE_MKTG_SITE') (top-level), not FEATURES.
 FEATURES['ENABLE_MKTG_SITE'] = True
+FEATURES['CUSTOM_CERTIFICATE_TEMPLATES_ENABLED'] = True
+CERTIFICATE_TEMPLATE_LANGUAGES['ar'] = 'العربية'
 ENABLE_MKTG_SITE = True
 MKTG_URLS['ROOT'] = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}'
 MKTG_URLS['COURSES'] = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}/courses/'
