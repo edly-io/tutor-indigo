@@ -8,16 +8,21 @@
 from django.urls import reverse
 from django.utils.translation import gettext as _
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from fbr.common.biodata.models import FbrProfileRole
 %>
 
 <%
   show_explore_courses = settings.FEATURES.get('COURSES_ARE_BROWSABLE')
   self.real_user = getattr(user, 'real_user', user)
+  fbr_profile = getattr(self.real_user, 'fbr_profile', None)
   enable_help_link = settings.FEATURES.get('ENABLE_HELP_LINK')
   show_courses_link = user.is_authenticated
-  show_programs_link = user.is_authenticated and getattr(settings, 'ENABLE_PROGRAMS', False)
+  show_programs_link = user.is_authenticated
   sessions_url = getattr(settings, 'SESSIONS_MICROFRONTEND_URL', '')
-  admin_url = (getattr(settings, 'FBR_ADMIN_BASE_URL', '') or getattr(settings, 'FBR_ADMIN_MICROFRONTEND_URL', '')) if getattr(self.real_user, 'is_staff', False) else ''
+  can_access_admin_console = bool(
+    fbr_profile and fbr_profile.has_admin_level(FbrProfileRole.DATA_ADMIN)
+  )
+  admin_url = (getattr(settings, 'FBR_ADMIN_BASE_URL', '') or getattr(settings, 'FBR_ADMIN_MICROFRONTEND_URL', '')) if can_access_admin_console else ''
 
   support_link = configuration_helpers.get_value('SUPPORT_SITE_LINK', settings.SUPPORT_SITE_LINK)
   doc_link = get_online_help_info(online_help_token)['doc_url']
