@@ -14,6 +14,10 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
   show_explore_courses = settings.FEATURES.get('COURSES_ARE_BROWSABLE')
   self.real_user = getattr(user, 'real_user', user)
   enable_help_link = settings.FEATURES.get('ENABLE_HELP_LINK')
+  show_courses_link = user.is_authenticated
+  show_programs_link = user.is_authenticated and getattr(settings, 'ENABLE_PROGRAMS', False)
+  sessions_url = getattr(settings, 'SESSIONS_MICROFRONTEND_URL', '')
+  admin_url = (getattr(settings, 'FBR_ADMIN_BASE_URL', '') or getattr(settings, 'FBR_ADMIN_MICROFRONTEND_URL', '')) if getattr(self.real_user, 'is_staff', False) else ''
 
   support_link = configuration_helpers.get_value('SUPPORT_SITE_LINK', settings.SUPPORT_SITE_LINK)
   doc_link = get_online_help_info(online_help_token)['doc_url']
@@ -28,27 +32,43 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 
 <div class="nav-links">
   <div class="main">
-    % if show_dashboard_tabs:
+    % if show_courses_link:
       <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
         <a class="${'active ' if reverse('dashboard') == request.path else ''}tab-nav-link" href="${reverse('dashboard')}"
              aria-current="${'page' if reverse('dashboard') == request.path else 'false'}">
-             ${_("My Courses")}
+             ${_("Courses")}
         </a>
       </div>
-      % if show_program_listing:
+    % endif
+    % if show_programs_link:
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
           <a class="${'active ' if reverse('program_listing_view') in request.path else ''}tab-nav-link" href="${reverse('program_listing_view')}"
              aria-current="${'page' if reverse('program_listing_view') == request.path else 'false'}">
              ${_("Programs")}
           </a>
         </div>
-      % endif
     % endif
     % if show_explore_courses:
       <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
           <a class="${'active ' if reverse('courses') == request.path else ''}tab-nav-link discover-new-link" href="${marketing_link('COURSES')}"
              aria-current="${'page' if '/courses' in request.path else 'false'}">
-             ${_('Discover')}
+             ${_('Discover New')}
+          </a>
+      </div>
+    % endif
+    % if sessions_url:
+      <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
+          <a class="${'active ' if '/sessions' in request.path else ''}tab-nav-link" href="${sessions_url}"
+             aria-current="${'page' if '/sessions' in request.path else 'false'}">
+             ${_("Calendar")}
+          </a>
+      </div>
+    % endif
+    % if admin_url:
+      <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
+          <a class="${'active ' if '/fbr-admin' in request.path else ''}tab-nav-link" href="${admin_url}"
+             aria-current="${'page' if '/fbr-admin' in request.path else 'false'}">
+             ${_("Admin Console")}
           </a>
       </div>
     % endif
