@@ -34,14 +34,29 @@ ${static.get_page_title_breadcrumbs(course_name())}
 <%block name="headextra">
 <%static:css group='style-course-vendor'/>
 <%static:css group='style-course'/>
-## INDIGO OVERRIDE: load Font Awesome via a <link> on the chromeless page.
-## On embedded/chromeless renders (e.g. LTI launches), the XBlock-fragment CSS that
-## normally pulls in Font Awesome via @import gets dropped — concatenation pushes the
-## @import below the top of the stylesheet, and the browser ignores non-leading @import
-## rules. That leaves `fa` glyphs (sequence-nav icons, chevrons, check-circles) as empty
-## boxes. A <link> is not subject to that rule, so this guarantees Font Awesome loads.
-## Scoped to chromeless only — full-page screens use other templates and are unaffected.
+## INDIGO OVERRIDE: keep Font Awesome icons working on chromeless / LTI render pages.
+##
+## Authored HTML blocks commonly inject `* { font-family: 'Lato' ... !important }` to
+## theme their content. That universal `!important` rule also matches the icon spans
+## (`.fa`, `.fa-chevron-next`, `.fa-check-circle`, ...) and, because it is `!important`,
+## overrides Font Awesome's own (non-important) `font-family: FontAwesome`. The glyphs
+## then render in Lato — which has no icon glyphs — so they show as empty boxes. This is
+## why the icons break only in subsections whose units contain such an HTML block, and
+## why navigating Next/Prev can clobber them page-wide (a <style> is document-global).
+##
+## 1) Ensure Font Awesome is loaded (a <link> is immune to the dropped-@import problem).
+## 2) Re-assert the icon font with higher specificity than `*`, using `!important` so it
+##    wins the cascade against the authored rule. `.fa`/`[class*="fa-"]` (specificity
+##    0,1,0) beats `*` (0,0,0). Scoped to chromeless only — normal screens are untouched.
 <link rel="stylesheet" type="text/css" href="${static.url('css/vendor/font-awesome.css')}">
+<style>
+  ## Target only the FA base class (`.fa`) — every Font Awesome 4 icon carries it, so
+  ## this covers all icons while never matching a stray author class that merely starts
+  ## with "fa-". The ::before inherits the element's font-family.
+  .fa, .fa::before {
+    font-family: FontAwesome !important;
+  }
+</style>
 ## Utility: Notes
 % if edx_notes_enabled:
 <%static:css group='style-student-notes'/>
