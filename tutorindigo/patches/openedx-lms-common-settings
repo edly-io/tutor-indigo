@@ -16,3 +16,4 @@ ENABLE_MKTG_SITE = True
 MKTG_URLS['ROOT'] = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}'
 MKTG_URLS['COURSES'] = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}/courses/'
 MKTG_URLS['ABOUT'] = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}/about/'
+MFE_CONFIG["FAVICON_URL"] = "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/theming/asset/images/favicon.ico"
