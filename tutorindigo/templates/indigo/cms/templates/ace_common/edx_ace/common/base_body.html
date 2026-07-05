@@ -186,14 +186,13 @@
                                 &copy; {{ platform_name }} {% now "Y" %}. {% trans "All rights reserved" %}.
                             {% endif %}
                             <br/>
-                            {% trans "Our mailing address is" %}: {{ contact_mailing_address }}
+                            {% trans "Our mailing address is:" %} {{ contact_mailing_address }}
                         </td>
                     </tr>
                     {% if unsubscribe_url %}
                     <tr>
                         <td>
-                            If you no longer wish to receive these emails, please <a style="color: #DD1F25;"
-                             href="{{ unsubscribe_url }}">unsubscribe</a> here.
+                            <a style="color: #DD1F25;" href="{{ unsubscribe_url }}">{% trans "Unsubscribe from these emails." %}</a>
                         </td>
                     </tr>
                     {% endif %}
