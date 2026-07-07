@@ -429,5 +429,15 @@ def _add_my_mfe(mfes):  # type: ignore[no-untyped-def]
         "port": 2001,
         "version": "ulmo/rwaq",
     }
+    mfes["learner-dashboard"] = {
+        "repository": "https://github.com/edly-io/frontend-app-learner-dashboard.git",
+        "port": 1996,
+        "version": "ulmo/rwaq",
+    }
+    mfes["learning"] = {
+        "repository": "https://github.com/edly-io/frontend-app-learning.git",
+        "port": 2000,
+        "version": "ulmo/rwaq",
+    }
 
     return mfes
