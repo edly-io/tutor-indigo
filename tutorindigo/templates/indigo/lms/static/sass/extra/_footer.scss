@@ -16,7 +16,6 @@ footer.tutor-container {
         text-align: left;
     }
     .footer-top {
-        display: none;
         margin: 0 0 15px;
         &:after {
             clear: both;
@@ -24,6 +23,7 @@ footer.tutor-container {
             content: "";
         }
         .powered-area {
+            display: none;
             margin: 0 0 10px;
             @include media-breakpoint-up(md) {
                 margin: 0 0 15px;
