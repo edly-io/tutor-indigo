@@ -24,6 +24,11 @@ from fbr.common.biodata.models import FbrProfileRole
   )
   admin_url = (getattr(settings, 'FBR_ADMIN_BASE_URL', '') or getattr(settings, 'FBR_ADMIN_MICROFRONTEND_URL', '')) if can_access_admin_console else ''
 
+  cms_root_url = getattr(settings, 'CMS_ROOT_URL', '')
+  cms_base = getattr(settings, 'CMS_BASE', '')
+  studio_base_url = cms_root_url or (('http://' + cms_base) if cms_base else '')
+  studio_url = studio_base_url if can_access_admin_console else ''
+
   support_link = configuration_helpers.get_value('SUPPORT_SITE_LINK', settings.SUPPORT_SITE_LINK)
   doc_link = get_online_help_info(online_help_token)['doc_url']
 
@@ -71,9 +76,8 @@ from fbr.common.biodata.models import FbrProfileRole
     % endif
     % if admin_url:
       <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
-          <a class="${'active ' if '/fbr-admin' in request.path else ''}tab-nav-link" href="${admin_url}"
-             aria-current="${'page' if '/fbr-admin' in request.path else 'false'}">
-             ${_("Admin Console")}
+          <a class="tab-nav-link" href="${studio_url}" aria-current="false">
+             ${_("Studio")}
           </a>
       </div>
     % endif
