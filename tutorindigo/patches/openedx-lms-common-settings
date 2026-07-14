@@ -18,4 +18,4 @@ MKTG_URLS['COURSES'] = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://si
 MKTG_URLS['ABOUT'] = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}/about/'
 MFE_CONFIG["FAVICON_URL"] = "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/theming/asset/images/favicon.png"
 
-ENABLE_LEARNER_RECORDS = True
+FEATURES["ENABLE_LEARNER_RECORDS"] = True
