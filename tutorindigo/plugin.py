@@ -113,6 +113,41 @@ hooks.Filters.CONFIG_UNIQUE.add_items(
 )
 hooks.Filters.CONFIG_OVERRIDES.add_items(list(config["overrides"].items()))
 
+hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_VIDEO_S3_BUCKET", ""))
+
+hooks.Filters.ENV_PATCHES.add_items(
+    [
+        (
+            "cms-env-features",
+            """
+{% if RWAQ_VIDEO_S3_BUCKET %}
+ENABLE_VIDEO_UPLOAD_PIPELINE: true
+{% endif %}
+""",
+        ),
+        (
+            "cms-env",
+            """
+{% if RWAQ_VIDEO_S3_BUCKET %}
+VIDEO_UPLOAD_PIPELINE:
+  VEM_S3_BUCKET: "{{ RWAQ_VIDEO_S3_BUCKET }}"
+  BUCKET: "{{ RWAQ_VIDEO_S3_BUCKET }}"
+  ROOT_PATH: "video"
+  CONCURRENT_UPLOAD_LIMIT: 4
+{% endif %}
+""",
+        ),
+        (
+            "openedx-lms-common-settings",
+            """
+{% if RWAQ_VIDEO_S3_BUCKET %}
+MFE_CONFIG['ENABLE_VIDEO_UPLOAD_PAGE_LINK_IN_CONTENT_DROPDOWN'] = 'true'
+{% endif %}
+""",
+        ),
+    ]
+)
+
 
 #  MFEs that are styled using Indigo
 indigo_styled_mfes = [
