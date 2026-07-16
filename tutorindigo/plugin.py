@@ -116,6 +116,13 @@ hooks.Filters.CONFIG_UNIQUE.add_items(
 hooks.Filters.CONFIG_OVERRIDES.add_items(list(config["overrides"].items()))
 
 hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_VIDEO_S3_BUCKET", ""))
+# Regional S3 endpoint for the video bucket, passed to VIDEO_UPLOAD_PIPELINE
+# below as HOST. edx-platform's storage_service_bucket() uses it to presign with
+# SigV4 against the bucket's regional endpoint (boto2 otherwise defaults to the
+# global endpoint + SigV2, which buckets outside us-east-1 reject with HTTP 400).
+hooks.Filters.CONFIG_DEFAULTS.add_item(
+    ("RWAQ_VIDEO_S3_HOST", "s3.eu-central-1.amazonaws.com")
+)
 
 hooks.Filters.ENV_PATCHES.add_items(
     [
@@ -136,6 +143,7 @@ VIDEO_UPLOAD_PIPELINE:
   BUCKET: "{{ RWAQ_VIDEO_S3_BUCKET }}"
   ROOT_PATH: "video"
   CONCURRENT_UPLOAD_LIMIT: 4
+  HOST: "{{ RWAQ_VIDEO_S3_HOST }}"
 {% endif %}
 """,
         ),
