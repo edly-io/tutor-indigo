@@ -140,7 +140,15 @@ VIDEO_UPLOAD_PIPELINE:
 """,
         ),
         (
-            "openedx-lms-common-settings",
+            "mfe-lms-common-settings",
+            """
+{% if RWAQ_VIDEO_S3_BUCKET %}
+MFE_CONFIG['ENABLE_VIDEO_UPLOAD_PAGE_LINK_IN_CONTENT_DROPDOWN'] = 'true'
+{% endif %}
+""",
+        ),
+        (
+            "mfe-cms-common-settings",
             """
 {% if RWAQ_VIDEO_S3_BUCKET %}
 MFE_CONFIG['ENABLE_VIDEO_UPLOAD_PAGE_LINK_IN_CONTENT_DROPDOWN'] = 'true'
