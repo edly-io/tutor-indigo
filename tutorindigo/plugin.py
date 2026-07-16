@@ -116,10 +116,10 @@ hooks.Filters.CONFIG_UNIQUE.add_items(
 hooks.Filters.CONFIG_OVERRIDES.add_items(list(config["overrides"].items()))
 
 hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_VIDEO_S3_BUCKET", ""))
-# Regional S3 endpoint for the video bucket. edx-platform's video upload code
-# (storage_service_bucket) uses boto2's S3Connection, which defaults to the
-# global s3.amazonaws.com endpoint and SigV2 -- rejected by buckets outside
-# us-east-1. Point boto at the bucket's regional host and force SigV4 (below).
+# Regional S3 endpoint for the video bucket, passed to VIDEO_UPLOAD_PIPELINE
+# below as HOST. edx-platform's storage_service_bucket() uses it to presign with
+# SigV4 against the bucket's regional endpoint (boto2 otherwise defaults to the
+# global endpoint + SigV2, which buckets outside us-east-1 reject with HTTP 400).
 hooks.Filters.CONFIG_DEFAULTS.add_item(
     ("RWAQ_VIDEO_S3_HOST", "s3.eu-central-1.amazonaws.com")
 )
@@ -143,6 +143,7 @@ VIDEO_UPLOAD_PIPELINE:
   BUCKET: "{{ RWAQ_VIDEO_S3_BUCKET }}"
   ROOT_PATH: "video"
   CONCURRENT_UPLOAD_LIMIT: 4
+  HOST: "{{ RWAQ_VIDEO_S3_HOST }}"
 {% endif %}
 """,
         ),
@@ -159,28 +160,6 @@ MFE_CONFIG['ENABLE_VIDEO_UPLOAD_PAGE_LINK_IN_CONTENT_DROPDOWN'] = 'true'
             """
 {% if RWAQ_VIDEO_S3_BUCKET %}
 MFE_CONFIG['ENABLE_VIDEO_UPLOAD_PAGE_LINK_IN_CONTENT_DROPDOWN'] = 'true'
-{% endif %}
-""",
-        ),
-        # storage_service_bucket() presigns the upload URL with boto2's
-        # S3Connection, which uses the global endpoint + SigV2. Buckets outside
-        # us-east-1 (ours is eu-central-1) reject SigV2 with HTTP 400
-        # ("Please use AWS4-HMAC-SHA256"). Force SigV4 and point boto at the
-        # regional endpoint via boto's own config, at CMS settings import time.
-        (
-            "openedx-cms-common-settings",
-            """
-{% if RWAQ_VIDEO_S3_BUCKET %}
-import os as _os
-_os.environ["S3_USE_SIGV4"] = "True"
-try:
-    import boto as _boto
-    if not _boto.config.has_section("s3"):
-        _boto.config.add_section("s3")
-    _boto.config.set("s3", "use-sigv4", "True")
-    _boto.config.set("s3", "host", "{{ RWAQ_VIDEO_S3_HOST }}")
-except ImportError:
-    pass
 {% endif %}
 """,
         ),
