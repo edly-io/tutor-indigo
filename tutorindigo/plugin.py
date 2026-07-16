@@ -158,6 +158,32 @@ MFE_CONFIG['ENABLE_VIDEO_UPLOAD_PAGE_LINK_IN_CONTENT_DROPDOWN'] = 'true'
     ]
 )
 
+# The pipeline settings above are necessary but not sufficient: the upload
+# endpoints (generate_video_upload_link / videos_handler) still 404 until
+# `course.video_pipeline_configured` is true. That relies on
+# VideoUploadsEnabledByDefault.feature_enabled(), which returns true for every
+# course only when BOTH `enabled` and `enabled_for_all_courses` are set (with
+# `enabled` alone it falls back to per-course CourseVideoUploadsEnabledByDefault
+# rows). Enable both, platform-wide, at init time.
+hooks.Filters.CLI_DO_INIT_TASKS.add_item(
+    (
+        "cms",
+        """
+{% if RWAQ_VIDEO_S3_BUCKET %}
+./manage.py cms shell -c "
+from openedx.core.djangoapps.video_pipeline.models import VideoUploadsEnabledByDefault
+current = VideoUploadsEnabledByDefault.current()
+if not (current.enabled and current.enabled_for_all_courses):
+    VideoUploadsEnabledByDefault.objects.create(enabled=True, enabled_for_all_courses=True)
+    print('indigo: enabled VideoUploadsEnabledByDefault for all courses')
+else:
+    print('indigo: VideoUploadsEnabledByDefault already enabled for all courses')
+"
+{% endif %}
+""",
+    )
+)
+
 
 #  MFEs that are styled using Indigo
 indigo_styled_mfes = [
