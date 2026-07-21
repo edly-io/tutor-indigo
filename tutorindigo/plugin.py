@@ -260,6 +260,35 @@ LEARNING_FOOTER_WIDGET = FOOTER_WIDGET + """
 },
 """
 
+# EDLYCUSTOM: frontend-saas-widgets' FooterWidget injects a FontAwesome 6 CDN
+# stylesheet (all.min.css) globally. FooterWidget/HeaderWidget render outside
+# <main> (see gradebook's App.jsx), but gradebook's own legacy Paragon icons
+# (GradebookFilters, LabelReplacements, SpinnerIcon) render raw `fa fa-*`
+# classNames inside <main> and depend on gradebook's self-hosted FontAwesome 4.
+# A separate, unscoped `.fa{font-family:"Font Awesome 6 Free"!important}` rule
+# (no matching @font-face) wins the cascade and breaks those icons (tofu glyph).
+# Scoping this restore to `main` only fixes gradebook's own icons without
+# touching FooterWidget/HeaderWidget's FontAwesome 6 usage elsewhere.
+GRADEBOOK_FOOTER_WIDGET = FOOTER_WIDGET + """
+{
+    op: PLUGIN_OPERATIONS.Insert,
+    widget: {
+        id: 'edly_gradebook_fa4_icon_fix',
+        type: DIRECT_PLUGIN,
+        RenderWidget: () => (
+            <style>
+                {`
+                    main .fa {
+                        font-family: "FontAwesome" !important;
+                        font-weight: normal !important;
+                    }
+                `}
+            </style>
+        ),
+    },
+},
+"""
+
 HEADER_WIDGET = """
 {
     op: PLUGIN_OPERATIONS.Hide,
@@ -302,6 +331,10 @@ MFE_CONFIG = {
     },
     "account": {
         "footer_slot": ACCOUNT_FOOTER_WIDGET,
+        "desktop_header_slot": HEADER_WIDGET,
+    },
+    "gradebook": {
+        "footer_slot": GRADEBOOK_FOOTER_WIDGET,
         "desktop_header_slot": HEADER_WIDGET,
     },
 }
