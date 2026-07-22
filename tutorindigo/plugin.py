@@ -123,6 +123,13 @@ hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_VIDEO_S3_BUCKET", ""))
 hooks.Filters.CONFIG_DEFAULTS.add_item(
     ("RWAQ_VIDEO_S3_HOST", "s3.eu-central-1.amazonaws.com")
 )
+# Base URL that uploaded videos are played back from (CloudFront distribution or
+# the bucket's public/website endpoint). Consumed by the rwaq-features passthrough
+# video-status signal to build the edx-val encoded_video URL. Inert until set.
+hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_VIDEO_PLAYBACK_BASE_URL", ""))
+# Region of the video bucket, used by the passthrough signal's boto3 HeadObject
+# (to read the uploaded file size). Kept in sync with RWAQ_VIDEO_S3_HOST above.
+hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_VIDEO_S3_REGION", "eu-central-1"))
 
 hooks.Filters.ENV_PATCHES.add_items(
     [
@@ -144,6 +151,10 @@ VIDEO_UPLOAD_PIPELINE:
   ROOT_PATH: "video"
   CONCURRENT_UPLOAD_LIMIT: 4
   HOST: "{{ RWAQ_VIDEO_S3_HOST }}"
+  REGION: "{{ RWAQ_VIDEO_S3_REGION }}"
+# Consumed by rwaq-features' passthrough video-status signal (marks Studio
+# uploads "Ready" without transcoding).
+RWAQ_VIDEO_PLAYBACK_BASE_URL: "{{ RWAQ_VIDEO_PLAYBACK_BASE_URL }}"
 {% endif %}
 """,
         ),
