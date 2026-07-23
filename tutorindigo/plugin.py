@@ -108,6 +108,7 @@ hooks.Filters.CONFIG_DEFAULTS.add_items(
 )
 hooks.Filters.CONFIG_DEFAULTS.add_item(("PAT", ""))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("ENABLE_PROGRAMS", False))
+hooks.Filters.CONFIG_DEFAULTS.add_item(("SESSION_COOKIE_DOMAIN", ""))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("COURSE_ACCESS_DURATION_MIN_WEEKS", 12))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("COURSE_ACCESS_DURATION_MAX_WEEKS", 18))
 hooks.Filters.CONFIG_UNIQUE.add_items(
