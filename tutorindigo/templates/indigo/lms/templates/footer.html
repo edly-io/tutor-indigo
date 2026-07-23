@@ -20,7 +20,7 @@
     <div class="footer-social-row">
       <div class="footer-container">
         <nav class="social-nav">
-          <a href="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}" class="logo">
+          <a href="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ WORDPRESS_HOST }}" class="logo">
             <img src="${static.url('images/logo.png')}" alt="${_('Rwaq Logo')}" />
           </a>
           <ul>
@@ -48,11 +48,11 @@
         </nav>
         <nav class="privacy-nav">
           <ul>
-            <li><a href="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}/about/">${_("About Us")}</a></li>
-            <li><a href="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}/policy/">${_("Privacy Policy")}</a></li>
-            <li><a href="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}/partners-join/">${_("Join as Partner")}</a></li>
-            <li><a href="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}/instructor-join/">${_("Join as Instructor")}</a></li>
-            <li><a href="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://site.{{ LMS_HOST }}/contact-us/">${_("Contact Us")}</a></li>
+            <li><a href="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ WORDPRESS_HOST }}/about/">${_("About Us")}</a></li>
+            <li><a href="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ WORDPRESS_HOST }}/policy/">${_("Privacy Policy")}</a></li>
+            <li><a href="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ WORDPRESS_HOST }}/partners-join/">${_("Join as Partner")}</a></li>
+            <li><a href="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ WORDPRESS_HOST }}/instructor-join/">${_("Join as Instructor")}</a></li>
+            <li><a href="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ WORDPRESS_HOST }}/contact-us/">${_("Contact Us")}</a></li>
           </ul>
         </nav>
       </div>

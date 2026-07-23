@@ -2,10 +2,9 @@
 const HomeNavLink = () => {
   const config = getConfig();
   const intl = useIntl();
-  const BASE_URL = config.LMS_BASE_URL;
-  const SITE_URL = (() => {
-    const url = new URL(BASE_URL);
-    return `${url.protocol}//site.${url.hostname}`;
+  const SITE_URL = config.MARKETING_SITE_URL || (() => {
+    const url = new URL(config.LMS_BASE_URL);
+    return `${url.protocol}//${url.hostname}`;
   })();
 
   return (

@@ -41,6 +41,11 @@ const IndigoFooter = () => {
     },
   };
 
+  const SITE_URL = config.MARKETING_SITE_URL || (() => {
+    const url = new URL(config.LMS_BASE_URL);
+    return `${url.protocol}//${url.hostname}`;
+  })();
+
   return (
     <div className="wrapper wrapper-footer">
       <footer id="footer" className="tutor-container">
@@ -48,7 +53,7 @@ const IndigoFooter = () => {
         <div className="footer-social-row">
           <div className="footer-container">
             <nav className="social-nav">
-              <a href="https://site.${config.LMS_BASE_URL}/" className="logo">
+              <a href={`${SITE_URL}/`} className="logo">
                 <img src={`${config.LMS_BASE_URL}/theming/asset/images/logo.png`} alt={intl.formatMessage(messages["footer.logo.altText"])} />
               </a>
               <ul>
@@ -77,27 +82,27 @@ const IndigoFooter = () => {
             <nav className="privacy-nav">
               <ul>
                 <li>
-                  <a href={`${config.LMS_BASE_URL?.replace('://', '://site.')}/about/`}>
+                  <a href={`${SITE_URL}/about/`}>
                     {intl.formatMessage(messages["footer.navlink.aboutUs"])}
                   </a>
                 </li>
                 <li>
-                  <a href={`${config.LMS_BASE_URL?.replace('://', '://site.')}/policy/`}>
+                  <a href={`${SITE_URL}/policy/`}>
                     {intl.formatMessage(messages["footer.navlink.privacyPolicy"])}
                   </a>
                 </li>
                 <li>
-                  <a href={`${config.LMS_BASE_URL?.replace('://', '://site.')}/partners-join/`}>
+                  <a href={`${SITE_URL}/partners-join/`}>
                     {intl.formatMessage(messages["footer.navlink.joinAsPartner"])}
                   </a>
                 </li>
                 <li>
-                  <a href={`${config.LMS_BASE_URL?.replace('://', '://site.')}/instructor-join/`}>
+                  <a href={`${SITE_URL}/instructor-join/`}>
                     {intl.formatMessage(messages["footer.navlink.joinAsInstructor"])}
                   </a>
                 </li>
                 <li>
-                  <a href={`${config.LMS_BASE_URL?.replace('://', '://site.')}/contact-us/`}>
+                  <a href={`${SITE_URL}/contact-us/`}>
                     {intl.formatMessage(messages["footer.navlink.contactUs"])}
                   </a>
                 </li>
