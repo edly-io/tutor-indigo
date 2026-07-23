@@ -1,1 +1,3 @@
 MFE_CONFIG["ENABLE_PROGRAMS"] = {{ ENABLE_PROGRAMS }}
+MFE_CONFIG["MARKETING_SITE_URL"] = "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ WORDPRESS_HOST }}"
+MFE_CONFIG["FAVICON_URL"] = "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/theming/asset/images/favicon.png"
