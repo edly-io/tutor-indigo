@@ -24,7 +24,14 @@ FEATURES["ENABLE_LEARNER_RECORDS"] = True
 {% if SESSION_COOKIE_DOMAIN %}
 SESSION_COOKIE_DOMAIN = "{{ SESSION_COOKIE_DOMAIN }}"
 CSRF_COOKIE_DOMAIN = "{{ SESSION_COOKIE_DOMAIN }}"
-JWT_AUTH["JWT_AUTH_COOKIE_DOMAIN"] = "{{ SESSION_COOKIE_DOMAIN }}"
+LANGUAGE_COOKIE_DOMAIN = "{{ SESSION_COOKIE_DOMAIN }}"
+# SHARED_COOKIE_DOMAIN scopes the cross-service login cookies set by
+# user_authn/cookies.py: edxloggedin, edx-user-info and the edx-jwt-cookie-*
+# pair (standard_cookie_settings() uses domain=settings.SHARED_COOKIE_DOMAIN).
+# It defaults to "" and is NOT derived from SESSION_COOKIE_DOMAIN, so it must be
+# set explicitly. Without it these cookies stay on the LMS host and WordPress
+# (a sibling subdomain) never receives them.
+SHARED_COOKIE_DOMAIN = "{{ SESSION_COOKIE_DOMAIN }}"
 {% endif %}
 
 COURSE_ACCESS_DURATION_MIN_WEEKS = {{ COURSE_ACCESS_DURATION_MIN_WEEKS }}
