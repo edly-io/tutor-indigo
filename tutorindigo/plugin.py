@@ -109,6 +109,9 @@ hooks.Filters.CONFIG_DEFAULTS.add_items(
 hooks.Filters.CONFIG_DEFAULTS.add_item(("PAT", ""))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("ENABLE_PROGRAMS", False))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("SESSION_COOKIE_DOMAIN", ""))
+# Toggles the "set your password" legacy-account flow in the authn MFE.
+# Set to false to hide the entry point + route (e.g. on an env where it is not ready).
+hooks.Filters.CONFIG_DEFAULTS.add_item(("ENABLE_LEGACY_ACCOUNT_FLOW", True))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("COURSE_ACCESS_DURATION_MIN_WEEKS", 12))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("COURSE_ACCESS_DURATION_MAX_WEEKS", 18))
 hooks.Filters.CONFIG_UNIQUE.add_items(
