@@ -108,6 +108,7 @@ hooks.Filters.CONFIG_DEFAULTS.add_items(
 )
 hooks.Filters.CONFIG_DEFAULTS.add_item(("PAT", ""))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("ENABLE_PROGRAMS", False))
+hooks.Filters.CONFIG_DEFAULTS.add_item(("ENABLE_INSTRUCTOR_MANAGEMENT", False))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("SESSION_COOKIE_DOMAIN", ""))
 # Toggles the "set your password" legacy-account flow in the authn MFE.
 # Set to false to hide the entry point + route (e.g. on an env where it is not ready).
