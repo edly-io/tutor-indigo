@@ -260,6 +260,28 @@ LEARNING_FOOTER_WIDGET = FOOTER_WIDGET + """
 },
 """
 
+# EDLYCUSTOM: FooterWidget's FA6 CDN import breaks gradebook's own FA4 icons.
+# Scoped to `main` so it doesn't touch Header/FooterSlot's own FA6 usage.
+GRADEBOOK_FOOTER_WIDGET = FOOTER_WIDGET + """
+{
+    op: PLUGIN_OPERATIONS.Insert,
+    widget: {
+        id: 'edly_gradebook_fa4_icon_fix',
+        type: DIRECT_PLUGIN,
+        RenderWidget: () => (
+            <style>
+                {`
+                    main .fa {
+                        font-family: "FontAwesome" !important;
+                        font-weight: normal !important;
+                    }
+                `}
+            </style>
+        ),
+    },
+},
+"""
+
 HEADER_WIDGET = """
 {
     op: PLUGIN_OPERATIONS.Hide,
@@ -302,6 +324,10 @@ MFE_CONFIG = {
     },
     "account": {
         "footer_slot": ACCOUNT_FOOTER_WIDGET,
+        "desktop_header_slot": HEADER_WIDGET,
+    },
+    "gradebook": {
+        "footer_slot": GRADEBOOK_FOOTER_WIDGET,
         "desktop_header_slot": HEADER_WIDGET,
     },
 }
