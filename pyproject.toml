@@ -5,7 +5,7 @@ name = "tutor-indigo"
 description = "Indigo theme plugin for Tutor"
 readme = { file = "README.rst", content-type = "text/x-rst" }
 license = { text = "AGPLv3" }
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 authors = [{ name = "Edly" }, { email = "hello@edly.io" }]
 maintainers = [
     { name = "Hammad Yousaf" }, { email = "hammad.yousaf@arbisoft.com" },
@@ -17,21 +17,22 @@ classifiers = [
     "License :: OSI Approved :: GNU Affero General Public License v3",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
 dependencies = [
-  "tutor-mfe>=21.0.0,<22.0.0", 
-  "tutor>=21.0.0,<22.0.0"
+  "tutor-mfe>=22.0.0,<23.0.0", 
+  "tutor>=22.0.0,<23.0.0"
 ]
 
 dynamic = ["version"]
 
 [project.optional-dependencies]
 dev = [
-  "tutor[dev]>=21.0.0,<22.0.0",
+  "tutor[dev]>=22.0.0,<23.0.0",
   "ruff",
 ]
 
