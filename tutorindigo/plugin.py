@@ -145,7 +145,7 @@ for mfe in indigo_styled_mfes:
             (
                 f"mfe-dockerfile-post-npm-install-{mfe}",
                 """
-                RUN npm install '@edly-io/edly-saas-widget'
+                RUN npm install 'git+https://GitToken:{{ GH_PAT }}@github.com/edly-io/frontend-saas-widgets.git#feat/paid-course-unenroll-widget'
                 RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'
 """,  # noqa: E501
             ),
