@@ -1,22 +1,16 @@
 {% raw %}
 
 {% load i18n %}{% autoescape off %}
-{% if first_name %}
-{% blocktrans %}Welcome, {{ first_name }}!{% endblocktrans %}
-{% else %}
-{% trans "Welcome!" %}
-{% endif %}
+{% if first_name %}{% blocktrans %}Welcome, {{ first_name }}!{% endblocktrans %}{% else %}{% trans "Welcome!" %}{% endif %}
 
 {% blocktrans %}An account has been created for you. To get started, set your password and sign in for the first time.{% endblocktrans %}
 
 {% if failed %}
 {% trans "If you don't want to join, you can ignore this email." %}
 {% else %}
-{% trans "Please go to the following page and choose a new password:" %}
+{% trans "Please go to the following page to set your password and sign in:" %}
 
 {{ reset_link }}
-
-{% trans "Thanks for using our site!" %}
 {% endif %}
 {% blocktrans %}The {{ platform_name }} Team{% endblocktrans %}
 {% endautoescape %}
