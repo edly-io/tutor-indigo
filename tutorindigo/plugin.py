@@ -152,7 +152,7 @@ for mfe in indigo_styled_mfes:
             (
                 f"mfe-env-config-runtime-definitions-{mfe}",
                 """
-                const { HeaderWidget, FooterWidget, MultiSiteBannerWidget, DiscussionSidebarWidget } = require("@edly-io/edly-saas-widget");
+                const { HeaderWidget, FooterWidget, MultiSiteBannerWidget, DiscussionSidebarWidget, PaidCourseUnenrollWidget } = require("@edly-io/edly-saas-widget");
                 """,
             )
         ]
@@ -282,6 +282,17 @@ GRADEBOOK_FOOTER_WIDGET = FOOTER_WIDGET + """
 },
 """
 
+PAID_COURSE_UNENROLL_WIDGET = """
+{
+    op: PLUGIN_OPERATIONS.Insert,
+    widget: {
+        id: 'paid_course_unenroll_guard',
+        type: DIRECT_PLUGIN,
+        RenderWidget: PaidCourseUnenrollWidget,
+    },
+},
+"""
+
 HEADER_WIDGET = """
 {
     op: PLUGIN_OPERATIONS.Hide,
@@ -329,6 +340,18 @@ MFE_CONFIG = {
     "gradebook": {
         "footer_slot": GRADEBOOK_FOOTER_WIDGET,
         "desktop_header_slot": HEADER_WIDGET,
+    },
+    "learner-dashboard": {
+        # Keep the same footer/header widgets learner-dashboard already gets via
+        # DEFAULT_CONFIG below - giving this MFE its own MFE_CONFIG entry means it no
+        # longer falls back to DEFAULT_CONFIG at all, so those two must be repeated here.
+        "footer_slot": FOOTER_WIDGET,
+        "desktop_header_slot": HEADER_WIDGET,
+        # No short alias exists for this slot (unlike footer_slot/desktop_header_slot),
+        # so the full slot ID is used directly. Mounted here (page-level, once) rather
+        # than in the per-card course_card_action_slot because PaidCourseUnenrollWidget
+        # now targets the "⋮" menu's Unenroll item via DOM, not a per-card render slot.
+        "org.openedx.frontend.learner_dashboard.dashboard_modal.v1": PAID_COURSE_UNENROLL_WIDGET,
     },
 }
 
