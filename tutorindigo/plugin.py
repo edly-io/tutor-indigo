@@ -217,6 +217,7 @@ indigo_styled_mfes = [
     "account",
     "discussions",
     "authoring",
+    "rwaq-admin",
 ]
 
 for mfe in indigo_styled_mfes:
@@ -537,6 +538,11 @@ def _add_my_mfe(mfes):  # type: ignore[no-untyped-def]
     mfes["learning"] = {
         "repository": "https://github.com/edly-io/frontend-app-learning.git",
         "port": 2000,
+        "version": "ulmo/rwaq",
+    }
+    mfes["rwaq-admin"] = {
+        "repository": "https://github.com/edly-io/frontend-app-rwaq-admin.git",
+        "port": 2011,
         "version": "ulmo/rwaq",
     }
 
