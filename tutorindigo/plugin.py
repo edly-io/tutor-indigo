@@ -551,7 +551,7 @@ def _add_my_mfe(mfes):  # type: ignore[no-untyped-def]
     mfes["rwaq-admin"] = {
         "repository": "https://github.com/edly-io/frontend-app-rwaq-admin.git",
         "port": 2011,
-        "version": "ulmo/rwaq",
+        "version": "master",
     }
 
     return mfes
