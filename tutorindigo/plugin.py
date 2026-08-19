@@ -233,9 +233,17 @@ RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/rwaq'
     )
 
 hooks.Filters.ENV_PATCHES.add_item(
-    (
+     (
         "mfe-dockerfile-post-npm-install-authn",
         "RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/rwaq'",
+    )
+)
+
+# Override PUBLIC_PATH for rwaq-admin from /rwaq-admin/ to /admin/
+hooks.Filters.ENV_PATCHES.add_item(
+    (
+        "mfe-dockerfile-pre-npm-build-rwaq-admin",
+        "ENV PUBLIC_PATH='/admin/'",
     )
 )
 
