@@ -217,6 +217,7 @@ indigo_styled_mfes = [
     "account",
     "discussions",
     "authoring",
+    "rwaq-admin",
 ]
 
 for mfe in indigo_styled_mfes:
@@ -232,9 +233,17 @@ RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/rwaq'
     )
 
 hooks.Filters.ENV_PATCHES.add_item(
-    (
+     (
         "mfe-dockerfile-post-npm-install-authn",
         "RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/rwaq'",
+    )
+)
+
+# Override PUBLIC_PATH for rwaq-admin from /rwaq-admin/ to /admin/
+hooks.Filters.ENV_PATCHES.add_item(
+    (
+        "mfe-dockerfile-pre-npm-build-rwaq-admin",
+        "ENV PUBLIC_PATH='/admin/'",
     )
 )
 
@@ -487,6 +496,26 @@ MFE_CONFIG["PARAGON_THEME_URLS"] = {json.dumps(paragon_theme_urls)}
 hooks.Filters.ENV_PATCHES.add_item(("mfe-lms-common-settings", fstring))
 hooks.Filters.ENV_PATCHES.add_item(("mfe-cms-common-settings", fstring))
 
+# The Rwaq Admin Panel MFE calls Studio directly (the Course Creator grant
+# writes the CourseCreator row, and cms.djangoapps.course_creators is a
+# CMS-only app), so Studio has to accept its origin.
+#
+# tutor-mfe's own CMS patch only whitelists "authoring" and "admin-console" by
+# name — unlike the LMS patch, which loops over every registered MFE — so ours
+# needs adding by hand. Development only: in production every MFE is served
+# from the single MFE_HOST, which tutor-mfe already whitelists.
+hooks.Filters.ENV_PATCHES.add_item(
+    (
+        "openedx-cms-development-settings",
+        """
+# Rwaq Admin Panel MFE
+CORS_ORIGIN_WHITELIST.append("http://{{ MFE_HOST }}:{{ get_mfe("rwaq-admin")["port"] }}")
+LOGIN_REDIRECT_WHITELIST.append("{{ MFE_HOST }}:{{ get_mfe("rwaq-admin")["port"] }}")
+CSRF_TRUSTED_ORIGINS.append("http://{{ MFE_HOST }}:{{ get_mfe("rwaq-admin")["port"] }}")
+""",
+    )
+)
+
 
 @MFE_APPS.add()  # type: ignore
 def _add_themed_logo(
@@ -537,6 +566,11 @@ def _add_my_mfe(mfes):  # type: ignore[no-untyped-def]
     mfes["learning"] = {
         "repository": "https://github.com/edly-io/frontend-app-learning.git",
         "port": 2000,
+        "version": "ulmo/rwaq",
+    }
+    mfes["rwaq-admin"] = {
+        "repository": "https://github.com/edly-io/frontend-app-rwaq-admin.git",
+        "port": 2011,
         "version": "ulmo/rwaq",
     }
 
