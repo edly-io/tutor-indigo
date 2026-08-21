@@ -472,22 +472,29 @@ PLUGIN_SLOTS.add_items(
     ]
 )
 
-paragon_theme_urls = {
-    "variants": {
-        "light": {
-            "urls": {
-                "default": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/rwaq/dist/light.min.css",
-                "brandOverride": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/rwaq/dist/light.min.css",
-            },
-        },
-        "dark": {
-            "urls": {
-                "default": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/rwaq/dist/dark.min.css",
-                "brandOverride": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/rwaq/dist/dark.min.css",
-            }
-        },
-    }
-}
+# Paragon theme URLs are deliberately left empty.
+#
+# These previously pointed at raw.githubusercontent.com paths in
+# edly-io/brand-openedx, which is a **private** repository — so the browser got
+# a 404 on every page load of every MFE. frontend-platform blocks its first
+# paint waiting for that stylesheet, logs
+#
+#     Failed to load theme variant (light) CSS from https://raw.githubusercontent...
+#     and locally installed fallback URL is not available. Aborting.
+#
+# and only then renders, which is a visible flash on each navigation. Verified
+# in a real browser: the two local paragon-theme-*.css files load fine and only
+# the brand override 404s.
+#
+# The brand package is already installed into the MFE image
+# (`npm install @edx/brand@github:@edly-io/brand-openedx#ulmo/rwaq` in the
+# Dockerfile), so each MFE serves its own compiled theme CSS and needs no
+# remote URL. Leaving this empty means nothing is fetched and nothing stalls.
+#
+# If a remote theme is wanted later it must be a URL the browser can actually
+# reach unauthenticated — a release asset or a CDN, not a private repo's raw
+# path.
+paragon_theme_urls = {}
 
 fstring = f"""
 MFE_CONFIG["PARAGON_THEME_URLS"] = {json.dumps(paragon_theme_urls)}
