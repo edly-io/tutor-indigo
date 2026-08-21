@@ -1,6 +1,6 @@
 {% raw %}
 {% load i18n %}
 {% autoescape off %}
-{% blocktrans trimmed %} Learner has earned a new certificate {{ platform_name }}{% endblocktrans %}
+{% blocktrans trimmed %}Learner has earned a new certificate {{ platform_name }}{% endblocktrans %}
 {% endautoescape %}
 {% endraw %}
