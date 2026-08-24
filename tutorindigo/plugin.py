@@ -217,7 +217,7 @@ indigo_styled_mfes = [
     "account",
     "discussions",
     "authoring",
-    "rwaq-admin",
+    "admin",
 ]
 
 for mfe in indigo_styled_mfes:
@@ -236,14 +236,6 @@ hooks.Filters.ENV_PATCHES.add_item(
      (
         "mfe-dockerfile-post-npm-install-authn",
         "RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/rwaq'",
-    )
-)
-
-# Override PUBLIC_PATH for rwaq-admin from /rwaq-admin/ to /admin/
-hooks.Filters.ENV_PATCHES.add_item(
-    (
-        "mfe-dockerfile-pre-npm-build-rwaq-admin",
-        "ENV PUBLIC_PATH='/admin/'",
     )
 )
 
@@ -509,9 +501,9 @@ hooks.Filters.ENV_PATCHES.add_item(
         "openedx-cms-development-settings",
         """
 # Rwaq Admin Panel MFE
-CORS_ORIGIN_WHITELIST.append("http://{{ MFE_HOST }}:{{ get_mfe("rwaq-admin")["port"] }}")
-LOGIN_REDIRECT_WHITELIST.append("{{ MFE_HOST }}:{{ get_mfe("rwaq-admin")["port"] }}")
-CSRF_TRUSTED_ORIGINS.append("http://{{ MFE_HOST }}:{{ get_mfe("rwaq-admin")["port"] }}")
+CORS_ORIGIN_WHITELIST.append("http://{{ MFE_HOST }}:{{ get_mfe("admin")["port"] }}")
+LOGIN_REDIRECT_WHITELIST.append("{{ MFE_HOST }}:{{ get_mfe("admin")["port"] }}")
+CSRF_TRUSTED_ORIGINS.append("http://{{ MFE_HOST }}:{{ get_mfe("admin")["port"] }}")
 """,
     )
 )
@@ -568,7 +560,12 @@ def _add_my_mfe(mfes):  # type: ignore[no-untyped-def]
         "port": 2000,
         "version": "ulmo/rwaq",
     }
-    mfes["rwaq-admin"] = {
+    # Registered as "admin" (not "rwaq-admin") so the Caddy route and the
+    # webpack PUBLIC_PATH both derive from this one name: tutor-mfe builds
+    # each MFE with PUBLIC_PATH='/<key>/' and serves it at /<key>, and the
+    # app's own .env already sets PUBLIC_PATH=/admin/. The repository name
+    # stays frontend-app-rwaq-admin.
+    mfes["admin"] = {
         "repository": "https://github.com/edly-io/frontend-app-rwaq-admin.git",
         "port": 2011,
         "version": "ulmo/rwaq",
