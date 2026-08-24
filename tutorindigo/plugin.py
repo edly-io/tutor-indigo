@@ -572,3 +572,38 @@ def _add_my_mfe(mfes):  # type: ignore[no-untyped-def]
     }
 
     return mfes
+
+
+_ADMIN_REPO_BASENAME = "frontend-app-rwaq-admin"
+_ADMIN_WRONG_NAME = "rwaq-admin"
+_ADMIN_MFE_NAME = "admin"
+
+
+@hooks.Filters.COMPOSE_MOUNTS.add(priority=hooks.priorities.LOW)
+def _fix_admin_compose_mount(
+    volumes: list[tuple[str, str]], path_basename: str
+) -> list[tuple[str, str]]:
+    """Redirect the frontend-app-rwaq-admin bind-mount to the "admin" service."""
+    if path_basename != _ADMIN_REPO_BASENAME:
+        return volumes
+    return [
+        (_ADMIN_MFE_NAME if service == _ADMIN_WRONG_NAME else service, container_path)
+        for service, container_path in volumes
+    ]
+
+
+@hooks.Filters.IMAGES_BUILD_MOUNTS.add(priority=hooks.priorities.LOW)
+def _fix_admin_build_mounts(
+    mounts: list[tuple[str, str]], host_path: str
+) -> list[tuple[str, str]]:
+    """Rename the rwaq-admin-* build mounts to admin-*, for both prod and dev images."""
+    if os.path.basename(host_path) != _ADMIN_REPO_BASENAME:
+        return mounts
+    renamed = []
+    for image, mount_name in mounts:
+        if image == f"{_ADMIN_WRONG_NAME}-dev":
+            image = f"{_ADMIN_MFE_NAME}-dev"
+        if mount_name == f"{_ADMIN_WRONG_NAME}-src":
+            mount_name = f"{_ADMIN_MFE_NAME}-src"
+        renamed.append((image, mount_name))
+    return renamed
