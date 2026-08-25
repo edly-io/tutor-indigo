@@ -29,8 +29,11 @@
   font-size: 1em;
 }
 
-.wp-block-image img {
-  max-width: 80px;
+.site-footer .widget img {
+    max-width: 200px !important;
+    max-height: 70px;
+    object-fit: contain;
+    object-position: left;
 }
 
 #menu-footer-menu {
