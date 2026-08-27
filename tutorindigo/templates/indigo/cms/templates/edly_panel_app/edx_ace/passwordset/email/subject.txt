@@ -1,6 +1,6 @@
 {% raw %}
 {% load i18n %}
 {% autoescape off %}
-{% blocktrans trimmed %}Password set on {{ platform_name }}{% endblocktrans %}
+{% blocktrans trimmed %}Welcome! Set up your account to get started{% endblocktrans %}
 {% endautoescape %}
 {% endraw %}
