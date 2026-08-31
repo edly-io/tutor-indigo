@@ -1,2 +1,2 @@
 # pip-install private repo using PAT
-RUN pip install -e 'git+https://{{ PAT }}@github.com/edly-io/rwaq-features.git@master#egg=rwaq_features'
+RUN pip install -e 'git+https://{{ PAT }}@github.com/edly-io/rwaq-features.git@ulmo/rwaq-dev#egg=rwaq_features'

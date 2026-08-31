@@ -226,7 +226,7 @@ for mfe in indigo_styled_mfes:
             (
                 f"mfe-dockerfile-post-npm-install-{mfe}",
                 """
-RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/rwaq'
+RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/rwaq-dev'
 """,  # noqa: E501
             ),
         ]
@@ -235,7 +235,7 @@ RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/rwaq'
 hooks.Filters.ENV_PATCHES.add_item(
      (
         "mfe-dockerfile-post-npm-install-authn",
-        "RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/rwaq'",
+        "RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/rwaq-dev'",
     )
 )
 
@@ -468,14 +468,14 @@ paragon_theme_urls = {
     "variants": {
         "light": {
             "urls": {
-                "default": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/rwaq/dist/light.min.css",
-                "brandOverride": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/rwaq/dist/light.min.css",
+                "default": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/rwaq-dev/dist/light.min.css",
+                "brandOverride": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/rwaq-dev/dist/light.min.css",
             },
         },
         "dark": {
             "urls": {
-                "default": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/rwaq/dist/dark.min.css",
-                "brandOverride": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/rwaq/dist/dark.min.css",
+                "default": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/rwaq-dev/dist/dark.min.css",
+                "brandOverride": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/rwaq-dev/dist/dark.min.css",
             }
         },
     }
@@ -543,22 +543,22 @@ def _add_my_mfe(mfes):  # type: ignore[no-untyped-def]
     mfes["authn"] = {
         "repository": "https://github.com/edly-io/frontend-app-authn.git",
         "port": 1999,
-        "version": "ulmo/rwaq",
+        "version": "ulmo/rwaq-dev",
     }
     mfes["authoring"] = {
         "repository": "https://github.com/edly-io/frontend-app-authoring.git",
         "port": 2001,
-        "version": "ulmo/rwaq",
+        "version": "ulmo/rwaq-dev",
     }
     mfes["learner-dashboard"] = {
         "repository": "https://github.com/edly-io/frontend-app-learner-dashboard.git",
         "port": 1996,
-        "version": "ulmo/rwaq",
+        "version": "ulmo/rwaq-dev",
     }
     mfes["learning"] = {
         "repository": "https://github.com/edly-io/frontend-app-learning.git",
         "port": 2000,
-        "version": "ulmo/rwaq",
+        "version": "ulmo/rwaq-dev",
     }
     # Registered as "admin" (not "rwaq-admin") so the Caddy route and the
     # webpack PUBLIC_PATH both derive from this one name: tutor-mfe builds
@@ -568,7 +568,7 @@ def _add_my_mfe(mfes):  # type: ignore[no-untyped-def]
     mfes["admin"] = {
         "repository": "https://github.com/edly-io/frontend-app-rwaq-admin.git",
         "port": 2011,
-        "version": "ulmo/rwaq",
+        "version": "ulmo/rwaq-dev",
     }
 
     return mfes
