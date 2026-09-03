@@ -98,6 +98,14 @@ h1, h2, h3, h1 span, h2 span, h3 span, .nav-item {
   }
 }
 
+// The banner is a sibling of #content inside .window-wrap and already carries the
+// $header-height offset above, so the wrapper's own offset would double the gap under it.
+.edly-course-banner ~ #content.content-wrapper {
+  @include media-breakpoint-up(lg) {
+    margin-top: 0;
+  }
+}
+
 ////////////////// Fonts
 @import "fonts";
 

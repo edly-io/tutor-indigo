@@ -309,29 +309,15 @@ HEADER_WIDGET = """
 },
 """
 
-# No slot renders at the top of the learning MFE's content column, so the banner is mounted
-# on the breadcrumbs slot and CourseBannerWidget prepends it into `.unit-container` -- the
-# column holding the unit beside the course outline sidebar. That is where the banner sat
-# before the upgrade. Renders nothing unless the tenant sets
-# MFE_CONFIG.COURSE_BANNER_IMAGE_URL.
-LEARNING_BANNER_WIDGET = """
+# Neither learning nor discussions exposes a slot where the banner belongs, so the widget
+# mounts on a slot they do have and inserts the banner above `<main>` itself -- above the
+# course tabs, matching where the mako course pages render it. Renders nothing unless the
+# tenant sets MFE_CONFIG.COURSE_BANNER_IMAGE_URL.
+COURSE_BANNER_WIDGET = """
 {
     op: PLUGIN_OPERATIONS.Insert,
     widget: {
         id: 'edly_course_banner',
-        type: DIRECT_PLUGIN,
-        RenderWidget: () => <CourseBannerWidget placement="content" />,
-    },
-},
-"""
-
-# frontend-app-discussions ships only a FooterSlot -- no header/top slot -- so the banner
-# mounts in the footer and CourseBannerWidget places it above `<main>`.
-DISCUSSIONS_BANNER_WIDGET = """
-{
-    op: PLUGIN_OPERATIONS.Insert,
-    widget: {
-        id: 'edly_course_banner_injector',
         type: DIRECT_PLUGIN,
         RenderWidget: CourseBannerWidget,
     },
@@ -356,8 +342,7 @@ CERTIFICATE_WIDGET =  """
 MFE_CONFIG = {
     "learning": {
         "footer_slot": LEARNING_FOOTER_WIDGET,
-        "header_slot": HEADER_WIDGET,
-        "course_breadcrumbs_slot": LEARNING_BANNER_WIDGET,
+        "header_slot": HEADER_WIDGET + COURSE_BANNER_WIDGET,
         "progress_certificate_status_slot": CERTIFICATE_WIDGET
     },
     "authoring": {
@@ -374,7 +359,7 @@ MFE_CONFIG = {
     # Own entry means no DEFAULT_CONFIG fallback, so desktop_header_slot is repeated here
     # to keep the header this MFE already got.
     "discussions": {
-        "footer_slot": FOOTER_WIDGET + DISCUSSIONS_BANNER_WIDGET,
+        "footer_slot": FOOTER_WIDGET + COURSE_BANNER_WIDGET,
         "desktop_header_slot": HEADER_WIDGET,
     },
     "learner-dashboard": {
