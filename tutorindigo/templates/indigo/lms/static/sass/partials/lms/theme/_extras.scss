@@ -81,6 +81,23 @@ h1, h2, h3, h1 span, h2 span, h3 span, .nav-item {
   min-height: calc(100vh - #{$header-height + $content-padding-top + $content-padding-bottom + $footer-height}); // sticky footer
 }
 
+// Per-tenant course banner.
+// `.header-holder` is position:fixed above lg, so it occupies no flow space --
+// without the same $header-height offset that #content.content-wrapper gets
+// above, the banner's top renders underneath the header.
+.edly-course-banner {
+  display: block;
+  width: 100%;
+  max-width: 1170px;
+  height: auto;
+  margin: 0 auto;
+  padding: 20px;
+
+  @include media-breakpoint-up(lg) {
+    margin-top: $header-height;
+  }
+}
+
 ////////////////// Fonts
 @import "fonts";
 

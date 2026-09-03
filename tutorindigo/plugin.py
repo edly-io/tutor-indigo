@@ -152,7 +152,7 @@ for mfe in indigo_styled_mfes:
             (
                 f"mfe-env-config-runtime-definitions-{mfe}",
                 """
-                const { HeaderWidget, FooterWidget, MultiSiteBannerWidget, DiscussionSidebarWidget, PaidCourseUnenrollWidget } = require("@edly-io/edly-saas-widget");
+                const { HeaderWidget, FooterWidget, MultiSiteBannerWidget, DiscussionSidebarWidget, PaidCourseUnenrollWidget, CourseBannerWidget } = require("@edly-io/edly-saas-widget");
                 """,
             )
         ]
@@ -309,6 +309,35 @@ HEADER_WIDGET = """
 },
 """
 
+# No slot renders at the top of the learning MFE's content column, so the banner is mounted
+# on the breadcrumbs slot and CourseBannerWidget prepends it into `.unit-container` -- the
+# column holding the unit beside the course outline sidebar. That is where the banner sat
+# before the upgrade. Renders nothing unless the tenant sets
+# MFE_CONFIG.COURSE_BANNER_IMAGE_URL.
+LEARNING_BANNER_WIDGET = """
+{
+    op: PLUGIN_OPERATIONS.Insert,
+    widget: {
+        id: 'edly_course_banner',
+        type: DIRECT_PLUGIN,
+        RenderWidget: () => <CourseBannerWidget placement="content" />,
+    },
+},
+"""
+
+# frontend-app-discussions ships only a FooterSlot -- no header/top slot -- so the banner
+# mounts in the footer and CourseBannerWidget places it above `<main>`.
+DISCUSSIONS_BANNER_WIDGET = """
+{
+    op: PLUGIN_OPERATIONS.Insert,
+    widget: {
+        id: 'edly_course_banner_injector',
+        type: DIRECT_PLUGIN,
+        RenderWidget: CourseBannerWidget,
+    },
+},
+"""
+
 CERTIFICATE_WIDGET =  """
 {
     op: PLUGIN_OPERATIONS.Modify,
@@ -328,6 +357,7 @@ MFE_CONFIG = {
     "learning": {
         "footer_slot": LEARNING_FOOTER_WIDGET,
         "header_slot": HEADER_WIDGET,
+        "course_breadcrumbs_slot": LEARNING_BANNER_WIDGET,
         "progress_certificate_status_slot": CERTIFICATE_WIDGET
     },
     "authoring": {
@@ -339,6 +369,12 @@ MFE_CONFIG = {
     },
     "gradebook": {
         "footer_slot": GRADEBOOK_FOOTER_WIDGET,
+        "desktop_header_slot": HEADER_WIDGET,
+    },
+    # Own entry means no DEFAULT_CONFIG fallback, so desktop_header_slot is repeated here
+    # to keep the header this MFE already got.
+    "discussions": {
+        "footer_slot": FOOTER_WIDGET + DISCUSSIONS_BANNER_WIDGET,
         "desktop_header_slot": HEADER_WIDGET,
     },
     "learner-dashboard": {
