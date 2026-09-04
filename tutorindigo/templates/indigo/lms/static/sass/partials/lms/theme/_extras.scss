@@ -81,6 +81,32 @@ h1, h2, h3, h1 span, h2 span, h3 span, .nav-item {
   min-height: calc(100vh - #{$header-height + $content-padding-top + $content-padding-bottom + $footer-height}); // sticky footer
 }
 
+// Per-tenant course banner (Koa parity: edly-edx-themes#435).
+// The banner is the first thing in .window-wrap, so it -- not #content -- has to clear the
+// fixed header. Unconditional: above 1230px that is `.header-holder`, below it the page's
+// own JS makes `.header-frame` fixed instead, so there is no width where the offset is
+// unwanted.
+.edly-course-banner {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 64px;
+}
+
+// The preview menu ("View this course as") renders above the banner and already carries
+// the offset, so the banner must not add a second one.
+nav.wrapper-preview-menu ~ .edly-course-banner {
+  margin-top: 0;
+}
+
+// `.window-wrap` is for specificity, not structure: css/main.css sets
+// `margin-top: 64px !important` on `.window-wrap #content.content-wrapper` and is linked
+// after this bundle, so an equal-specificity rule would lose on source order. The banner
+// has taken that offset over.
+.window-wrap .edly-course-banner ~ #content.content-wrapper {
+  margin-top: 0 !important;
+}
+
 ////////////////// Fonts
 @import "fonts";
 
