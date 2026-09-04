@@ -75,10 +75,6 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
   </div>
 </div>
 
-<% banner_url = configuration_helpers.get_value('MFE_CONFIG', {}).get('COURSE_BANNER_IMAGE_URL') %>
-% if course and banner_url:
-  <img src="${banner_url}" alt="" class="edly-course-banner" />
-% endif
 
 % if course:
 <!--[if lte IE 9]>
