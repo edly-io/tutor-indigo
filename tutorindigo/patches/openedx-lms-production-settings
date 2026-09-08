@@ -1,0 +1,49 @@
+# Route learner-facing, latency-sensitive Celery tasks off the default queue.
+#
+# Why this is needed: every routing key below resolves to DEFAULT_PRIORITY_QUEUE
+# upstream (lms/envs/common.py), so activation emails, gradebook recalculation
+# and certificate awards all queue behind whatever bulk work is running.
+# Measured on prod: edx.lms.core.default held 9,594 messages while
+# edx.lms.core.high and .high_mem sat at 0 — that is what produced the ~4 hour
+# gradebook lag and 1-3 hour email delays learners reported.
+#
+# Safe with a single worker: tutor's LMS_WORKER_COMMAND default already passes
+#   --queues=edx.lms.core.default,edx.lms.core.high,edx.lms.core.high_mem
+# so one worker consumes all three and nothing is orphaned. Identical in the
+# docker (local/docker-compose.prod.yml) and k8s (k8s/deployments.yml) paths,
+# so stage and prod behave the same.
+#
+# What this does NOT give you: strict priority. One worker pool serving three
+# queues means Celery round-robins between them, so a high task does not
+# preempt an in-flight default task. It does mean a deep default queue no
+# longer sits in front of a shallow high queue. For true priority, add a
+# separate worker deployment consuming only edx.lms.core.high.
+#
+# Lives in tutor-indigo because indigo is the one plugin enabled in BOTH the
+# stage and prod deployment workflows; this is platform config rather than
+# theming, so move it to a dedicated plugin if one is ever created.
+
+# Single-learner subsection regrade — the task behind the gradebook lag.
+SINGLE_LEARNER_COURSE_REGRADE_ROUTING_KEY = HIGH_PRIORITY_QUEUE
+
+# award_course_certificate / award_program_certificates / revoke_*.
+PROGRAM_CERTIFICATES_ROUTING_KEY = HIGH_PRIORITY_QUEUE
+
+# send_grade_to_credentials.
+CREDENTIALS_GENERATION_ROUTING_KEY = HIGH_PRIORITY_QUEUE
+
+# ACE covers most learner email (set-password, verification, schedules).
+# Upstream hardcodes this to 'edx.lms.core.default' in
+# openedx/core/djangoapps/ace_common/settings/common.py.
+ACE_ROUTING_KEY = HIGH_PRIORITY_QUEUE
+
+# send_activation_email has no routing key upstream at all, so it falls through
+# to CELERY_DEFAULT_QUEUE. Route it explicitly.
+EXPLICIT_QUEUES.update({
+    "openedx.core.djangoapps.user_authn.tasks.send_activation_email": {
+        "queue": HIGH_PRIORITY_QUEUE},
+})
+
+# POLICY_CHANGE_GRADES_ROUTING_KEY is deliberately left on the default queue:
+# recalculate_course_and_subsection_grades_for_user is bulk work, and bulk work
+# is exactly what should stay isolated from interactive traffic.
