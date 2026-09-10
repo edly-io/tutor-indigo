@@ -1,0 +1,1 @@
+- [Feature] Edly sales demo theming for Verawood: Edly primary color, logos, favicons and the Edly footer (legacy LMS and MFEs), with the `@edx/brand` package and Paragon theme CSS served from the `sales-demo-theming-verawood` branch of `edly-io/brand-openedx`. (by @abdul-muqadim)
