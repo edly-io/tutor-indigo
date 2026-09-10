@@ -24,7 +24,7 @@ config: t.Dict[str, t.Dict[str, t.Any]] = {
     "defaults": {
         "VERSION": __version__,
         "WELCOME_MESSAGE": "The place for all your online learning",
-        "PRIMARY_COLOR": "#15376D",  # Indigo
+        "PRIMARY_COLOR": "#dd1e26",  # Edly primary red (sales demo)
         "ENABLE_DARK_TOGGLE": True,
         # Footer links are dictionaries with a "title" and "url"
         # To remove all links, run:
@@ -123,7 +123,7 @@ for mfe in indigo_styled_mfes:
             (
                 f"mfe-dockerfile-post-npm-install-{mfe}",
                 """
-RUN npm install '@edx/brand@github:@edly-io/brand-openedx#indigo-3.0.0'
+RUN npm install '@edx/brand@git+https://github.com/edly-io/brand-openedx.git#sales-demo-theming-verawood'
 """,  # noqa: E501
             ),
         ]
@@ -132,7 +132,7 @@ RUN npm install '@edx/brand@github:@edly-io/brand-openedx#indigo-3.0.0'
 hooks.Filters.ENV_PATCHES.add_item(
     (
         "mfe-dockerfile-post-npm-install-authn",
-        "RUN npm install '@edx/brand@github:@edly-io/brand-openedx#indigo-3.0.0'",
+        "RUN npm install '@edx/brand@git+https://github.com/edly-io/brand-openedx.git#sales-demo-theming-verawood'",
     )
 )
 
@@ -322,14 +322,14 @@ paragon_theme_urls = {
     "variants": {
         "light": {
             "urls": {
-                "default": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/verawood/indigo/dist/light.min.css",
-                "brandOverride": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/verawood/indigo/dist/light.min.css",
+                "default": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/sales-demo-theming-verawood/dist/light.min.css",
+                "brandOverride": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/sales-demo-theming-verawood/dist/light.min.css",
             },
         },
         "dark": {
             "urls": {
-                "default": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/verawood/indigo/dist/dark.min.css",
-                "brandOverride": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/verawood/indigo/dist/dark.min.css",
+                "default": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/sales-demo-theming-verawood/dist/dark.min.css",
+                "brandOverride": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/sales-demo-theming-verawood/dist/dark.min.css",
             }
         },
     }
@@ -337,7 +337,7 @@ paragon_theme_urls = {
 
 frontend_base_theme = {
     "core": {
-        "url": "https://cdn.jsdelivr.net/gh/edly-io/brand-openedx@refs/heads/verawood/indigo/dist/core.min.css",
+        "url": "https://cdn.jsdelivr.net/gh/edly-io/brand-openedx@refs/heads/sales-demo-theming-verawood/dist/core.min.css",
     },
     "defaults": {
         "light": "light",
@@ -345,10 +345,10 @@ frontend_base_theme = {
     },
     "variants": {
         "light": {
-            "url": "https://cdn.jsdelivr.net/gh/edly-io/brand-openedx@refs/heads/verawood/indigo/dist/light.min.css",
+            "url": "https://cdn.jsdelivr.net/gh/edly-io/brand-openedx@refs/heads/sales-demo-theming-verawood/dist/light.min.css",
         },
         "dark": {
-            "url": "https://cdn.jsdelivr.net/gh/edly-io/brand-openedx@refs/heads/verawood/indigo/dist/dark.min.css",
+            "url": "https://cdn.jsdelivr.net/gh/edly-io/brand-openedx@refs/heads/sales-demo-theming-verawood/dist/dark.min.css",
         },
     },
 }
