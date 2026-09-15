@@ -1,0 +1,1 @@
+- [Feature] Style the Course Catalog MFE ("Discover new") like the other Indigo MFEs: install the brand package, add the Indigo footer, theme toggle and mobile header, and replace the course cards with the Indigo course card (ported from the upstream `catalog-indigo-updates` branch). (by @abdul-muqadim)

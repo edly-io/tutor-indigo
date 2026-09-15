@@ -115,6 +115,7 @@ indigo_styled_mfes = [
     "account",
     "discussions",
     "authoring",
+    "catalog",
 ]
 
 for mfe in indigo_styled_mfes:
@@ -384,3 +385,38 @@ def _add_themed_logo(
         PLUGIN_SLOTS.add_item((str(mfe), *INDIGO_LOGO_SLOT))
 
     return mfes
+
+
+# Course Catalog MFE ("Discover new"): replace the default course cards with the
+# Indigo course card so the catalog matches the rest of the themed MFEs.
+INDIGO_CATALOG_COURSE_CARD_SLOT = """
+    {
+        op: PLUGIN_OPERATIONS.Hide,
+        widgetId: 'default_contents',
+    },
+    {
+        op: PLUGIN_OPERATIONS.Insert,
+        widget: {
+            id: 'indigo_catalog_course_card',
+            type: DIRECT_PLUGIN,
+            RenderWidget: (props) => (
+              <CatalogCourseCard {...props} />
+            ),
+        },
+    },
+"""
+
+PLUGIN_SLOTS.add_items(
+    [
+        (
+            "catalog",
+            "org.openedx.frontend.catalog.home_page.course_card",
+            INDIGO_CATALOG_COURSE_CARD_SLOT,
+        ),
+        (
+            "catalog",
+            "org.openedx.frontend.catalog.course_catalog_page.data_table.course_card",
+            INDIGO_CATALOG_COURSE_CARD_SLOT,
+        ),
+    ]
+)
