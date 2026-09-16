@@ -24,6 +24,9 @@ config: t.Dict[str, t.Dict[str, t.Any]] = {
         "WELCOME_MESSAGE": "The place for all your online learning",
         "PRIMARY_COLOR": "#15376D",  # Indigo
         "ENABLE_DARK_TOGGLE": True,
+        # Executes tenant-authored JS from WordPress on the LMS, Studio and MFEs.
+        # Off by default: it is a code-execution channel, not a styling option.
+        "ENABLE_CUSTOM_JS": False,
         # Footer links are dictionaries with a "title" and "url"
         # To remove all links, run:
         # tutor config save --set INDIGO_FOOTER_NAV_LINKS=[]
@@ -127,6 +130,29 @@ brand_styled_mfes = [
     "discussions",
 ]
 
+# Every MFE tutor-mfe builds (tutormfe.plugin.CORE_MFE_APPS). Deliberately separate
+# from indigo_styled_mfes, which is a branding list and omits authn/admin-console.
+custom_js_mfes = [
+    "account",
+    "admin-console",
+    "authn",
+    "authoring",
+    "communications",
+    "discussions",
+    "gradebook",
+    "learner-dashboard",
+    "learning",
+    "ora-grading",
+    "profile",
+]
+
+# TEMP: pinned to the feature branch while tenant-custom-js is in review.
+# Restore before merge to: RUN npm install '@edly-io/edly-saas-widget'
+SAAS_WIDGET_INSTALL = (
+    "RUN npm install "
+    "'git+https://github.com/edly-io/frontend-saas-widgets.git#feat/tenant-custom-js'"
+)
+
 for mfe in indigo_styled_mfes:
     if mfe in brand_styled_mfes:
         hooks.Filters.ENV_PATCHES.add_items(
@@ -144,8 +170,8 @@ for mfe in indigo_styled_mfes:
         [
             (
                 f"mfe-dockerfile-post-npm-install-{mfe}",
-                """
-                RUN npm install '@edly-io/edly-saas-widget'
+                f"""
+                {SAAS_WIDGET_INSTALL}
                 RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'
 """,  # noqa: E501
             ),
@@ -162,12 +188,53 @@ for mfe in indigo_styled_mfes:
 hooks.Filters.ENV_PATCHES.add_item(
     (
         "mfe-dockerfile-post-npm-install-authn",
-        """
+        f"""
         RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'
-        RUN npm install @edly-io/edly-saas-widget
+        {SAAS_WIDGET_INSTALL}
         """,
     )
 )
+
+# Tenant custom JS. Wired through mfe-env-config-runtime-final rather than a plugin
+# slot: that patch runs for every MFE and every route, so authn and admin-console are
+# covered without inventing slot ids they may not render.
+for mfe in custom_js_mfes:
+    if mfe in indigo_styled_mfes or mfe == "authn":
+        continue
+    hooks.Filters.ENV_PATCHES.add_item(
+        (
+            f"mfe-dockerfile-post-npm-install-{mfe}",
+            "\n{% if INDIGO_ENABLE_CUSTOM_JS %}\n" + SAAS_WIDGET_INSTALL + "\n{% endif %}\n",
+        )
+    )
+
+hooks.Filters.ENV_PATCHES.add_item(
+    (
+        "mfe-env-config-runtime-final",
+        """
+{% if INDIGO_ENABLE_CUSTOM_JS %}
+    const { installCustomScript } = await import('@edly-io/edly-saas-widget');
+    const { APP_READY, getConfig, subscribe } = await import('@edx/frontend-platform');
+
+    subscribe(APP_READY, () => {
+      const appConfig = getConfig();
+      installCustomScript({
+        baseUrl: appConfig.MARKETING_SITE_BASE_URL,
+        context: {
+          platform: 'mfe',
+          app: process.env.APP_ID,
+          lmsBaseUrl: appConfig.LMS_BASE_URL,
+          marketingSiteBaseUrl: appConfig.MARKETING_SITE_BASE_URL,
+          pathname: window.location.pathname,
+          locale: document.documentElement.lang || null,
+        },
+      });
+    });
+{% endif %}
+""",
+    )
+)
+
 
 # Include js file in lms main.html, main_django.html, and certificate.html
 

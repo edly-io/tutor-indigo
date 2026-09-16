@@ -1,0 +1,11 @@
+## mako
+<%page expression_filter="h"/>
+<%namespace name='static' file='static_content.html'/>
+## Theme hook called unconditionally from lms/templates/main.html, so this is the only
+## LMS injection point that survives disable_header / disable_footer views.
+{% if INDIGO_ENABLE_CUSTOM_JS %}
+<script src="${static.url('js/edly-custom-js.js')}"
+        data-edly-mktg-root="${settings.MKTG_URLS.get('ROOT', '')}"
+        data-edly-platform="lms"
+        defer></script>
+{% endif %}
