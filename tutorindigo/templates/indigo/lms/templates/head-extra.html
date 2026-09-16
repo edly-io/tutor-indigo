@@ -1,7 +1,15 @@
 ## mako
 <%page expression_filter="h"/>
 <%namespace name='static' file='static_content.html'/>
-<%! from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers %>
+<%!
+import re
+
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+
+ORA_IN_PROGRESS_DEFAULT = '#0075b4'
+DEFAULT_XBLOCK_COLORS = {'xblock-color-warning': ORA_IN_PROGRESS_DEFAULT}
+SAFE_COLOR = re.compile(r'^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$')
+%>
 ## main.html calls this hook unconditionally -- the only LMS injection point that
 ## survives disable_header / disable_footer. MFE_CONFIG: one tenant key, both surfaces.
 % if configuration_helpers.get_value('MFE_CONFIG', {}).get('ENABLE_CUSTOM_JS', False):
@@ -9,4 +17,28 @@
         data-edly-mktg-root="${settings.MKTG_URLS.get('ROOT', '')}"
         data-edly-platform="lms"
         defer></script>
+% endif
+<%
+xblock_colors = {
+    key: value
+    for key, value in configuration_helpers.get_dict('XBLOCK_COLORS', DEFAULT_XBLOCK_COLORS).items()
+    if SAFE_COLOR.match(str(value or ''))
+}
+%>
+% if xblock_colors:
+<style>
+  :root {
+% for key, value in xblock_colors.items():
+    --${key}: ${value};
+% endfor
+  }
+
+  .wrapper--openassessment .openassessment .openassessment__steps__step.is--in-progress {
+    border-top-color: var(--xblock-color-warning, ${ORA_IN_PROGRESS_DEFAULT});
+  }
+
+  .wrapper--openassessment .openassessment .openassessment__steps__step.is--in-progress .step__status .step__status__value {
+    background: var(--xblock-color-warning, ${ORA_IN_PROGRESS_DEFAULT});
+  }
+</style>
 % endif
