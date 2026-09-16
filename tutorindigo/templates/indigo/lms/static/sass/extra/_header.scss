@@ -101,7 +101,7 @@ header.global-header {
             .toggle-user-dropdown {
                 padding: 9px 15px;
                 background: $primary-light;
-                color: $primary;
+                color: $accent;
                 font-size: 14px;
                 font-weight: 500;
                 line-height: 20px;
@@ -225,7 +225,7 @@ header.global-header {
     .light-theme-icon, .dark-theme-icon{
         width: 18px;
         height: 1.5rem;
-        color: $primary;
+        color: $accent;
         & svg {
             width: inherit;
             height: inherit;

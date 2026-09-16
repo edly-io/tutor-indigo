@@ -32,7 +32,7 @@ const indigoFooterStyles = {
   heading: {
     fontSize: '15px',
     marginBottom: '20px',
-    borderBottom: '2px solid #dd1e26',
+    borderBottom: '2px solid #4DC6B1',
     display: 'inline-block',
     paddingBottom: '10px',
     color: '#fff',

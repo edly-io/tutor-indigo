@@ -1,5 +1,11 @@
 $primary: {{ INDIGO_PRIMARY_COLOR }};
-$primary-light: #F2F7F8;
+// Edly brand (edly.io): red is reserved for buttons and controls, teal is the text accent,
+// mint is the light surface colour.
+$primary-light: #EBF9F6;
+$accent: #4DC6B1;
+$accent-hover: #20AD96;
+$link-color: $accent;
+$link-hover-color: $accent-hover;
 
 // Theme fonts
 $font-family-title: 'Inter', sans-serif;

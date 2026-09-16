@@ -301,7 +301,7 @@ nav.wrapper-preview-menu {
       margin: 0 0 20px;
     }
     a {
-      color: $primary;
+      color: $accent;
       text-decoration: underline;
     }
     .graphic-img {
@@ -535,7 +535,7 @@ body.view-instructordash {
         .total {
           border-top: 1px solid $gray-light;
           th, td {
-            color: $primary;
+            color: $accent;
             font-weight: 700;
           }
         }
@@ -651,7 +651,7 @@ body.view-wiki{
         }
         td {
           a {
-            color: $primary !important;
+            color: $accent !important;
           }
         }
       }
@@ -774,7 +774,7 @@ body.view-wiki{
               font-size: 14px;
               line-height: 28px;
               font-weight: 500;
-              color: $primary;
+              color: $accent;
               padding: 6px 10px;
               &:hover {
                 text-decoration: none;
@@ -792,7 +792,7 @@ body.view-wiki{
             &.active {
               a {
                 border: none;
-                color: $primary;
+                color: $accent;
                 background: $primary-light;
               }
             }
