@@ -1,8 +1,8 @@
 $primary: {{ INDIGO_PRIMARY_COLOR }};
-// Edly brand (edly.io): red is reserved for buttons and controls, teal is the text accent,
-// mint is the light surface colour.
+// Edly brand (edly.io): red is reserved for buttons and controls, the secondary navy is the
+// text accent (links, icons) with teal as hover, mint is the light surface colour.
 $primary-light: #EBF9F6;
-$accent: #4DC6B1;
+$accent: #3F3A64;
 $accent-hover: #20AD96;
 $link-color: $accent;
 $link-hover-color: $accent-hover;
