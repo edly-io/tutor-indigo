@@ -36,3 +36,10 @@ SHARED_COOKIE_DOMAIN = "{{ SESSION_COOKIE_DOMAIN }}"
 
 COURSE_ACCESS_DURATION_MIN_WEEKS = {{ COURSE_ACCESS_DURATION_MIN_WEEKS }}
 COURSE_ACCESS_DURATION_MAX_WEEKS = {{ COURSE_ACCESS_DURATION_MAX_WEEKS }}
+
+# Learner self-enrollment from the LMS is disabled — all enrollment must flow
+# through Programs (WordPress / admin paths). This makes every course
+# invitation-only at the data layer, so CourseEnrollment.enroll(check_access=True)
+# is rejected for non-staff. Privileged paths (MyProgramEnrollView, Admin Panel,
+# instructor dashboard) all use check_access=False and are unaffected.
+COURSES_INVITE_ONLY = True
