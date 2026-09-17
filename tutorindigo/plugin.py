@@ -141,17 +141,16 @@ custom_js_mfes = [
     "discussions",
     "gradebook",
     "learner-dashboard",
+    "learner-record",
     "learning",
     "ora-grading",
     "profile",
 ]
 
-# TEMP: pinned to the feature branch while tenant-custom-js is in review.
-# Restore before merge to: RUN npm install '@edly-io/edly-saas-widget'
-SAAS_WIDGET_INSTALL = (
-    "RUN npm install "
-    "'git+https://github.com/edly-io/frontend-saas-widgets.git#feat/tenant-custom-js'"
-)
+# frontend-saas-widgets is a private repo, so a git+https install cannot authenticate
+# inside the image build. To test an unreleased widget, publish a prerelease and point
+# this at its dist-tag (e.g. '@edly-io/edly-saas-widget@tenant-custom-js').
+SAAS_WIDGET_INSTALL = "RUN npm install '@edly-io/edly-saas-widget'"
 
 for mfe in indigo_styled_mfes:
     if mfe in brand_styled_mfes:
