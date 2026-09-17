@@ -208,10 +208,13 @@ hooks.Filters.ENV_PATCHES.add_item(
 # Installed unconditionally: the feature is enabled per tenant at runtime via
 # MFE_CONFIG['ENABLE_CUSTOM_JS'], so gating the install would make opting a tenant in
 # require an image rebuild.
+#
+# Imports the loader module directly, not the package barrel: the barrel pulls
+# HeaderWidget, DOMPurify and scss into MFEs that use none of them.
 CUSTOM_SCRIPT_RUNTIME = """
       {
         const { APP_READY, getConfig, subscribe } = require("@edx/frontend-platform");
-        const { installCustomScript } = require("@edly-io/edly-saas-widget/customScript");
+        const { installCustomScript } = require("@edly-io/edly-saas-widget/dist/customScript/loader");
 
         subscribe(APP_READY, () => {
           const appConfig = getConfig();
