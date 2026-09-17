@@ -130,13 +130,13 @@ brand_styled_mfes = [
     "discussions",
 ]
 
-# Every MFE tutor-mfe builds (tutormfe.plugin.CORE_MFE_APPS). Deliberately separate
-# from indigo_styled_mfes, which is a branding list and omits authn/admin-console.
+# Hand-maintained, not derived from upstream: tutormfe.plugin.CORE_MFE_APPS minus
+# authoring (Studio-facing, out of scope) plus learner-record, which some deployments
+# build. A patch for an MFE this deployment does not build is silently unconsumed.
 custom_js_mfes = [
     "account",
     "admin-console",
     "authn",
-    "authoring",
     "communications",
     "discussions",
     "gradebook",
@@ -199,29 +199,26 @@ hooks.Filters.ENV_PATCHES.add_item(
     )
 )
 
-# Tenant custom JS. Wired through mfe-env-config-runtime-final rather than a plugin
-# slot: that patch runs for every MFE and every route, so authn and admin-console are
-# covered without inventing slot ids they may not render.
+# Tenant custom JS. Emitted per MFE through mfe-env-config-runtime-definitions-{mfe}
+# rather than the unsuffixed mfe-env-config-runtime-final: that patch lands in every
+# MFE tutor-mfe builds, so a deployment carrying an MFE outside custom_js_mfes would
+# fail to resolve the import at build time. Keying both the install and the import off
+# one list keeps them from drifting apart.
 #
 # Installed unconditionally: the feature is enabled per tenant at runtime via
 # MFE_CONFIG['ENABLE_CUSTOM_JS'], so gating the install would make opting a tenant in
 # require an image rebuild.
-#
-# Emitted per MFE rather than through the unsuffixed mfe-env-config-runtime-final:
-# that patch lands in every MFE tutor-mfe builds, so a deployment carrying an MFE
-# outside custom_js_mfes would fail to resolve the import at build time. Keying both
-# the install and the import off one list keeps them from drifting apart.
 CUSTOM_SCRIPT_RUNTIME = """
       {
-        const { APP_READY, getConfig, subscribe } = await import('@edx/frontend-platform');
+        const { APP_READY, getConfig, subscribe } = require("@edx/frontend-platform");
+        const { installCustomScript } = require("@edly-io/edly-saas-widget/customScript");
 
-        subscribe(APP_READY, async () => {
+        subscribe(APP_READY, () => {
           const appConfig = getConfig();
           if (!appConfig.ENABLE_CUSTOM_JS) {
             return;
           }
 
-          const { installCustomScript } = await import('@edly-io/edly-saas-widget');
           installCustomScript({
             baseUrl: appConfig.MARKETING_SITE_BASE_URL,
             context: {
