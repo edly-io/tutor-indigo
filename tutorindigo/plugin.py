@@ -147,10 +147,15 @@ custom_js_mfes = [
     "profile",
 ]
 
-# frontend-saas-widgets is a private repo, so a git+https install cannot authenticate
-# inside the image build. To test an unreleased widget, publish a prerelease and point
-# this at its dist-tag (e.g. '@edly-io/edly-saas-widget@tenant-custom-js').
-SAAS_WIDGET_INSTALL = "RUN npm install '@edly-io/edly-saas-widget'"
+# TEMP: pinned to the feature branch while tenant-custom-js is in review.
+# frontend-saas-widgets is private, so the install authenticates with {{GH_PAT}}, the
+# same Tutor value the private pip installs in tutor-contrib-saas use.
+# Restore before merge to: RUN npm install '@edly-io/edly-saas-widget'
+SAAS_WIDGET_INSTALL = (
+    "RUN npm install "
+    "'git+https://{{GH_PAT}}@github.com/edly-io/"
+    "frontend-saas-widgets.git#feat/tenant-custom-js'"
+)
 
 for mfe in indigo_styled_mfes:
     if mfe in brand_styled_mfes:
