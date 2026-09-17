@@ -24,8 +24,8 @@ config: t.Dict[str, t.Dict[str, t.Any]] = {
         "WELCOME_MESSAGE": "The place for all your online learning",
         "PRIMARY_COLOR": "#15376D",  # Indigo
         "ENABLE_DARK_TOGGLE": True,
-        # Executes tenant-authored JS from WordPress on the LMS, Studio and MFEs.
-        # Off by default: it is a code-execution channel, not a styling option.
+        # Deployment-wide default for MFE_CONFIG['ENABLE_CUSTOM_JS']. A single tenant
+        # opts in by setting that key in its own MFE_CONFIG, which needs no rebuild.
         "ENABLE_CUSTOM_JS": False,
         # Footer links are dictionaries with a "title" and "url"
         # To remove all links, run:
@@ -202,42 +202,53 @@ hooks.Filters.ENV_PATCHES.add_item(
 # Tenant custom JS. Wired through mfe-env-config-runtime-final rather than a plugin
 # slot: that patch runs for every MFE and every route, so authn and admin-console are
 # covered without inventing slot ids they may not render.
+#
+# Installed unconditionally: the feature is enabled per tenant at runtime via
+# MFE_CONFIG['ENABLE_CUSTOM_JS'], so gating the install would make opting a tenant in
+# require an image rebuild.
+#
+# Emitted per MFE rather than through the unsuffixed mfe-env-config-runtime-final:
+# that patch lands in every MFE tutor-mfe builds, so a deployment carrying an MFE
+# outside custom_js_mfes would fail to resolve the import at build time. Keying both
+# the install and the import off one list keeps them from drifting apart.
+CUSTOM_SCRIPT_RUNTIME = """
+      {
+        const { APP_READY, getConfig, subscribe } = await import('@edx/frontend-platform');
+
+        subscribe(APP_READY, async () => {
+          const appConfig = getConfig();
+          if (!appConfig.ENABLE_CUSTOM_JS) {
+            return;
+          }
+
+          const { installCustomScript } = await import('@edly-io/edly-saas-widget');
+          installCustomScript({
+            baseUrl: appConfig.MARKETING_SITE_BASE_URL,
+            context: {
+              platform: 'mfe',
+              app: process.env.APP_ID,
+              lmsBaseUrl: appConfig.LMS_BASE_URL,
+              marketingSiteBaseUrl: appConfig.MARKETING_SITE_BASE_URL,
+              pathname: window.location.pathname,
+              locale: document.documentElement.lang || null,
+            },
+          });
+        });
+      }
+"""
+
 for mfe in custom_js_mfes:
-    if mfe in indigo_styled_mfes or mfe == "authn":
-        continue
-    hooks.Filters.ENV_PATCHES.add_item(
-        (
-            f"mfe-dockerfile-post-npm-install-{mfe}",
-            "\n{% if INDIGO_ENABLE_CUSTOM_JS %}\n" + SAAS_WIDGET_INSTALL + "\n{% endif %}\n",
+    if mfe not in indigo_styled_mfes and mfe != "authn":
+        hooks.Filters.ENV_PATCHES.add_item(
+            (
+                f"mfe-dockerfile-post-npm-install-{mfe}",
+                f"\n{SAAS_WIDGET_INSTALL}\n",
+            )
         )
-    )
 
-hooks.Filters.ENV_PATCHES.add_item(
-    (
-        "mfe-env-config-runtime-final",
-        """
-{% if INDIGO_ENABLE_CUSTOM_JS %}
-    const { installCustomScript } = await import('@edly-io/edly-saas-widget');
-    const { APP_READY, getConfig, subscribe } = await import('@edx/frontend-platform');
-
-    subscribe(APP_READY, () => {
-      const appConfig = getConfig();
-      installCustomScript({
-        baseUrl: appConfig.MARKETING_SITE_BASE_URL,
-        context: {
-          platform: 'mfe',
-          app: process.env.APP_ID,
-          lmsBaseUrl: appConfig.LMS_BASE_URL,
-          marketingSiteBaseUrl: appConfig.MARKETING_SITE_BASE_URL,
-          pathname: window.location.pathname,
-          locale: document.documentElement.lang || null,
-        },
-      });
-    });
-{% endif %}
-""",
+    hooks.Filters.ENV_PATCHES.add_item(
+        (f"mfe-env-config-runtime-definitions-{mfe}", CUSTOM_SCRIPT_RUNTIME)
     )
-)
 
 
 # Include js file in lms main.html, main_django.html, and certificate.html
@@ -269,6 +280,7 @@ for filename in javascript_files:
 
 MFE_CONFIG['INDIGO_ENABLE_DARK_TOGGLE'] = {{ INDIGO_ENABLE_DARK_TOGGLE }}
 MFE_CONFIG['INDIGO_FOOTER_NAV_LINKS'] = {{ INDIGO_FOOTER_NAV_LINKS }}
+MFE_CONFIG['ENABLE_CUSTOM_JS'] = {{ INDIGO_ENABLE_CUSTOM_JS }}
 """,
         ),
         (
@@ -276,6 +288,7 @@ MFE_CONFIG['INDIGO_FOOTER_NAV_LINKS'] = {{ INDIGO_FOOTER_NAV_LINKS }}
             """
 MFE_CONFIG['INDIGO_ENABLE_DARK_TOGGLE'] = {{ INDIGO_ENABLE_DARK_TOGGLE }}
 MFE_CONFIG['INDIGO_FOOTER_NAV_LINKS'] = {{ INDIGO_FOOTER_NAV_LINKS }}
+MFE_CONFIG['ENABLE_CUSTOM_JS'] = {{ INDIGO_ENABLE_CUSTOM_JS }}
 """,
         ),
     ]

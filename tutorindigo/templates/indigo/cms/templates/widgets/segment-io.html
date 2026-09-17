@@ -6,6 +6,7 @@
 <%namespace name='static' file='../static_content.html'/>
 <%page expression_filter="h"/>
 <%! from openedx.core.djangolib.js_utils import js_escaped_string %>
+<%! from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers %>
 
 % if context_course:
 <%
@@ -42,9 +43,11 @@
 <!-- end dummy Segment -->
 % endif
 
-{% if INDIGO_ENABLE_CUSTOM_JS %}
+## Read from MFE_CONFIG, not a top-level key: the MFE config API only exposes that dict
+## to the MFEs, so this keeps one tenant-config key driving all three surfaces.
+% if configuration_helpers.get_value('MFE_CONFIG', {}).get('ENABLE_CUSTOM_JS', False):
 <script src="${static.url('js/edly-custom-js.js')}"
         data-edly-mktg-root="${settings.MKTG_URLS.get('ROOT', '')}"
         data-edly-platform="cms"
         defer></script>
-{% endif %}
+% endif
