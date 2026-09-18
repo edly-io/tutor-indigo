@@ -243,7 +243,10 @@ for mfe in indigo_styled_mfes:
         PLUGIN_SLOTS.add_items(
             [
                 (
-                    # Hide the default mobile header as it only shows logo
+                    # Replace the stock mobile header (hamburger + logo + user menu)
+                    # with just the centred brand logo. Navigation, notifications and
+                    # the theme toggle all live in the fixed bottom nav from
+                    # tutor-contrib-fbr on small viewports.
                     mfe,
                     "mobile_header_slot",
                     """
@@ -260,7 +263,7 @@ for mfe in indigo_styled_mfes:
                 {
                     op: PLUGIN_OPERATIONS.Insert,
                     widget: {
-                        id: 'theme_switch_button',
+                        id: 'indigo_mobile_header',
                         type: DIRECT_PLUGIN,
                         RenderWidget: MobileViewHeader,
                     },
