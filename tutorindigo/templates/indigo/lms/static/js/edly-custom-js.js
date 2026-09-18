@@ -1,8 +1,5 @@
-/*
- * Tenant custom JS loader for server-rendered LMS pages.
- * Behavioural twin of src/customScript/loader.js in frontend-saas-widgets, which
- * covers the MFEs. Keep the window.EDLY contract identical across both.
- */
+/* Behavioural twin of src/customScript/loader.js in frontend-saas-widgets, which
+ * covers the MFEs. Keep the window.EDLY contract identical across both. */
 (function edlyCustomJs() {
   var ROUTE = '/wp-json/edly-wp-routes/custom-js';
   var SCRIPT_ATTR = 'data-edly-custom-js';
@@ -41,8 +38,8 @@
       });
     }
 
-    // applyAll queries the whole document once per registration, so coalesce the
-    // observer's batches into one flush per frame rather than one per batch.
+    // applyAll queries the whole document per registration, so coalesce the
+    // observer's batches into one flush per frame.
     function scheduleFlush() {
       if (flushScheduled) { return; }
       flushScheduled = true;
@@ -54,10 +51,9 @@
       }
     }
 
-    // Only childList is observed: re-firing on attribute changes would loop when
-    // the callback itself sets an attribute. Each node is handled at most once.
+    // Only childList: re-firing on attribute changes would loop when the callback
+    // itself sets an attribute.
     function onElement(selector, callback) {
-      // WeakSet, not an array: a matched node must not be retained after detach.
       registrations.push({ selector: selector, callback: callback, seen: new WeakSet() });
       if (!observer) {
         observer = new MutationObserver(scheduleFlush);
@@ -66,8 +62,8 @@
       applyAll();
     }
 
-    // Patches pushState/replaceState as well as popstate, matching the MFE loader:
-    // legacy pages are server-rendered, but tenant JS is written once for both.
+    // pushState/replaceState as well as popstate: these pages are server-rendered,
+    // but tenant JS is written once for both surfaces.
     function onRoute(callback) {
       if (!routeHandlers.length) {
         var emit = function () {
@@ -95,8 +91,8 @@
     document.head.appendChild(script);
   }
 
-  // No client-side digest check and no sessionStorage cache: a digest arriving beside
-  // the code it attests is not a control, and the route already sends max-age=300.
+  // No digest check, no sessionStorage cache: a digest arriving beside the code it
+  // attests is not a control, and the route already sends max-age=300.
   fetch(base + ROUTE, { headers: { Accept: 'application/json' } })
     .then(function (response) { return response.ok ? response.json() : null; })
     .then(function (payload) {

@@ -2,10 +2,8 @@
 <%page expression_filter="h"/>
 <%namespace name='static' file='static_content.html'/>
 <%! from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers %>
-## Theme hook called unconditionally from lms/templates/main.html, so this is the only
-## LMS injection point that survives disable_header / disable_footer views.
-## Read from MFE_CONFIG, not a top-level key: the MFE config API only exposes that dict
-## to the MFEs, so one tenant-config key drives both the MFEs and these pages.
+## main.html calls this hook unconditionally -- the only LMS injection point that
+## survives disable_header / disable_footer. MFE_CONFIG: one tenant key, both surfaces.
 % if configuration_helpers.get_value('MFE_CONFIG', {}).get('ENABLE_CUSTOM_JS', False):
 <script src="${static.url('js/edly-custom-js.js')}"
         data-edly-mktg-root="${settings.MKTG_URLS.get('ROOT', '')}"

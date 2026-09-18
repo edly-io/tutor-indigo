@@ -130,9 +130,8 @@ brand_styled_mfes = [
     "discussions",
 ]
 
-# Hand-maintained, not derived from upstream: tutormfe.plugin.CORE_MFE_APPS minus
-# authoring (Studio-facing, out of scope) plus learner-record, which some deployments
-# build. A patch for an MFE this deployment does not build is silently unconsumed.
+# CORE_MFE_APPS minus authoring (Studio-facing, out of scope), plus learner-record,
+# which some deployments build. A patch for an unbuilt MFE is silently unconsumed.
 custom_js_mfes = [
     "account",
     "admin-console",
@@ -146,16 +145,6 @@ custom_js_mfes = [
     "ora-grading",
     "profile",
 ]
-
-# TEMP: pinned to the feature branch while tenant-custom-js is in review.
-# frontend-saas-widgets is private, so the install authenticates with {{GH_PAT}}, the
-# same Tutor value the private pip installs in tutor-contrib-saas use.
-# Restore before merge to: RUN npm install '@edly-io/edly-saas-widget'
-SAAS_WIDGET_INSTALL = (
-    "RUN npm install "
-    "'git+https://{{GH_PAT}}@github.com/edly-io/"
-    "frontend-saas-widgets.git#feat/tenant-custom-js'"
-)
 
 for mfe in indigo_styled_mfes:
     if mfe in brand_styled_mfes:
@@ -174,8 +163,8 @@ for mfe in indigo_styled_mfes:
         [
             (
                 f"mfe-dockerfile-post-npm-install-{mfe}",
-                f"""
-                {SAAS_WIDGET_INSTALL}
+                """
+                RUN npm install '@edly-io/edly-saas-widget'
                 RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'
 """,  # noqa: E501
             ),
@@ -192,29 +181,20 @@ for mfe in indigo_styled_mfes:
 hooks.Filters.ENV_PATCHES.add_item(
     (
         "mfe-dockerfile-post-npm-install-authn",
-        f"""
+        """
         RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'
-        {SAAS_WIDGET_INSTALL}
+        RUN npm install @edly-io/edly-saas-widget
         """,
     )
 )
 
-# Tenant custom JS. Emitted per MFE through mfe-env-config-runtime-definitions-{mfe}
-# rather than the unsuffixed mfe-env-config-runtime-final: that patch lands in every
-# MFE tutor-mfe builds, so a deployment carrying an MFE outside custom_js_mfes would
-# fail to resolve the import at build time. Keying both the install and the import off
-# one list keeps them from drifting apart.
-#
-# Installed unconditionally: the feature is enabled per tenant at runtime via
-# MFE_CONFIG['ENABLE_CUSTOM_JS'], so gating the install would make opting a tenant in
-# require an image rebuild.
-#
-# Imports the loader module directly, not the package barrel: the barrel pulls
-# HeaderWidget, DOMPurify and scss into MFEs that use none of them.
+# Per-MFE, not mfe-env-config-runtime-final: that lands in every MFE tutor-mfe builds,
+# including ones outside custom_js_mfes, which would fail to resolve the import.
 CUSTOM_SCRIPT_RUNTIME = """
       {
         const { APP_READY, getConfig, subscribe } = require("@edx/frontend-platform");
-        const { installCustomScript } = require("@edly-io/edly-saas-widget/dist/customScript/loader");
+        const { installCustomScript } =
+          require("@edly-io/edly-saas-widget/dist/customScript/loader");
 
         subscribe(APP_READY, () => {
           const appConfig = getConfig();
@@ -242,7 +222,9 @@ for mfe in custom_js_mfes:
         hooks.Filters.ENV_PATCHES.add_item(
             (
                 f"mfe-dockerfile-post-npm-install-{mfe}",
-                f"\n{SAAS_WIDGET_INSTALL}\n",
+                """
+                RUN npm install '@edly-io/edly-saas-widget'
+                """,
             )
         )
 
