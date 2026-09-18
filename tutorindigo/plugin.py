@@ -24,6 +24,9 @@ config: t.Dict[str, t.Dict[str, t.Any]] = {
         "WELCOME_MESSAGE": "The place for all your online learning",
         "PRIMARY_COLOR": "#15376D",  # Indigo
         "ENABLE_DARK_TOGGLE": True,
+        # Deployment-wide default for MFE_CONFIG['ENABLE_CUSTOM_JS']. A single tenant
+        # opts in by setting that key in its own MFE_CONFIG, which needs no rebuild.
+        "ENABLE_CUSTOM_JS": False,
         # Footer links are dictionaries with a "title" and "url"
         # To remove all links, run:
         # tutor config save --set INDIGO_FOOTER_NAV_LINKS=[]
@@ -127,6 +130,22 @@ brand_styled_mfes = [
     "discussions",
 ]
 
+# CORE_MFE_APPS minus authoring (Studio-facing, out of scope), plus learner-record,
+# which some deployments build. A patch for an unbuilt MFE is silently unconsumed.
+custom_js_mfes = [
+    "account",
+    "admin-console",
+    "authn",
+    "communications",
+    "discussions",
+    "gradebook",
+    "learner-dashboard",
+    "learner-record",
+    "learning",
+    "ora-grading",
+    "profile",
+]
+
 for mfe in indigo_styled_mfes:
     if mfe in brand_styled_mfes:
         hooks.Filters.ENV_PATCHES.add_items(
@@ -169,6 +188,51 @@ hooks.Filters.ENV_PATCHES.add_item(
     )
 )
 
+# Per-MFE, not mfe-env-config-runtime-final: that lands in every MFE tutor-mfe builds,
+# including ones outside custom_js_mfes, which would fail to resolve the import.
+CUSTOM_SCRIPT_RUNTIME = """
+      {
+        const { APP_READY, getConfig, subscribe } = require("@edx/frontend-platform");
+        const { installCustomScript } =
+          require("@edly-io/edly-saas-widget/dist/customScript/loader");
+
+        subscribe(APP_READY, () => {
+          const appConfig = getConfig();
+          if (!appConfig.ENABLE_CUSTOM_JS) {
+            return;
+          }
+
+          installCustomScript({
+            baseUrl: appConfig.MARKETING_SITE_BASE_URL,
+            context: {
+              platform: 'mfe',
+              app: process.env.APP_ID,
+              lmsBaseUrl: appConfig.LMS_BASE_URL,
+              marketingSiteBaseUrl: appConfig.MARKETING_SITE_BASE_URL,
+              pathname: window.location.pathname,
+              locale: document.documentElement.lang || null,
+            },
+          });
+        });
+      }
+"""
+
+for mfe in custom_js_mfes:
+    if mfe not in indigo_styled_mfes and mfe != "authn":
+        hooks.Filters.ENV_PATCHES.add_item(
+            (
+                f"mfe-dockerfile-post-npm-install-{mfe}",
+                """
+                RUN npm install '@edly-io/edly-saas-widget'
+                """,
+            )
+        )
+
+    hooks.Filters.ENV_PATCHES.add_item(
+        (f"mfe-env-config-runtime-definitions-{mfe}", CUSTOM_SCRIPT_RUNTIME)
+    )
+
+
 # Include js file in lms main.html, main_django.html, and certificate.html
 
 hooks.Filters.ENV_PATCHES.add_items(
@@ -198,6 +262,7 @@ for filename in javascript_files:
 
 MFE_CONFIG['INDIGO_ENABLE_DARK_TOGGLE'] = {{ INDIGO_ENABLE_DARK_TOGGLE }}
 MFE_CONFIG['INDIGO_FOOTER_NAV_LINKS'] = {{ INDIGO_FOOTER_NAV_LINKS }}
+MFE_CONFIG['ENABLE_CUSTOM_JS'] = {{ INDIGO_ENABLE_CUSTOM_JS }}
 """,
         ),
         (
@@ -205,6 +270,7 @@ MFE_CONFIG['INDIGO_FOOTER_NAV_LINKS'] = {{ INDIGO_FOOTER_NAV_LINKS }}
             """
 MFE_CONFIG['INDIGO_ENABLE_DARK_TOGGLE'] = {{ INDIGO_ENABLE_DARK_TOGGLE }}
 MFE_CONFIG['INDIGO_FOOTER_NAV_LINKS'] = {{ INDIGO_FOOTER_NAV_LINKS }}
+MFE_CONFIG['ENABLE_CUSTOM_JS'] = {{ INDIGO_ENABLE_CUSTOM_JS }}
 """,
         ),
     ]
