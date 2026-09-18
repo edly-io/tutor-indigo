@@ -19,17 +19,17 @@ if (config.pluginSlots && config.pluginSlots['logo_slot']) {
 }
 
 if (config.pluginSlots && config.pluginSlots['org.openedx.frontend.layout.footer.v1']) {
-  const footerPluginsToInsert =
-    config.pluginSlots['org.openedx.frontend.layout.footer.v1'].plugins.filter(plugin => plugin.op === 'insert');
-
-  if (footerPluginsToInsert.length > 2) {
+  // De-duplicate our own widget only. The previous version counted *every* insert in
+  // this slot and dropped `indigo_footer` once the total exceeded two, so any other
+  // plugin adding a footer widget silently deleted the Indigo footer. Mirror the
+  // `logo_slot` approach instead: keep the first `indigo_footer`, drop later copies.
+  let indigoFooterKept = false;
   config.pluginSlots['org.openedx.frontend.layout.footer.v1'].plugins =
     config.pluginSlots['org.openedx.frontend.layout.footer.v1'].plugins.filter(plugin => {
-      if (plugin.op === 'insert') {
-        const widgetId = plugin.widget?.id;
-        return widgetId !== 'indigo_footer';
+      if (plugin.op === 'insert' && plugin.widget?.id === 'indigo_footer') {
+        if (indigoFooterKept) return false;
+        indigoFooterKept = true;
       }
       return true;
     });
-  }
 }
