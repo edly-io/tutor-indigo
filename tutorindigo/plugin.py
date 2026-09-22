@@ -118,9 +118,6 @@ hooks.Filters.CONFIG_DEFAULTS.add_item(("COURSE_ACCESS_DURATION_MAX_WEEKS", 18))
 hooks.Filters.CONFIG_UNIQUE.add_items(
     [(f"INDIGO_{key}", value) for key, value in config["unique"].items()]
 )
-# Auto-generated secret shared with the WordPress backend for server-to-server
-# enrollment calls (X-Edx-Api-Key header → EDX_API_KEY in LMS settings).
-hooks.Filters.CONFIG_UNIQUE.add_item(("RWAQ_EDX_API_KEY", "{{ 32|random_string }}"))
 hooks.Filters.CONFIG_OVERRIDES.add_items(list(config["overrides"].items()))
 
 hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_VIDEO_S3_BUCKET", ""))
