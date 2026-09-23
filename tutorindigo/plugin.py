@@ -555,22 +555,40 @@ def _add_themed_logo(
     return mfes
 
 
+# Resolved tutor config, captured once CONFIG_LOADED fires.
+#
+# MFE_APPS is a plain dict filter with no config argument, so the git ref has
+# to be looked up here rather than passed in. It cannot be a Jinja expression
+# either: tutor-mfe's Dockerfile renders app["version"] with
+# {{ app.get("version", ...) }}, and Jinja substitutes that value verbatim
+# without re-rendering it — a "{{ ... }}" string would reach Docker literally
+# and fail the build with `"/}}": not found`.
+_CONFIG: dict = {}
+
+
+@hooks.Actions.CONFIG_LOADED.add()
+def _capture_config(config: dict) -> None:
+    """Keep the resolved config for _mfe_version() to read."""
+    _CONFIG.update(config)
+
+
 def _mfe_version(config_key: str) -> str:
     """
-    Jinja expression resolving one MFE's git ref at render time.
+    Return one MFE's git ref, already resolved to a plain string.
 
-    MFE_APPS is a plain dict filter with no access to the tutor config, but
-    tutor-mfe renders app["version"] through Jinja in its Dockerfile
-    (ADD ...#{{ app.get("version", ...) }}), so handing it an expression is
-    what lets a release workflow pin a front end the same way it already pins
+    Lets a release workflow pin a front end the same way it pins
     RWAQ_FEATURES_RELEASE_TAG:
 
-        tutor config save --set AUTHORING_MFE_RELEASE_TAG="v1.3.0"
+        tutor config save --set AUTHORING_MFE_RELEASE_TAG="release_v1.3.0"
 
     Falls back to RWAQ_MFE_RELEASE_TAG when the per-MFE key is empty, so a
-    release that moves every front end together sets one value instead of five.
+    release moving every front end together sets one value instead of five.
     """
-    return f'{{{{ {config_key} or RWAQ_MFE_RELEASE_TAG }}}}'
+    return (
+        _CONFIG.get(config_key)
+        or _CONFIG.get("RWAQ_MFE_RELEASE_TAG")
+        or "ulmo/rwaq"
+    )
 
 
 @MFE_APPS.add()
