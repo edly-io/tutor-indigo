@@ -107,6 +107,11 @@ hooks.Filters.CONFIG_DEFAULTS.add_items(
     [(f"INDIGO_{key}", value) for key, value in config["defaults"].items()]
 )
 hooks.Filters.CONFIG_DEFAULTS.add_item(("PAT", ""))
+# Git ref for the rwaq-features pip install in the openedx Dockerfile patch.
+# Needs a default here, not just a --set in the deploy workflow: tutor renders
+# the patch during "tutor plugins enable", before any config save runs, so an
+# undeclared variable fails the render outright.
+hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_FEATURES_RELEASE_TAG", "master"))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("ENABLE_PROGRAMS", False))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("ENABLE_INSTRUCTOR_MANAGEMENT", False))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("SESSION_COOKIE_DOMAIN", ""))
