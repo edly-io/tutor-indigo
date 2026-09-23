@@ -115,6 +115,18 @@ hooks.Filters.CONFIG_DEFAULTS.add_item(("SESSION_COOKIE_DOMAIN", ""))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("ENABLE_LEGACY_ACCOUNT_FLOW", True))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("COURSE_ACCESS_DURATION_MIN_WEEKS", 12))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("COURSE_ACCESS_DURATION_MAX_WEEKS", 18))
+
+# Per-MFE git ref, so a release workflow can pin each front end the same way it
+# already pins RWAQ_FEATURES_RELEASE_TAG / EDX_PLATFORM_VERSION:
+#
+#     tutor config save --set AUTHORING_MFE_RELEASE_TAG="v1.3.0"
+#
+# RWAQ_MFE_RELEASE_TAG is the fallback for all of them, so a release that moves
+# every front end together only has to set one value. Defaults keep the
+# previous hardcoded branch, so an unset config behaves exactly as before.
+hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_MFE_RELEASE_TAG", "ulmo/rwaq"))
+for _mfe_key in ("AUTHN", "AUTHORING", "LEARNER_DASHBOARD", "LEARNING", "ADMIN"):
+    hooks.Filters.CONFIG_DEFAULTS.add_item((f"{_mfe_key}_MFE_RELEASE_TAG", ""))
 hooks.Filters.CONFIG_UNIQUE.add_items(
     [(f"INDIGO_{key}", value) for key, value in config["unique"].items()]
 )
@@ -538,27 +550,45 @@ def _add_themed_logo(
     return mfes
 
 
+def _mfe_version(config_key: str) -> str:
+    """
+    Jinja expression resolving one MFE's git ref at render time.
+
+    MFE_APPS is a plain dict filter with no access to the tutor config, but
+    tutor-mfe renders app["version"] through Jinja in its Dockerfile
+    (ADD ...#{{ app.get("version", ...) }}), so handing it an expression is
+    what lets a release workflow pin a front end the same way it already pins
+    RWAQ_FEATURES_RELEASE_TAG:
+
+        tutor config save --set AUTHORING_MFE_RELEASE_TAG="v1.3.0"
+
+    Falls back to RWAQ_MFE_RELEASE_TAG when the per-MFE key is empty, so a
+    release that moves every front end together sets one value instead of five.
+    """
+    return f'{{{{ {config_key} or RWAQ_MFE_RELEASE_TAG }}}}'
+
+
 @MFE_APPS.add()
 def _add_my_mfe(mfes):  # type: ignore[no-untyped-def]
     mfes["authn"] = {
         "repository": "https://github.com/edly-io/frontend-app-authn.git",
         "port": 1999,
-        "version": "ulmo/rwaq",
+        "version": _mfe_version("AUTHN_MFE_RELEASE_TAG"),
     }
     mfes["authoring"] = {
         "repository": "https://github.com/edly-io/frontend-app-authoring.git",
         "port": 2001,
-        "version": "ulmo/rwaq",
+        "version": _mfe_version("AUTHORING_MFE_RELEASE_TAG"),
     }
     mfes["learner-dashboard"] = {
         "repository": "https://github.com/edly-io/frontend-app-learner-dashboard.git",
         "port": 1996,
-        "version": "ulmo/rwaq",
+        "version": _mfe_version("LEARNER_DASHBOARD_MFE_RELEASE_TAG"),
     }
     mfes["learning"] = {
         "repository": "https://github.com/edly-io/frontend-app-learning.git",
         "port": 2000,
-        "version": "ulmo/rwaq",
+        "version": _mfe_version("LEARNING_MFE_RELEASE_TAG"),
     }
     # Registered as "admin" (not "rwaq-admin") so the Caddy route and the
     # webpack PUBLIC_PATH both derive from this one name: tutor-mfe builds
@@ -568,7 +598,7 @@ def _add_my_mfe(mfes):  # type: ignore[no-untyped-def]
     mfes["admin"] = {
         "repository": "https://github.com/edly-io/frontend-app-rwaq-admin.git",
         "port": 2011,
-        "version": "ulmo/rwaq",
+        "version": _mfe_version("ADMIN_MFE_RELEASE_TAG"),
     }
 
     return mfes
