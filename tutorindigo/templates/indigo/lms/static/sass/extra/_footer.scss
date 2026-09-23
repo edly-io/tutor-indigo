@@ -1,26 +1,42 @@
+/* Edly sales-demo footer for the legacy LMS pages.
+ *
+ * Mirrors tutorindigo/components/IndigoFooter.jsx: same markup, same
+ * breakpoints. Mobile first — one brand row over two link columns on phones,
+ * four link columns from 768px, the brand joins the grid as a fifth column
+ * from 1200px. Grid tracks use minmax(0, 1fr) so a long link can never widen
+ * the page. Keep the two files in step.
+ */
+
 /* ================= FOOTER BASE ================= */
 .edx-footer {
   background: #2a2a2a;
   color: #fff;
-  padding: 60px 0 30px;
+  padding: 40px 0 24px;
   font-family: Arial, sans-serif; /* ensure consistent font */
+
+  * {
+    box-sizing: border-box;
+  }
 }
 
 .edx-footer-inner {
   max-width: 100%;
-  padding: 0 60px;
+  padding: 0 20px;
 }
 
 .edx-footer-main {
   display: grid;
-  grid-template-columns: 1.5fr repeat(4, 1fr);
-  gap: 50px;
-  margin-bottom: 50px;
-  margin-left: 30px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 24px;
+  margin: 0 0 32px;
+}
+
+.edx-footer-brand {
+  grid-column: 1 / -1;
 }
 
 .edx-footer-logo {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   text-decoration: none;
 }
@@ -31,15 +47,9 @@
   display: block;
 }
 
-@media (min-width: 1024px) {
-  .edx-footer-logo-img {
-    height: 52px;
-  }
-}
-
 .edx-footer-heading {
   font-size: 15px;
-  margin-bottom: 20px;
+  margin: 0 0 16px;
   border-bottom: 2px solid $primary;
   display: inline-block;
   padding-bottom: 10px;
@@ -48,6 +58,7 @@
 
 .edx-footer-links {
   list-style: none;
+  margin: 0;
   padding: 0;
 }
 
@@ -55,31 +66,33 @@
   margin-bottom: 12px;
 }
 
-.edx-footer a,
-.edx-footer a:visited,
-.edx-footer a:active,
-.edx-footer a:focus {
+/* Doubled class so these outrank edx-platform's `a:not(.btn)` rule, which the
+   course/wiki stylesheets load after the theme and which has the same specificity
+   as a plain `.edx-footer a`. */
+.edx-footer .edx-footer-links a,
+.edx-footer .edx-footer-links a:visited,
+.edx-footer .edx-footer-links a:active,
+.edx-footer .edx-footer-links a:focus {
   color: #b0b0b0;
   text-decoration: none;
   font-size: 14px;
 }
 
-.edx-footer a:hover,
-.edx-footer a:visited:hover {
+.edx-footer .edx-footer-links a:hover,
+.edx-footer .edx-footer-links a:visited:hover {
   color: #f6f6f6;
 }
 
 .edx-footer-divider {
   border: none;
   border-top: 1px solid #444;
-  margin: 30px 0;
+  margin: 24px 0;
 }
 
 .edx-footer-bottom {
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 20px;
+  flex-direction: column;
+  gap: 16px;
 }
 
 /* ================= COPYRIGHT & LEGAL ================= */
@@ -90,29 +103,34 @@
   margin: 0 0 8px 0;
 }
 
-.edx-footer-legal a,
-.edx-footer-legal a:visited {
-  margin-left: 20px;
+.edx-footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
+.edx-footer .edx-footer-legal a,
+.edx-footer .edx-footer-legal a:visited {
   color: #ffffff;
   font-size: 13px; /* matches React */
   text-decoration: none;
 }
 
-.edx-footer-legal a:hover,
-.edx-footer-legal a:visited:hover {
+.edx-footer .edx-footer-legal a:hover,
+.edx-footer .edx-footer-legal a:visited:hover {
   color: $primary;
 }
 
 /* ================= SOCIAL ================= */
 .edx-footer-social {
-  margin-top: 30px;
+  margin-top: 24px;
   display: flex;
   justify-content: center;
   gap: 28px;
 }
 
-.edx-footer-social .edx-social-link,
-.edx-footer-social .edx-social-link:visited {
+.edx-footer .edx-footer-social .edx-social-link,
+.edx-footer .edx-footer-social .edx-social-link:visited {
   color: #f9f9f9 !important;
   display: flex;
   align-items: center;
@@ -126,8 +144,58 @@
   fill: currentColor !important;
 }
 
-.edx-footer-social .edx-social-link:hover,
-.edx-footer-social .edx-social-link:visited:hover {
+.edx-footer .edx-footer-social .edx-social-link:hover,
+.edx-footer .edx-footer-social .edx-social-link:visited:hover {
   transform: translateY(-3px);
   opacity: 0.85;
+}
+
+/* ================= BREAKPOINTS ================= */
+@media (min-width: 768px) {
+  .edx-footer {
+    padding: 50px 0 30px;
+  }
+
+  .edx-footer-inner {
+    padding: 0 32px;
+  }
+
+  .edx-footer-main {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 32px;
+    margin-bottom: 40px;
+  }
+
+  .edx-footer-bottom {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .edx-footer-logo-img {
+    height: 52px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .edx-footer {
+    padding: 60px 0 30px;
+  }
+
+  .edx-footer-inner {
+    padding: 0 60px;
+  }
+
+  .edx-footer-main {
+    grid-template-columns: 1.5fr repeat(4, minmax(0, 1fr));
+    gap: 50px;
+    margin: 0 0 50px 30px;
+  }
+
+  .edx-footer-brand {
+    grid-column: auto;
+  }
 }
