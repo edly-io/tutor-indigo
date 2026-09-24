@@ -555,22 +555,73 @@ def _add_themed_logo(
     return mfes
 
 
-def _mfe_version(config_key: str) -> str:
-    """
-    Jinja expression resolving one MFE's git ref at render time.
+# Resolved tutor config, captured once CONFIG_LOADED fires.
+#
+# MFE_APPS is a plain dict filter with no config argument, so the git ref has
+# to be looked up here rather than passed in. It cannot be a Jinja expression
+# either: tutor-mfe's Dockerfile renders app["version"] with
+# {{ app.get("version", ...) }}, and Jinja substitutes that value verbatim
+# without re-rendering it — a "{{ ... }}" string would reach Docker literally
+# and fail the build with `"/}}": not found`.
+_CONFIG: dict = {}
 
-    MFE_APPS is a plain dict filter with no access to the tutor config, but
-    tutor-mfe renders app["version"] through Jinja in its Dockerfile
-    (ADD ...#{{ app.get("version", ...) }}), so handing it an expression is
-    what lets a release workflow pin a front end the same way it already pins
+
+@hooks.Actions.CONFIG_LOADED.add()
+def _capture_config(config: dict) -> None:
+    """Keep the resolved config for _mfe_version() to read."""
+    _CONFIG.update(config)
+
+
+class _MfeVersion(str):
+    """
+    One MFE's git ref, resolved on use rather than when MFE_APPS is applied.
+
+    Returning a plain string here does not work: tutor-mfe's get_mfes() is
+    lru_cached and runs before CONFIG_LOADED fires, so the value is computed
+    and frozen while the config is still empty — every MFE would keep the
+    fallback no matter what the deploy workflow set.
+
+    A Jinja expression does not work either: the Dockerfile renders this with
+    {{ app.get("version", ...) }}, and Jinja substitutes the value verbatim
+    without re-rendering it, so "{{ ... }}" reaches Docker literally and the
+    build fails with `"/}}": not found`.
+
+    Subclassing str keeps it a string for anything that inspects the dict,
+    while __str__ defers the lookup to render time, once the config is loaded.
+    """
+
+    def __new__(cls, config_key: str) -> "_MfeVersion":
+        instance = super().__new__(cls, "")
+        instance._config_key = config_key  # type: ignore[attr-defined]
+        return instance
+
+    def _resolve(self) -> str:
+        return (
+            _CONFIG.get(self._config_key)  # type: ignore[attr-defined]
+            or _CONFIG.get("RWAQ_MFE_RELEASE_TAG")
+            or "ulmo/rwaq"
+        )
+
+    def __str__(self) -> str:
+        return self._resolve()
+
+    def __repr__(self) -> str:
+        return repr(self._resolve())
+
+
+def _mfe_version(config_key: str) -> "_MfeVersion":
+    """
+    Return one MFE's git ref, deferred until the config is loaded.
+
+    Lets a release workflow pin a front end the same way it pins
     RWAQ_FEATURES_RELEASE_TAG:
 
-        tutor config save --set AUTHORING_MFE_RELEASE_TAG="v1.3.0"
+        tutor config save --set AUTHORING_MFE_RELEASE_TAG="release_v1.3.0"
 
     Falls back to RWAQ_MFE_RELEASE_TAG when the per-MFE key is empty, so a
-    release that moves every front end together sets one value instead of five.
+    release moving every front end together sets one value instead of five.
     """
-    return f'{{{{ {config_key} or RWAQ_MFE_RELEASE_TAG }}}}'
+    return _MfeVersion(config_key)
 
 
 @MFE_APPS.add()
