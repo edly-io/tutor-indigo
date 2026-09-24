@@ -3,3 +3,14 @@
 #main{
     background-color: $secondary;
 }
+
+// EDLYPRODUCT-8589: library.html sets `.mast.has-actions.has-navigation.has-subtitle`
+// but never renders a breadcrumb (`.navigation`) element, unlike course pages that
+// do. `elements/layout`'s `.has-navigation .nav-actions { top: -($baseline*2); }`
+// exists to compensate for that breadcrumb's height, so with none present it lifts
+// the "+ Add Component"/"Hide Previews" buttons up into the fixed header instead.
+// Scoped to `view-library` (the body class library.html sets) so course pages that
+// do have a real breadcrumb keep the original offset.
+.view-library .mast.has-navigation .nav-actions {
+    top: auto;
+}
