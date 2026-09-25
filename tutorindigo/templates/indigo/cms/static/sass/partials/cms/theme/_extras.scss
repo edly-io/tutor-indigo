@@ -3,3 +3,10 @@
 #main{
     background-color: $secondary;
 }
+
+// library.html has no breadcrumb, so elements/layout's compensating offset for
+// .has-navigation .nav-actions lifts the buttons into the fixed header instead.
+// Scoped to view-library so course pages with a real breadcrumb are unaffected.
+.view-library .mast.has-navigation .nav-actions {
+    top: auto;
+}
