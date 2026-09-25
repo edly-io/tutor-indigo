@@ -20,7 +20,10 @@
 <%
   # get_logo_url() can return a path relative to the panel backend, which Studio
   # can't load - only use it when absolute, else keep the theme's bundled image.
-  logo_url = branding_api.get_logo_url() if configuration_helpers.get_value('logo_image_url') or configuration_helpers.get_value('university') or settings.LOGO_URL else None
+  # Only trust branches that can carry a real configured logo: 'university' resolves to
+  # an LMS-only static path that doesn't exist in Studio's static tree, and under
+  # CDN-hosted static it can still false-pass the absolute-URL check below.
+  logo_url = branding_api.get_logo_url() if configuration_helpers.get_value('logo_image_url') or settings.LOGO_URL else None
   if not logo_url or not urlparse(logo_url).netloc:
       # static.url is an unbuffered Mako def; capture() is needed to call it for
       # its return value instead of writing straight to the output buffer.
