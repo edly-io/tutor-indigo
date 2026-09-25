@@ -11,29 +11,19 @@
   from cms.djangoapps.contentstore.utils import get_pages_and_resources_url, get_course_outline_url, get_course_libraries_url, get_updates_url, get_files_uploads_url, get_video_uploads_url, get_schedule_details_url, get_grading_url, get_advanced_settings_url, get_import_url, get_export_url, get_studio_home_url, get_course_team_url, get_optimizer_url
   from openedx.core.djangoapps.discussions.config.waffle import ENABLE_PAGES_AND_RESOURCES_MICROFRONTEND
   from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_enabled, released_languages
-  # EDLYCUSTOM: per-tenant Studio logo (branding_api mirrors base.html's own
-  # get_favicon_url() usage) instead of the theme's single static studio-logo.png.
+  # EDLYCUSTOM: per-tenant Studio logo, via the same branding_api base.html uses.
   from mako.runtime import capture
   from urllib.parse import urlparse
   from lms.djangoapps.branding import api as branding_api
   from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 %>
 <%
-  # get_logo_url() falls all the way back to an LMS-only static path
-  # ('images/logo.png') that does not exist in Studio's static tree, and tenants
-  # can also configure LOGO_URL as a path relative to the panel backend (the panel
-  # uploads site logos, so "/site_media/..." is rooted at the panel's MEDIA_URL -
-  # served by neither Studio nor the LMS). Either way a non-absolute URL is not
-  # loadable from Studio, so only use the configured logo when it is absolute and
-  # otherwise keep the theme's bundled image - a working generic logo beats a
-  # broken specific one. In practice production tenants store absolute (S3) URLs.
+  # get_logo_url() can return a path relative to the panel backend, which Studio
+  # can't load - only use it when absolute, else keep the theme's bundled image.
   logo_url = branding_api.get_logo_url() if configuration_helpers.get_value('logo_image_url') or configuration_helpers.get_value('university') or settings.LOGO_URL else None
   if not logo_url or not urlparse(logo_url).netloc:
-      # `static.url` is an unbuffered Mako namespace def (writes to the current
-      # output buffer rather than returning a string) - calling it outside a
-      # top-level ${...} interpolation would return '' and write the real URL to
-      # the wrong place. `capture()` is Mako's documented way to call such a def
-      # for its return value instead.
+      # static.url is an unbuffered Mako def; capture() is needed to call it for
+      # its return value instead of writing straight to the output buffer.
       logo_url = capture(context, static.url, 'images/studio-logo.png')
 %>
 <div class="wrapper-header wrapper" id="view-top">
