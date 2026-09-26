@@ -206,24 +206,6 @@ INDIGO_DESKTOP_SECONDARY_MENU_SLOT = (
 )
 
 # Hide the default mobile header (it only shows the logo) and replace it.
-INDIGO_MOBILE_HEADER_SLOT = (
-    "mobile_header_slot",
-    """
-    {
-        op: PLUGIN_OPERATIONS.Hide,
-        widgetId: 'default_contents',
-    },
-    {
-        op: PLUGIN_OPERATIONS.Insert,
-        widget: {
-            id: 'theme_switch_button',
-            type: DIRECT_PLUGIN,
-            RenderWidget: MobileViewHeader,
-        },
-    },
-""",
-)
-
 INDIGO_LOGO_SLOT = (
     "logo_slot",
     """
@@ -245,14 +227,12 @@ INDIGO_LOGO_SLOT = (
 # Frontend-base site compatibility
 FRONTEND_COMPAT_SLOTS.add_item(("all", *INDIGO_FOOTER_COMPAT_SLOT))
 FRONTEND_COMPAT_SLOTS.add_item(("all", *INDIGO_DESKTOP_SECONDARY_MENU_SLOT))
-FRONTEND_COMPAT_SLOTS.add_item(("all", *INDIGO_MOBILE_HEADER_SLOT))
 FRONTEND_COMPAT_SLOTS.add_item(("all", *INDIGO_LOGO_SLOT))
 
 for mfe in indigo_styled_mfes:
     PLUGIN_SLOTS.add_item((mfe, *INDIGO_FOOTER_SLOT))
     if mfe != "learning":
         PLUGIN_SLOTS.add_item((mfe, *INDIGO_DESKTOP_SECONDARY_MENU_SLOT))
-        PLUGIN_SLOTS.add_item((mfe, *INDIGO_MOBILE_HEADER_SLOT))
 
 PLUGIN_SLOTS.add_items(
     [
