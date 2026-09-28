@@ -1,6 +1,4 @@
-## mako
 <%page expression_filter="h"/>
-<%namespace name='static' file='static_content.html'/>
 <%!
 import re
 
@@ -10,14 +8,6 @@ ORA_IN_PROGRESS_DEFAULT = '#0075b4'
 ORA_INCOMPLETE_DEFAULT = '#ffc01f'
 SAFE_COLOR = re.compile(r'^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$')
 %>
-## main.html calls this hook unconditionally -- the only LMS injection point that
-## survives disable_header / disable_footer. MFE_CONFIG: one tenant key, both surfaces.
-% if configuration_helpers.get_value('MFE_CONFIG', {}).get('ENABLE_CUSTOM_JS', False):
-<script src="${static.url('js/edly-custom-js.js')}"
-        data-edly-mktg-root="${settings.MKTG_URLS.get('ROOT', '')}"
-        data-edly-platform="lms"
-        defer></script>
-% endif
 <%
 xblock_colors = {
     key: value
