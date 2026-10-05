@@ -1,0 +1,14 @@
+# Rwaq hides the program type on the LMS program pages (EDLYCSRWAQ-278). The learner dashboard
+# templates are bundled by webpack from the platform source, so a theme override does not reach them.
+# Edit the source before the assets are built. The build fails if the platform changes these lines.
+RUN cd /openedx/edx-platform \
+ && D=lms/templates/learner_dashboard \
+ && sed -i '/<div class="category col col-last">/,/<\/div>/d' $D/program_card.underscore \
+ && sed -i 's/requirements for the %(title)s %(type)s\./requirements for %(title)s./' $D/program_details_view.underscore $D/program_details_tab_view.underscore \
+ && sed -i 's/Transform your %(org)s %(type)s into/Transform your %(org)s program into/' $D/program_details_tab_view.underscore \
+ && sed -i "s/gettext('Your {program} Certificate')/gettext('Your Certificate')/" $D/program_details_sidebar.underscore \
+ && sed -i "s/gettext('{type} Progress')/gettext('Progress')/" lms/static/js/learner_dashboard/views/program_details_sidebar_view.js \
+ && ! grep -q 'category-text' $D/program_card.underscore \
+ && ! grep -rq '%(type)s' $D/program_details_view.underscore $D/program_details_tab_view.underscore \
+ && ! grep -q '{program} Certificate' $D/program_details_sidebar.underscore \
+ && ! grep -q '{type} Progress' lms/static/js/learner_dashboard/views/program_details_sidebar_view.js
