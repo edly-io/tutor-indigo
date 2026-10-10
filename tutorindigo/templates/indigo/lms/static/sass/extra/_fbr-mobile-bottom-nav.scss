@@ -1,0 +1,369 @@
+// Mobile bottom nav for legacy LMS pages; mirrors FbrMobileBottomNav.jsx in tutor-contrib-fbr.
+// Link rules are nested to beat edx-platform's `a:not(.btn)` / `a:visited:not(.btn)`.
+
+$fbr-nav-height: 4rem;
+
+$fbr-nav-safe-area: $fbr-safe-area-bottom;
+
+// MFE bar colours (Paragon tokens); indigo has no matching variables.
+$fbr-nav-bg: #fdfdfd;                 // --pgn-color-light-100
+$fbr-nav-border: #e9e6e4;             // --pgn-color-light-400
+$fbr-nav-outline: #e1dddb;            // --pgn-color-light-500 (avatar, grabber)
+$fbr-nav-text: #454545;               // --pgn-color-gray-700
+$fbr-nav-text-hover: #212529;         // --pgn-color-gray-900
+$fbr-nav-hover-bg: #f0eeed;           // --pgn-color-light-300
+$fbr-nav-danger: #c32d3a;             // --pgn-color-danger-500
+
+// Dark-mode fallbacks used by FbrMobileBottomNav.jsx.
+$fbr-nav-bg-d: #1b1b1d;
+$fbr-nav-border-d: #3a3a3c;
+$fbr-nav-outline-d: #d4d0cb;
+$fbr-nav-text-d: #ccc;
+$fbr-nav-text-hover-d: #fff;
+$fbr-nav-hover-bg-d: #2a2a2c;
+
+.fbr-mobile-bottom-nav,
+.fbr-mobile-nav-sheet,
+.fbr-mobile-nav-sheet__backdrop {
+    display: none;
+}
+
+@include media-breakpoint-down(md) {
+    .fbr-mobile-bottom-nav {
+        position: fixed;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1030;
+
+        display: flex;
+        align-items: stretch;
+        justify-content: space-around;
+
+        height: calc(#{$fbr-nav-height} + #{$fbr-nav-safe-area});
+        padding-bottom: $fbr-nav-safe-area;
+
+        background-color: $fbr-nav-bg;
+        border-top: 1px solid $fbr-nav-border;
+        box-shadow: 0 -1px 4px rgba(0, 0, 0, .06);
+    }
+
+    body.has-fbr-mobile-bottom-nav {
+        padding-bottom: calc(#{$fbr-nav-height} + #{$fbr-nav-safe-area});
+
+        header.global-header {
+            .hamburger-menu,
+            .mobile-menu {
+                display: none !important;
+            }
+
+            // Match indigo's MFE mobile header: centred logo, no hamburger indent.
+            .main-header {
+                justify-content: center;
+                height: auto;
+                padding: 0 1rem;
+            }
+
+            .header-logo a {
+                display: inline-flex;
+                align-items: center;
+                margin: 0;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    }
+
+    .fbr-mobile-nav-sheet__backdrop.is-open {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1040;
+        display: block;
+        background: rgba(0, 0, 0, .4);
+    }
+
+    .fbr-mobile-nav-sheet.is-open {
+        position: fixed;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1050;
+        display: block;
+
+        padding-bottom: $fbr-nav-safe-area;
+
+        background-color: $fbr-nav-bg;
+        border-top-left-radius: .75rem;
+        border-top-right-radius: .75rem;
+        box-shadow: 0 -2px 16px rgba(0, 0, 0, .18);
+    }
+}
+
+.fbr-mobile-bottom-nav,
+.fbr-mobile-nav-sheet {
+    font-family: $font-family-title;
+    letter-spacing: normal;
+    text-shadow: none;
+}
+
+.fbr-mobile-bottom-nav {
+    .fbr-mobile-bottom-nav__item {
+        flex: 1 1 0;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: .25rem;
+
+        min-width: 0;
+        margin: 0;
+        padding: .25rem .125rem;
+
+        font-family: inherit;
+        font-size: .8125rem;
+        font-weight: 400;
+        line-height: 1.2;
+        text-align: center;
+        text-decoration: none;
+
+        &,
+        &:visited {
+            color: $fbr-nav-text;
+        }
+
+        &:hover,
+        &:focus {
+            text-decoration: none;
+            color: $fbr-nav-text-hover;
+        }
+
+        &.is-active {
+            color: $primary;
+            font-weight: 600;
+
+            .fbr-mobile-bottom-nav__avatar {
+                border-color: currentColor;
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    // Reset edx-platform's "shiny" button style on the Profile tab.
+    button.fbr-mobile-bottom-nav__trigger {
+        &,
+        &:hover,
+        &:focus,
+        &:active {
+            -webkit-appearance: none;
+            appearance: none;
+            height: auto;
+            border: 0;
+            border-radius: 0;
+            background: none;
+            box-shadow: none;
+            text-shadow: none;
+            letter-spacing: normal;
+            text-transform: none;
+            font-family: $font-family-title;
+            font-size: .8125rem;
+            font-weight: 400;
+            line-height: 1.2;
+            cursor: pointer;
+        }
+
+        &.is-active {
+            font-weight: 600;
+        }
+    }
+
+    .fbr-mobile-bottom-nav__icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        flex: 0 0 auto;
+        transform: scale(.9);
+    }
+
+    .fbr-mobile-bottom-nav__label {
+        display: block;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &.fbr-mobile-bottom-nav--compact {
+        @media (max-width: 430px) {
+            .fbr-mobile-bottom-nav__label {
+                display: none;
+            }
+
+            .is-active .fbr-mobile-bottom-nav__label {
+                display: block;
+            }
+        }
+    }
+}
+
+.fbr-mobile-bottom-nav__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 1.75rem;
+    height: 1.75rem;
+    flex: 0 0 auto;
+
+    border: 1px solid $fbr-nav-outline;
+    border-radius: 50%;
+
+    font-size: .8125rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    transform: scale(.9);
+}
+
+.fbr-mobile-nav-sheet {
+    .fbr-mobile-nav-sheet__grabber {
+        width: 2.25rem;
+        height: .25rem;
+        margin: .5rem auto .25rem;
+        border-radius: 999px;
+        background: $fbr-nav-outline;
+    }
+
+    .fbr-mobile-nav-sheet__user {
+        display: flex;
+        align-items: center;
+        gap: .75rem;
+        padding: .75rem 1.25rem;
+        border-bottom: 1px solid $fbr-nav-border;
+    }
+
+    .fbr-mobile-nav-sheet__username {
+        flex: 1 1 auto;
+        min-width: 0;
+        font-weight: 600;
+        color: $fbr-nav-text-hover;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .fbr-mobile-nav-sheet__theme-toggle {
+        display: flex;
+        align-items: center;
+        flex: 0 0 auto;
+
+        .theme-toggle-button {
+            margin-right: 0 !important;
+        }
+    }
+
+    .fbr-mobile-nav-sheet__list {
+        margin: 0;
+        padding: .5rem 0 .75rem;
+        list-style: none;
+    }
+
+    .fbr-mobile-nav-sheet__link {
+        display: block;
+        padding: .875rem 1.25rem;
+        font-size: .9375rem;
+        font-weight: 400;
+        text-decoration: none;
+
+        &,
+        &:visited {
+            color: $fbr-nav-text;
+        }
+
+        &:hover,
+        &:focus {
+            text-decoration: none;
+            background-color: $fbr-nav-hover-bg;
+            color: $fbr-nav-text-hover;
+        }
+    }
+
+    .fbr-mobile-nav-sheet__item--logout {
+        margin-top: .25rem;
+        border-top: 1px solid $fbr-nav-border;
+
+        .fbr-mobile-nav-sheet__link {
+            font-weight: 600;
+
+            &,
+            &:visited,
+            &:hover,
+            &:focus {
+                color: $fbr-nav-danger;
+            }
+        }
+    }
+}
+
+body.indigo-dark-theme {
+    .fbr-mobile-bottom-nav,
+    .fbr-mobile-nav-sheet {
+        background-color: $fbr-nav-bg-d;
+        border-top-color: $fbr-nav-border-d;
+    }
+
+    .fbr-mobile-bottom-nav {
+        box-shadow: 0 -1px 4px rgba(0, 0, 0, .4);
+
+        .fbr-mobile-bottom-nav__item {
+            &,
+            &:visited {
+                color: $fbr-nav-text-d;
+            }
+
+            &:hover,
+            &:focus {
+                color: $fbr-nav-text-hover-d;
+            }
+
+            &.is-active {
+                color: $primary-d;
+            }
+        }
+    }
+
+    .fbr-mobile-bottom-nav__avatar {
+        border-color: $fbr-nav-outline-d;
+    }
+
+    .fbr-mobile-nav-sheet .fbr-mobile-nav-sheet__grabber {
+        background: $fbr-nav-outline-d;
+    }
+
+    .fbr-mobile-nav-sheet {
+        .fbr-mobile-nav-sheet__user,
+        .fbr-mobile-nav-sheet__item--logout {
+            border-color: $fbr-nav-border-d;
+        }
+
+        .fbr-mobile-nav-sheet__username {
+            color: $fbr-nav-text-hover-d;
+        }
+
+        .fbr-mobile-nav-sheet__link {
+            &,
+            &:visited {
+                color: $fbr-nav-text-d;
+            }
+
+            &:hover,
+            &:focus {
+                background-color: $fbr-nav-hover-bg-d;
+                color: $fbr-nav-text-hover-d;
+            }
+        }
+    }
+}

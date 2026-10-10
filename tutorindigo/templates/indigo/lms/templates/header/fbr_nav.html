@@ -1,0 +1,73 @@
+## mako
+## FBR navigation items for legacy LMS pages; mirrors FbrHeader.jsx in tutor-contrib-fbr.
+<%!
+from urllib.parse import urljoin
+
+from django.urls import reverse
+from django.utils.translation import gettext as _
+
+from fbr.common.biodata.models import FbrProfileRole
+
+
+def _real_user(user):
+    return getattr(user, 'real_user', user)
+
+
+def _sessions_url(settings):
+    return getattr(settings, 'SESSIONS_MICROFRONTEND_URL', '').rstrip('/')
+
+
+def fbr_home_url(settings):
+    sessions_url = _sessions_url(settings)
+    return sessions_url + '/dashboard' if sessions_url else reverse('dashboard')
+
+
+def fbr_learning_url(settings):
+    sessions_url = _sessions_url(settings)
+    return sessions_url + '/programs' if sessions_url else reverse('program_listing_view')
+
+
+def fbr_is_admin(user):
+    real_user = _real_user(user)
+    fbr_profile = getattr(real_user, 'fbr_profile', None)
+    return bool(
+        real_user.is_staff
+        or (fbr_profile and fbr_profile.has_admin_level(FbrProfileRole.DATA_ADMIN))
+    )
+
+
+def fbr_main_menu_items(user, settings):
+    items = [
+        {'key': 'home', 'label': _('Home'), 'href': fbr_home_url(settings)},
+        {'key': 'learning', 'label': _('Learning'), 'href': fbr_learning_url(settings)},
+    ]
+    if fbr_is_admin(user):
+        cms_root_url = getattr(settings, 'CMS_ROOT_URL', '')
+        cms_base = getattr(settings, 'CMS_BASE', '')
+        studio_url = cms_root_url or (('http://' + cms_base) if cms_base else '')
+        if studio_url:
+            items.append({'key': 'studio', 'label': _('Studio'), 'href': studio_url})
+        admin_url = (
+            getattr(settings, 'FBR_ADMIN_BASE_URL', '')
+            or getattr(settings, 'FBR_ADMIN_MICROFRONTEND_URL', '')
+        )
+        if admin_url:
+            items.append({'key': 'admin', 'label': _('Administration'), 'href': admin_url})
+    return items
+
+
+def fbr_user_menu_items(user, settings):
+    username = _real_user(user).username
+    items = [{'key': 'home', 'label': _('Home'), 'href': fbr_home_url(settings)}]
+    profile_base = getattr(settings, 'PROFILE_MICROFRONTEND_URL', '')
+    if profile_base:
+        items.append({'key': 'profile', 'label': _('Profile'), 'href': urljoin(profile_base, username)})
+    account_url = getattr(settings, 'ACCOUNT_MICROFRONTEND_URL', '')
+    if account_url:
+        items.append({'key': 'account', 'label': _('Account'), 'href': account_url})
+    order_history_url = getattr(settings, 'ORDER_HISTORY_MICROFRONTEND_URL', '')
+    if order_history_url:
+        items.append({'key': 'order-history', 'label': _('Order History'), 'href': order_history_url})
+    items.append({'key': 'logout', 'label': _('Logout'), 'href': reverse('logout')})
+    return items
+%>
