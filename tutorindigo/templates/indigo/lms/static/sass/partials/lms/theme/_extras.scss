@@ -943,7 +943,8 @@ body.indigo-dark-theme {
     .tabs.course-tabs {
       border-bottom: 1px solid $primary-light-d;
       li {
-        a {
+        a,
+        button {
           color: $text-color-d;
           &:hover, &:visited {
             color: $text-color-primary;
@@ -1710,6 +1711,7 @@ body.indigo-dark-theme {
 
 @import '../../../extra/footer';
 @import '../../../extra/header';
+@import '../../../extra/fbr-mobile-bottom-nav';
 @import '../../../dashboard/dashboard';
 @import '../../../courseware/discover';
 @import '../../../courseware/about';

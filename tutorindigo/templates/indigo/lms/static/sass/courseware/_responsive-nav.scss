@@ -18,6 +18,18 @@
       display: block;
     }
   }
+
+  // Reset edx-platform's "shiny" button style.
+  .more-button {
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      border: 0;
+      box-shadow: none;
+      text-shadow: none;
+    }
+  }
 }
 
 .more-responsive-menu {
@@ -40,6 +52,23 @@
     a,
     button {
       display: block;
+    }
+  }
+}
+
+body.indigo-dark-theme {
+  .more-responsive-menu {
+    background: $light-overlay-d;
+    border-color: $light-dark-d;
+
+    li {
+      a,
+      button {
+        &:hover,
+        &:focus {
+          background: $primary-light-d;
+        }
+      }
     }
   }
 }
