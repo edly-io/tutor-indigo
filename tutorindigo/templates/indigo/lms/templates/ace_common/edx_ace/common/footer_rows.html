@@ -1,7 +1,7 @@
 {% raw %}
 {% load i18n %}
 {% get_current_language_bidi as LANGUAGE_BIDI %}
-{# Social links + app-store buttons rows of the Edly email footer; included by base_body.html and notifications/digest_footer.html. #}
+{# The Edly email footer rows, shared by base_body.html and notifications/digest_footer.html. #}
 <tr>
     <td>
         <!-- SOCIAL -->
@@ -70,4 +70,45 @@
         {% endif %}
     </td>
 </tr>
+<tr>
+    <!-- Actions -->
+    <td>
+        {% for action_link_url, action_link_text in channel.action_links %}
+            <p style="padding-bottom: 20px;">
+                <a href="{{ action_link_url }}" style="color: #960909">
+                    <font color="#960909"><b>{{ action_link_text }}</b></font>
+                </a>
+            </p>
+        {% endfor %}
+    </td>
+</tr>
+<tr>
+    <!-- DIGEST REASON + LINKS (notification digest only) -->
+    {% if notification_settings_url %}
+    <td style="color: #666666; font-size: 13px; line-height: 26px; padding-top: 10px;">
+        {% if footer_email_reason %}{{ footer_email_reason }}{% else %}{% trans "You are receiving this email because you have subscribed to email digest" %}{% endif %}
+        <br/>
+        <a href="{{ notification_settings_url }}" rel="noopener noreferrer" target="_blank" style="color: #DD1F25;">{% trans "Notification Settings" %}</a>
+    </td>
+    {% endif %}
+</tr>
+<tr>
+    <!-- COPYRIGHT -->
+    <td style="color: #666666; font-size: 13px; line-height: 26px;">
+        {% if site_configuration_values.EDLY_COPYRIGHT_TEXT %}
+            {{ site_configuration_values.EDLY_COPYRIGHT_TEXT }}
+        {% else %}
+            &copy; {{ platform_name }} {% now "Y" %}. {% trans "All rights reserved" %}.
+        {% endif %}
+        <br/>
+        {% trans "Our mailing address is:" %} {{ contact_mailing_address }}
+    </td>
+</tr>
+{% if unsubscribe_url %}
+<tr>
+    <td>
+        <a style="color: #DD1F25;" href="{{ unsubscribe_url }}">{% if notification_settings_url %}{% trans "Unsubscribe from email digest for learning activity" %}{% else %}{% trans "Unsubscribe from these emails." %}{% endif %}</a>
+    </td>
+</tr>
+{% endif %}
 {% endraw %}

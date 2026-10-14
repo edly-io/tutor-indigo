@@ -97,27 +97,7 @@
             <!-- FOOTER -->
             <td class="footer" style="padding: 20px; text-align: center;">
                 <table role="presentation" width="100%" align="left" border="0" cellpadding="0" cellspacing="0">
-                    {% include "ace_common/edx_ace/common/footer_social_rows.html" %}
-                    <tr>
-                        <!-- Actions -->
-                        <td>
-                            {% for action_link_url, action_link_text in channel.action_links %}
-                                <p style="padding-bottom: 20px;">
-                                    <a href="{{ action_link_url }}" style="color: #960909">
-                                        <font color="#960909"><b>{{ action_link_text }}</b></font>
-                                    </a>
-                                </p>
-                            {% endfor %}
-                        </td>
-                    </tr>
-                    {% include "ace_common/edx_ace/common/footer_copyright_row.html" %}
-                    {% if unsubscribe_url %}
-                    <tr>
-                        <td>
-                            <a style="color: #DD1F25;" href="{{ unsubscribe_url }}">{% trans "Unsubscribe from these emails." %}</a>
-                        </td>
-                    </tr>
-                    {% endif %}
+                    {% include "ace_common/edx_ace/common/footer_rows.html" %}
                 </table>
             </td>
         </tr>
