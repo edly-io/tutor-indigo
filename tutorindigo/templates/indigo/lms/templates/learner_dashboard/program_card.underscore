@@ -2,10 +2,6 @@
     <h3 id="program-<%- uuid %>" class="title hd-3"><%- gettext(title) %></h3>
     <div class="meta-info grid-container">
         <div class="organization col"><%- orgList %></div>
-        <div class="category col col-last">
-            <span class="category-text"><%- gettext(type) %></span>
-            <span class="category-icon <%- type.toLowerCase() %>-icon" aria-hidden="true"></span>
-        </div>
     </div>
 </div>
 <% if (progress) { %>

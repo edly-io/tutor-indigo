@@ -1,0 +1,6 @@
+# Rwaq hides the program type (EDLYCSRWAQ-278). Upstream puts it in two English messages,
+# so drop it at build time. The build fails if upstream changes these lines.
+RUN sed -i 's/defaultMessage="{program_type} Program Record"/defaultMessage="Program Record"/' src/components/ProgramRecord/ProgramRecordHeader.jsx \
+ && sed -i 's/accept credit for this {programType} Program\./accept credit for this Program./' src/components/ProgramRecordSendModal/SendLearnerRecordModal.jsx \
+ && grep -q 'defaultMessage="Program Record"' src/components/ProgramRecord/ProgramRecordHeader.jsx \
+ && grep -q 'accept credit for this Program\.' src/components/ProgramRecordSendModal/SendLearnerRecordModal.jsx

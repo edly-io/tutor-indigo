@@ -23,7 +23,7 @@ from openedx.core.lib.courses import course_image_url
 <%block name="js_extra">
   <script type="text/javascript">
   (function() {
-    $(".register").click(function(event) {
+    $(".register").not(".rwaq-enroll-link").click(function(event) {
       $("#class_enroll_form").submit();
       event.preventDefault();
     });
@@ -112,20 +112,11 @@ from openedx.core.lib.courses import course_image_url
             </a>
           %endif
         %else:
-          <%
-            if ecommerce_checkout:
-              reg_href = ecommerce_checkout_link
-            else:
-              reg_href="#"
-            if single_paid_mode:
-              href_class = "add-to-cart"
-            else:
-              href_class = "register"
-          %>
-          <a href="${reg_href}" class="${href_class}">
-            ${_("Enroll Now")}
+          ## Rwaq: learners enroll on the Rwaq website (WordPress), free and paid
+          ## courses alike, never from this page.
+          <a href="${marketing_link('ROOT')}" class="register rwaq-enroll-link">
+            ${_("Enroll on the Rwaq website")}
           </a>
-          <div id="register_error"></div>
         %endif
         </div>
       </div>
