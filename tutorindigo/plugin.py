@@ -183,7 +183,7 @@ hooks.Filters.ENV_PATCHES.add_item(
         "mfe-dockerfile-post-npm-install-authn",
         """
         RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'
-        RUN npm install @edly-io/edly-saas-widget
+        RUN npm install 'git+https://x-access-token:{{ GH_PAT }}@github.com/edly-io/frontend-saas-widgets.git#fix/email-check-redirect-logged-in-user'
         """,
     )
 )
