@@ -117,7 +117,7 @@ indigo_styled_mfes = [
     "discussions",
     "authoring",
     "fbr-admin",
-    "sessions"
+    "fbr-home"
 ]
 
 for mfe in indigo_styled_mfes:

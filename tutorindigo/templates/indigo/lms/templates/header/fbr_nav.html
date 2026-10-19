@@ -13,18 +13,18 @@ def _real_user(user):
     return getattr(user, 'real_user', user)
 
 
-def _sessions_url(settings):
-    return getattr(settings, 'SESSIONS_MICROFRONTEND_URL', '').rstrip('/')
+def _fbr_home_mfe_url(settings):
+    return getattr(settings, 'FBR_HOME_MICROFRONTEND_URL', '').rstrip('/')
 
 
 def fbr_home_url(settings):
-    sessions_url = _sessions_url(settings)
-    return sessions_url + '/dashboard' if sessions_url else reverse('dashboard')
+    mfe_url = _fbr_home_mfe_url(settings)
+    return mfe_url + '/dashboard' if mfe_url else reverse('dashboard')
 
 
 def fbr_learning_url(settings):
-    sessions_url = _sessions_url(settings)
-    return sessions_url + '/programs' if sessions_url else reverse('program_listing_view')
+    mfe_url = _fbr_home_mfe_url(settings)
+    return mfe_url + '/programs' if mfe_url else reverse('program_listing_view')
 
 
 def fbr_is_admin(user):
