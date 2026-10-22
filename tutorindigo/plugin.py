@@ -466,3 +466,14 @@ for mfe in indigo_styled_mfes:
                 slot_content,
             )
         )
+
+# TEMPORARY (EDLYPRODUCT-8619): dev testing only, drop before merge. Installs the learning
+# MFE's widget package from the unmerged frontend-saas-widgets branch instead of npm.
+hooks.Filters.ENV_PATCHES.add_item(
+    (
+        "mfe-dockerfile-post-npm-install-learning",
+        """
+        RUN npm install '@edly-io/edly-saas-widget@github:edly-io/frontend-saas-widgets#zaman/EDLYPRODUCT-8619-submitted-exam-nav'
+""",  # noqa: E501
+    )
+)
