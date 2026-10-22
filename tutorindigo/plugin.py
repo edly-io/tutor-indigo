@@ -171,7 +171,7 @@ for mfe in indigo_styled_mfes:
             (
                 f"mfe-env-config-runtime-definitions-{mfe}",
                 """
-                const { HeaderWidget, FooterWidget, MultiSiteBannerWidget, DiscussionSidebarWidget, PaidCourseUnenrollWidget, CourseBannerWidget } = require("@edly-io/edly-saas-widget");
+                const { HeaderWidget, FooterWidget, MultiSiteBannerWidget, DiscussionSidebarWidget, PaidCourseUnenrollWidget, CourseBannerWidget, SubmittedExamNavWidget } = require("@edly-io/edly-saas-widget");
                 """,
             )
         ]
@@ -322,6 +322,14 @@ LEARNING_FOOTER_WIDGET = FOOTER_WIDGET + """
         id: 'discussion_sidebar_closed_by_default',
         type: DIRECT_PLUGIN,
         RenderWidget: DiscussionSidebarWidget,
+    },
+},
+{
+    op: PLUGIN_OPERATIONS.Insert,
+    widget: {
+        id: 'submitted_exam_nav',
+        type: DIRECT_PLUGIN,
+        RenderWidget: SubmittedExamNavWidget,
     },
 },
 """
