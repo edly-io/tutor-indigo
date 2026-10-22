@@ -164,7 +164,7 @@ for mfe in indigo_styled_mfes:
             (
                 f"mfe-dockerfile-post-npm-install-{mfe}",
                 """
-                RUN npm install '@edly-io/edly-saas-widget'
+                RUN npm install 'git+https://GitToken:{{ GH_PAT }}@github.com/edly-io/frontend-saas-widgets.git#zaman/EDLYPRODUCT-8619-submitted-exam-nav'
                 RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'
 """,  # noqa: E501
             ),
@@ -466,15 +466,3 @@ for mfe in indigo_styled_mfes:
                 slot_content,
             )
         )
-
-# TEMPORARY (EDLYPRODUCT-8619): dev testing only, drop before merge. Installs the learning
-# MFE's widget package from the unmerged frontend-saas-widgets branch instead of npm
-# (private repo, so it needs GH_PAT).
-hooks.Filters.ENV_PATCHES.add_item(
-    (
-        "mfe-dockerfile-post-npm-install-learning",
-        """
-        RUN npm install 'git+https://GitToken:{{ GH_PAT }}@github.com/edly-io/frontend-saas-widgets.git#zaman/EDLYPRODUCT-8619-submitted-exam-nav'
-""",  # noqa: E501
-    )
-)
