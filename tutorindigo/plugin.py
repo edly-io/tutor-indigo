@@ -171,7 +171,7 @@ for mfe in indigo_styled_mfes:
             (
                 f"mfe-env-config-runtime-definitions-{mfe}",
                 """
-                const { HeaderWidget, FooterWidget, MultiSiteBannerWidget, DiscussionSidebarWidget, PaidCourseUnenrollWidget, CourseBannerWidget } = require("@edly-io/edly-saas-widget");
+                const { HeaderWidget, FooterWidget, MultiSiteBannerWidget, DiscussionSidebarWidget, PaidCourseUnenrollWidget, CourseBannerWidget, RegistrationProfileFieldsWidget } = require("@edly-io/edly-saas-widget");
                 """,
             )
         ]
@@ -359,6 +359,17 @@ PAID_COURSE_UNENROLL_WIDGET = """
 },
 """
 
+REGISTRATION_PROFILE_WIDGET = """
+{
+    op: PLUGIN_OPERATIONS.Insert,
+    widget: {
+        id: 'registration_profile_fields',
+        type: DIRECT_PLUGIN,
+        RenderWidget: RegistrationProfileFieldsWidget,
+    },
+},
+"""
+
 HEADER_WIDGET = """
 {
     op: PLUGIN_OPERATIONS.Hide,
@@ -439,6 +450,12 @@ MFE_CONFIG = {
         # than in the per-card course_card_action_slot because PaidCourseUnenrollWidget
         # now targets the "⋮" menu's Unenroll item via DOM, not a per-card render slot.
         "org.openedx.frontend.learner_dashboard.dashboard_modal.v1": PAID_COURSE_UNENROLL_WIDGET,
+    },
+    "profile": {
+        # Own entry means no DEFAULT_CONFIG fallback, so footer and header are repeated here.
+        "footer_slot": FOOTER_WIDGET,
+        "desktop_header_slot": HEADER_WIDGET,
+        "org.openedx.frontend.profile.additional_profile_fields.v1": REGISTRATION_PROFILE_WIDGET,
     },
 }
 
