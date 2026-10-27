@@ -16,6 +16,10 @@ const MobileViewHeader = () => {
     <>
       <style>
         {`
+          #root .logo-image {
+            width: 200px;
+            height: auto;
+          }
           #root .logo-image.logo-white {
             display: none;
           }
