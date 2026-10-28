@@ -406,6 +406,29 @@ for mfe in indigo_styled_mfes:
         """,
             )
         )
+        # tutor-contrib-platform-notifications imports NotificationsTray via
+        # mfe-env-config-runtime-definitions. Registering it here uses the old
+        # slot name (desktop_secondary_menu_slot) that the Rwaq header exposes,
+        # since the plugin's own registration targets the new fully-qualified
+        # name (org.openedx.frontend.layout.header_desktop_secondary_menu.v1)
+        # which does not exist in the Rwaq MFE headers.
+        PLUGIN_SLOTS.add_item(
+            (
+                mfe,
+                "desktop_secondary_menu_slot",
+                """
+                {
+                    op: PLUGIN_OPERATIONS.Insert,
+                    widget: {
+                        id: 'notification-drawer-widget',
+                        priority: 10,
+                        type: DIRECT_PLUGIN,
+                        RenderWidget: typeof NotificationsTray !== 'undefined' ? NotificationsTray : () => null,
+                    },
+                },
+        """,
+            )
+        )
         PLUGIN_SLOTS.add_items(
             [
                 (
@@ -459,6 +482,22 @@ PLUGIN_SLOTS.add_items(
                 id: 'theme_switch_button',
                 type: DIRECT_PLUGIN,
                 RenderWidget: ToggleThemeButton,
+            },
+        },
+        """,
+        ),
+        # Same slot-name mismatch fix as desktop_secondary_menu_slot above.
+        (
+            "learning",
+            "learning_help_slot",
+            """
+        {
+            op: PLUGIN_OPERATIONS.Insert,
+            widget: {
+                id: 'notification-drawer-widget',
+                priority: 10,
+                type: DIRECT_PLUGIN,
+                RenderWidget: typeof NotificationsTray !== 'undefined' ? NotificationsTray : () => null,
             },
         },
         """,
