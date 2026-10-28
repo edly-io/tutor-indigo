@@ -164,7 +164,7 @@ for mfe in indigo_styled_mfes:
             (
                 f"mfe-dockerfile-post-npm-install-{mfe}",
                 """
-                RUN npm install 'git+https://GitToken:{{ GH_PAT }}@github.com/edly-io/frontend-saas-widgets.git#zaman/EDLYPRODUCT-8592-registration-profile-widget'
+                RUN npm install '@edly-io/edly-saas-widget'
                 RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'
 """,  # noqa: E501
             ),
@@ -176,6 +176,18 @@ for mfe in indigo_styled_mfes:
             )
         ]
     )
+
+    # TEMPORARY, for testing on dev only: the registry version has no RegistrationProfileFieldsWidget yet.
+    # Install the widget package straight from its branch (private repo, needs GH_PAT) for the profile MFE.
+    if mfe == "profile":
+        hooks.Filters.ENV_PATCHES.add_item(
+            (
+                f"mfe-dockerfile-post-npm-install-{mfe}",
+                """
+                RUN npm install 'git+https://GitToken:{{ GH_PAT }}@github.com/edly-io/frontend-saas-widgets.git#zaman/EDLYPRODUCT-8592-registration-profile-widget'
+""",  # noqa: E501
+            )
+        )
 
 
 hooks.Filters.ENV_PATCHES.add_item(
