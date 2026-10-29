@@ -1,0 +1,12 @@
+# Platform name shown by rwaq-features in emails, certificates, CSV titles and messages.
+# rwaq_features.branding falls back to the Rwaq text when these are not set.
+RWAQ_PLATFORM_NAME = "{{ RWAQ_PLATFORM_NAME }}"
+RWAQ_PLATFORM_NAME_AR = "{{ RWAQ_PLATFORM_NAME_AR }}"
+RWAQ_DEFAULT_ORG_NAME = "{{ RWAQ_DEFAULT_ORG_NAME }}"
+# Certificate images come from this theme. Stylesheets and the stamp are left empty on purpose.
+RWAQ_CERT_LOGO_URL = "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/theming/asset/images/logo.png"
+RWAQ_CERT_BADGE_URL = "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/theming/asset/images/favicon.png"
+RWAQ_CERT_SEAL_URL = ""
+RWAQ_CERT_CSS_URL = ""
+RWAQ_CERT_PRINT_CSS_URL = ""
+RWAQ_CERT_VERIFY_DISPLAY = ""
