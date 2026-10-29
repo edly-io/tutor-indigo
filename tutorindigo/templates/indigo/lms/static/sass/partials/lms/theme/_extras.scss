@@ -4,7 +4,10 @@ $content_padding_top: 24px;
 $content-padding-bottom: 10px;
 $header-height: 75px;
 $footer-height: 125.5px;
-body, h1, h2, h3, h4, h5, h6, p, label, button {
+body, p, label, button {
+  font-family: $font-family-body !important;
+}
+h1, h2, h3, h4, h5, h6 {
   font-family: $font-family-title !important;
 }
 html {
@@ -744,7 +747,7 @@ body.view-wiki{
       margin: 0 0 10px;
     }
     .article-wrapper {
-      border: 1px solid #F2F7F8;
+      border: 1px solid #E8F2FC;
       border-radius: 8px;
       padding: 15px;
       &:after {
