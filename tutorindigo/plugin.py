@@ -112,6 +112,10 @@ hooks.Filters.CONFIG_DEFAULTS.add_item(("PAT", ""))
 # the patch during "tutor plugins enable", before any config save runs, so an
 # undeclared variable fails the render outright.
 hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_FEATURES_RELEASE_TAG", "master"))
+# Visible platform name used by rwaq-features (see patches/openedx-common-settings).
+hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_PLATFORM_NAME", "Arbisoft"))
+hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_PLATFORM_NAME_AR", "أربيسوفت"))
+hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_DEFAULT_ORG_NAME", "Arbisoft"))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("ENABLE_PROGRAMS", False))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("ENABLE_INSTRUCTOR_MANAGEMENT", False))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("SESSION_COOKIE_DOMAIN", ""))
