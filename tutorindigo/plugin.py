@@ -133,7 +133,7 @@ hooks.Filters.CONFIG_DEFAULTS.add_item(("COURSE_ACCESS_DURATION_MAX_WEEKS", 18))
 # RWAQ_MFE_RELEASE_TAG is the fallback for all of them, so a release that moves
 # every front end together only has to set one value. Defaults keep the
 # previous hardcoded branch, so an unset config behaves exactly as before.
-hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_MFE_RELEASE_TAG", "ulmo/arbisoft-clone-dev"))
+hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_MFE_RELEASE_TAG", "ulmo/arbisoft-clone"))
 for _mfe_key in ("AUTHN", "AUTHORING", "LEARNER_DASHBOARD", "LEARNING", "ADMIN"):
     hooks.Filters.CONFIG_DEFAULTS.add_item((f"{_mfe_key}_MFE_RELEASE_TAG", ""))
 hooks.Filters.CONFIG_UNIQUE.add_items(
@@ -247,7 +247,7 @@ for mfe in indigo_styled_mfes:
             (
                 f"mfe-dockerfile-post-npm-install-{mfe}",
                 """
-RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/arbisoft-clone-dev'
+RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/arbisoft-clone'
 """,  # noqa: E501
             ),
         ]
@@ -256,7 +256,7 @@ RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/arbisoft-clone-de
 hooks.Filters.ENV_PATCHES.add_item(
      (
         "mfe-dockerfile-post-npm-install-authn",
-        "RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/arbisoft-clone-dev'",
+        "RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/arbisoft-clone'",
     )
 )
 
@@ -489,14 +489,14 @@ paragon_theme_urls = {
     "variants": {
         "light": {
             "urls": {
-                "default": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/arbisoft-clone-dev/dist/light.min.css",
-                "brandOverride": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/arbisoft-clone-dev/dist/light.min.css",
+                "default": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/arbisoft-clone/dist/light.min.css",
+                "brandOverride": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/arbisoft-clone/dist/light.min.css",
             },
         },
         "dark": {
             "urls": {
-                "default": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/arbisoft-clone-dev/dist/dark.min.css",
-                "brandOverride": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/arbisoft-clone-dev/dist/dark.min.css",
+                "default": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/arbisoft-clone/dist/dark.min.css",
+                "brandOverride": "https://raw.githubusercontent.com/edly-io/brand-openedx/refs/heads/ulmo/arbisoft-clone/dist/dark.min.css",
             }
         },
     }
@@ -603,7 +603,7 @@ class _MfeVersion(str):
         return (
             _CONFIG.get(self._config_key)  # type: ignore[attr-defined]
             or _CONFIG.get("RWAQ_MFE_RELEASE_TAG")
-            or "ulmo/arbisoft-clone-dev"
+            or "ulmo/arbisoft-clone"
         )
 
     def __str__(self) -> str:
