@@ -6,6 +6,10 @@ const ThemedLogo = () => {
     <>
       <style>
         {`
+          #root header .logo-image {
+            width: 200px;
+            height: auto;
+          }
           #root header .logo-image.logo-white {
             display: none;
           }
