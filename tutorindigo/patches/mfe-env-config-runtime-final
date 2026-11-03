@@ -33,3 +33,11 @@ if (config.pluginSlots && config.pluginSlots['org.openedx.frontend.layout.footer
     });
   }
 }
+
+// The Studio header renders its own logo instead of logo_slot, so size it here.
+if (typeof document !== 'undefined' && !document.getElementById('edl-studio-logo')) {
+  const style = document.createElement('style');
+  style.id = 'edl-studio-logo';
+  style.textContent = '#root .studio-header a img.logo { width: 200px; height: auto; padding: 0.25rem 0; }';
+  document.head.appendChild(style);
+}
