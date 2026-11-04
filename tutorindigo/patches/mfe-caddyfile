@@ -1,1 +1,3 @@
 redir / {% if ENABLE_HTTPS %}https://{% else %}http://{% endif %}{{ LMS_HOST }}
+# /admin has no trailing slash: the admin MFE basename is /admin/, so React Router renders nothing there.
+redir /admin /admin/ permanent
