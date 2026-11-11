@@ -315,6 +315,9 @@ ACCOUNT_FOOTER_WIDGET = FOOTER_WIDGET + """
 },
 """
 
+# EDLYCUSTOM (EDLYPRODUCT-8749): Indigo brand forces white text on the below-passing
+# "current grade" Progress tooltip, but its navy background loses to the app's yellow.
+# Light mode only; dark-mode rules are left as-is.
 LEARNING_FOOTER_WIDGET = FOOTER_WIDGET + """
 {
     op: PLUGIN_OPERATIONS.Insert,
@@ -330,6 +333,34 @@ LEARNING_FOOTER_WIDGET = FOOTER_WIDGET + """
         id: 'submitted_exam_nav',
         type: DIRECT_PLUGIN,
         RenderWidget: SubmittedExamNavWidget,
+    },
+},
+{
+    op: PLUGIN_OPERATIONS.Insert,
+    widget: {
+        id: 'edly_current_grade_tooltip_contrast_fix',
+        type: DIRECT_PLUGIN,
+        RenderWidget: () => (
+            <style>
+                {`
+                    html:not([data-paragon-theme-variant="dark"])
+                        #non-passing-grade-tooltip {
+                        background-color: var(--pgn-color-accent-b) !important;
+                        border-color: var(--pgn-color-accent-b) !important;
+                    }
+                    html:not([data-paragon-theme-variant="dark"])
+                        #non-passing-grade-tooltip .popover-body {
+                        color: var(--pgn-color-dark-700) !important;
+                    }
+                    html:not([data-paragon-theme-variant="dark"])
+                        #non-passing-grade-tooltip .arrow::before,
+                    html:not([data-paragon-theme-variant="dark"])
+                        #non-passing-grade-tooltip .arrow::after {
+                        border-top-color: var(--pgn-color-accent-b) !important;
+                    }
+                `}
+            </style>
+        ),
     },
 },
 """
