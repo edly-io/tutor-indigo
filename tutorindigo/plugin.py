@@ -315,7 +315,7 @@ ACCOUNT_FOOTER_WIDGET = FOOTER_WIDGET + """
 },
 """
 
-# EDLYCUSTOM: brand's white text is unreadable on the non-passing grade tooltip's yellow.
+# EDLYCUSTOM: brand's white text is unreadable on the non-passing tooltip's yellow.
 LEARNING_FOOTER_WIDGET = FOOTER_WIDGET + """
 {
     op: PLUGIN_OPERATIONS.Insert,
