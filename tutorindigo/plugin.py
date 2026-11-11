@@ -315,9 +315,7 @@ ACCOUNT_FOOTER_WIDGET = FOOTER_WIDGET + """
 },
 """
 
-# EDLYCUSTOM (EDLYPRODUCT-8749): Indigo brand forces white text on the below-passing
-# "current grade" Progress tooltip, but its navy background loses to the app's yellow.
-# Light mode only; dark-mode rules are left as-is.
+# EDLYCUSTOM: brand's white text is unreadable on the non-passing grade tooltip's yellow.
 LEARNING_FOOTER_WIDGET = FOOTER_WIDGET + """
 {
     op: PLUGIN_OPERATIONS.Insert,
