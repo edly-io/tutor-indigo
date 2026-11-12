@@ -61,6 +61,7 @@ hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
 hooks.Filters.ENV_PATTERNS_INCLUDE.add_items(
     [
         r"indigo/lms/static/sass/partials/lms/theme/",
+        r"indigo/lms/static/sass/partials/vendor/",
         r"indigo/cms/static/sass/partials/cms/theme/",
     ]
 )
