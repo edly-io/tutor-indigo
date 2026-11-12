@@ -10,7 +10,6 @@ from common.djangoapps.edxmako.shortcuts import marketing_link
 from openedx.core.djangolib.js_utils import js_escaped_string
 from openedx.core.djangolib.markup import clean_dangerous_html, HTML, Text
 from openedx.core.lib.courses import course_image_url
-from rwaq_features.pricing.rules import course_is_enrollment_code
 %>
 
 <%inherit file="../main.html" />
@@ -112,15 +111,6 @@ from rwaq_features.pricing.rules import course_is_enrollment_code
             <strong>${_("View Course")}</strong>
             </a>
           %endif
-        % elif course_is_enrollment_code(course.id):
-          ## Rwaq: a restricted course is joined with an enrollment code, entered in the box below the header.
-          % if user.is_authenticated:
-            <span class="register disabled">${_("Enrollment in this course is restricted")}</span>
-          % else:
-            <a href="${reverse('signin_user')}?next=${request.get_full_path() | u}" class="register rwaq-enroll-link">
-              ${_("Sign in to enter your enrollment code")}
-            </a>
-          % endif
         %else:
           ## Rwaq: learners enroll on the Rwaq website (WordPress), free and paid
           ## courses alike, never from this page.
@@ -132,11 +122,6 @@ from rwaq_features.pricing.rules import course_is_enrollment_code
       </div>
   </header>
   </%block>
-
-  ## Rwaq: the code box of a restricted (Enrollment code) course, for a learner who is not enrolled yet.
-  % if user.is_authenticated and course_is_enrollment_code(course.id):
-    <%include file="/rwaq_enrollment_code.html" args="kind='course', item_id=str(course.id), restricted=True, enrolled=bool(registered)"/>
-  % endif
 
   <div class="about-content">
 
