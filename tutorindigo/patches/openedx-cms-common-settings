@@ -9,3 +9,20 @@ SHARED_COOKIE_DOMAIN = "{{ SESSION_COOKIE_DOMAIN }}"
 # reset link via AUTHN_MICROFRONTEND_URL. Tutor sets this only for LMS; CMS
 # Celery workers must have it too or the link falls back to the Studio domain.
 AUTHN_MICROFRONTEND_URL = "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ MFE_HOST }}/authn"
+
+# Enrollment code share card (EDLYCSRWAQ-366). The QR codes open pages of the public WordPress site, so the
+# site address follows WORDPRESS_HOST like MKTG_URLS above. The slogan, about line and links are Rwaq's
+# values from rwaq.org (decided 2026-11-11).
+RWAQ_PUBLIC_SITE_URL = "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ WORDPRESS_HOST }}"
+ENROLLMENT_CODE_CARD = {
+    "slogan": "رواق .. المنصة العربية للتعليم المفتوح",
+    "about": "إحدى مبادرات جمعية أروقة المعرفة",
+    "logo_url": "https://dsa1pgbddfj1a.cloudfront.net//2026/06/rwaq-logo.svg",
+    "links": [
+        {"type": "website", "url": "https://rwaq.org"},
+        {"type": "x", "url": "https://twitter.com/rwaq"},
+        {"type": "facebook", "url": "https://facebook.com/RwaqOrg"},
+        {"type": "instagram", "url": "https://instagram.com/rwaq_"},
+        {"type": "youtube", "url": "https://youtube.com/rwaqorg"},
+    ],
+}
