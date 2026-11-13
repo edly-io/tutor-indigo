@@ -12,3 +12,14 @@ RUN cd /openedx/edx-platform \
  && ! grep -rq '%(type)s' $D/program_details_view.underscore $D/program_details_tab_view.underscore \
  && ! grep -q '{program} Certificate' $D/program_details_sidebar.underscore \
  && ! grep -q '{type} Progress' lms/static/js/learner_dashboard/views/program_details_sidebar_view.js
+
+# Courses in a program are Program-only, and nobody enrolls into one directly, so the "Enroll Now" button on the
+# program page course cards can never work: the basket gate refuses it and the learner sees no reason (EDLYCSRWAQ-366).
+# Remove the button and the session select that only feeds it. The build fails if the platform changes these lines.
+RUN cd /openedx/edx-platform \
+ && D=lms/templates/learner_dashboard \
+ && sed -i '/<div class="enroll-button">/,/<\/div>/d' $D/course_enroll.underscore \
+ && sed -i '/<div class="run-select-container">/,/<\/div>/d' $D/course_enroll.underscore \
+ && ! grep -q 'enroll-button' $D/course_enroll.underscore \
+ && ! grep -q 'run-select-container' $D/course_enroll.underscore \
+ && grep -q 'view-course-button' $D/course_enroll.underscore
