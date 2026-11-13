@@ -273,6 +273,18 @@ li.menu-item-object-menu_openedx {
 #menu-primary-menu .user-profile-wrap span {
   display: none;
 }
+#menu-primary-menu .user-profile-wrap.has-username {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+}
+#menu-primary-menu .user-profile-wrap.has-username span.user-profile-name {
+  display: inline-block !important;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .indigo-mobile-menu .site-header {
   background: white;
