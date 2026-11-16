@@ -1,0 +1,28 @@
+[dir="rtl"] .xmodule_display.xmodule_ProblemBlock div.problem {
+  .choicegroup input[type="radio"],
+  .choicegroup input[type="checkbox"] {
+    left: auto;
+    right: 0.5625em;
+  }
+
+  .choicegroup label {
+    padding-left: calc((var(--baseline, 20px) / 2));
+    padding-right: calc((var(--baseline, 20px) * 2.3));
+  }
+
+  .choicegroup input[type="radio"],
+  .choicetextgroup input[type="radio"],
+  .choicegroup input[type="checkbox"],
+  .choicetextgroup input[type="checkbox"] {
+    margin-right: calc((var(--baseline, 20px) / 4));
+    margin-left: calc((var(--baseline, 20px) / 2));
+  }
+
+  .choicegroup label::after,
+  .choicetextgroup label::after,
+  .choicetextgroup label.choicetextgroup_show_correct::after,
+  .choicetextgroup section.choicetextgroup_show_correct::after {
+    margin-left: 0;
+    margin-right: calc((var(--baseline, 20px) * 0.75));
+  }
+}
