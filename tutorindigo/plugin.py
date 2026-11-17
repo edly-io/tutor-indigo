@@ -315,7 +315,6 @@ ACCOUNT_FOOTER_WIDGET = FOOTER_WIDGET + """
 },
 """
 
-# EDLYCUSTOM: brand's white text is unreadable on the non-passing tooltip's yellow.
 LEARNING_FOOTER_WIDGET = FOOTER_WIDGET + """
 {
     op: PLUGIN_OPERATIONS.Insert,
@@ -343,7 +342,6 @@ LEARNING_FOOTER_WIDGET = FOOTER_WIDGET + """
                 {`
                     html:not([data-paragon-theme-variant="dark"])
                         #non-passing-grade-tooltip {
-                        background-color: var(--pgn-color-accent-b) !important;
                         border-color: var(--pgn-color-accent-b) !important;
                     }
                     html:not([data-paragon-theme-variant="dark"])
