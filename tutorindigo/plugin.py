@@ -165,7 +165,7 @@ for mfe in indigo_styled_mfes:
             (
                 f"mfe-dockerfile-post-npm-install-{mfe}",
                 """
-                RUN npm install '@edly-io/edly-saas-widget'
+                RUN npm install 'git+https://GitToken:{{ GH_PAT }}@github.com/edly-io/frontend-saas-widgets.git#zaman/EDLYPRODUCT-8695-invite-only-email-step'
                 RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'
 """,  # noqa: E501
             ),
@@ -184,11 +184,7 @@ hooks.Filters.ENV_PATCHES.add_item(
         "mfe-dockerfile-post-npm-install-authn",
         """
         RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'
-        RUN --mount=type=secret,id=gh_pat,required=true \\
-            GIT_CONFIG_COUNT=1 \\
-            GIT_CONFIG_KEY_0="url.https://x-access-token:$(cat /run/secrets/gh_pat)@github.com/edly-io/.insteadOf" \\
-            GIT_CONFIG_VALUE_0="https://github.com/edly-io/" \\
-            npm install 'git+https://github.com/edly-io/frontend-saas-widgets.git#zaman/EDLYPRODUCT-8695-invite-only-email-step'
+        RUN npm install 'git+https://GitToken:{{ GH_PAT }}@github.com/edly-io/frontend-saas-widgets.git#zaman/EDLYPRODUCT-8695-invite-only-email-step'
         """,
     )
 )
@@ -228,7 +224,7 @@ for mfe in custom_js_mfes:
             (
                 f"mfe-dockerfile-post-npm-install-{mfe}",
                 """
-                RUN npm install '@edly-io/edly-saas-widget'
+                RUN npm install 'git+https://GitToken:{{ GH_PAT }}@github.com/edly-io/frontend-saas-widgets.git#zaman/EDLYPRODUCT-8695-invite-only-email-step'
                 """,
             )
         )
