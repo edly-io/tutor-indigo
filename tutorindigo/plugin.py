@@ -184,7 +184,7 @@ hooks.Filters.ENV_PATCHES.add_item(
         "mfe-dockerfile-post-npm-install-authn",
         """
         RUN npm install '@edx/brand@github:@edly-io/brand-openedx#ulmo/indigo'
-        RUN npm install 'git+https://GitToken:{{ GH_PAT }}@github.com/edly-io/frontend-saas-widgets.git#zaman/EDLYPRODUCT-8695-invite-only-email-step'
+        RUN npm install @edly-io/edly-saas-widget
         """,
     )
 )
@@ -224,7 +224,7 @@ for mfe in custom_js_mfes:
             (
                 f"mfe-dockerfile-post-npm-install-{mfe}",
                 """
-                RUN npm install 'git+https://GitToken:{{ GH_PAT }}@github.com/edly-io/frontend-saas-widgets.git#zaman/EDLYPRODUCT-8695-invite-only-email-step'
+                RUN npm install '@edly-io/edly-saas-widget'
                 """,
             )
         )
