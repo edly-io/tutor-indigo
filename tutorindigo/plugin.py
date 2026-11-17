@@ -333,6 +333,33 @@ LEARNING_FOOTER_WIDGET = FOOTER_WIDGET + """
         RenderWidget: SubmittedExamNavWidget,
     },
 },
+{
+    op: PLUGIN_OPERATIONS.Insert,
+    widget: {
+        id: 'edly_current_grade_tooltip_contrast_fix',
+        type: DIRECT_PLUGIN,
+        RenderWidget: () => (
+            <style>
+                {`
+                    html:not([data-paragon-theme-variant="dark"])
+                        #non-passing-grade-tooltip {
+                        border-color: var(--pgn-color-accent-b) !important;
+                    }
+                    html:not([data-paragon-theme-variant="dark"])
+                        #non-passing-grade-tooltip .popover-body {
+                        color: var(--pgn-color-dark-700) !important;
+                    }
+                    html:not([data-paragon-theme-variant="dark"])
+                        #non-passing-grade-tooltip .arrow::before,
+                    html:not([data-paragon-theme-variant="dark"])
+                        #non-passing-grade-tooltip .arrow::after {
+                        border-top-color: var(--pgn-color-accent-b) !important;
+                    }
+                `}
+            </style>
+        ),
+    },
+},
 """
 
 # EDLYCUSTOM: FooterWidget's FA6 CDN import breaks gradebook's own FA4 icons.
