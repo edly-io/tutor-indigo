@@ -274,12 +274,12 @@ li.menu-item-object-menu_openedx {
   display: none;
 }
 #menu-primary-menu .user-profile-wrap.has-username {
-  display: flex !important;
+  display: flex;
   align-items: center;
   gap: 10px;
 }
 #menu-primary-menu .user-profile-wrap.has-username span.user-profile-name {
-  display: inline-block !important;
+  display: inline-block;
   max-width: 160px;
   overflow: hidden;
   text-overflow: ellipsis;
