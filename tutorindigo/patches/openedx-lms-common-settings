@@ -37,7 +37,6 @@ SHARED_COOKIE_DOMAIN = "{{ SESSION_COOKIE_DOMAIN }}"
 COURSE_ACCESS_DURATION_MIN_WEEKS = {{ COURSE_ACCESS_DURATION_MIN_WEEKS }}
 COURSE_ACCESS_DURATION_MAX_WEEKS = {{ COURSE_ACCESS_DURATION_MAX_WEEKS }}
 
-# Enrollment code share card (EDLYCSRWAQ-366). The QR codes open pages of the public WordPress site, so the
-# site address follows WORDPRESS_HOST like MKTG_URLS above. ENROLLMENT_CODE_CARD (slogan, about line, logo, links)
-# is left unset on purpose: the card shows only what is set.
-RWAQ_PUBLIC_SITE_URL = "{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ WORDPRESS_HOST }}"
+# Enrollment code share card (EDLYCSRWAQ-366). The QR codes open pages of the public experience site.
+# ENROLLMENT_CODE_CARD (slogan, about line, logo, links) is left unset on purpose: the card shows only what is set.
+RWAQ_PUBLIC_SITE_URL = "https://experience.edly.io"
