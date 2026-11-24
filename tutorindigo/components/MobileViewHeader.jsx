@@ -5,7 +5,7 @@ const MobileViewHeader = () => {
   const messages = {
     "mobile.view.header.logo.altText": {
       id: "mobile.view.header.logo.altText",
-      defaultMessage: "My Open edX",
+      defaultMessage: "Edly",
       description: "alt text for the mobile view header logo",
     },
   };
@@ -31,9 +31,9 @@ const MobileViewHeader = () => {
           }
         `}
       </style>
-      <a href={`${BASE_URL}/dashboard`} title="Open edX" className="logo">
-        <img className="logo-image" src={`${BASE_URL}/static/indigo/images/logo.png`} alt={intl.formatMessage(messages["mobile.view.header.logo.altText"])} />
-        <img className="logo-image logo-white" src={`${BASE_URL}/static/indigo/images/logo-white.png`} alt={intl.formatMessage(messages["mobile.view.header.logo.altText"])} />
+      <a href={`${BASE_URL}/dashboard`} title="Edly" className="logo">
+        <img className="logo-image" src={`${BASE_URL}/theming/asset/images/logo.png`} alt={intl.formatMessage(messages["mobile.view.header.logo.altText"])} />
+        <img className="logo-image logo-white" src={`${BASE_URL}/theming/asset/images/logo-white.png`} alt={intl.formatMessage(messages["mobile.view.header.logo.altText"])} />
       </a>
       <a href={SITE_URL} className="mobile-home-link">
         {intl.formatMessage({ id: "mobile.view.header.home", defaultMessage: "Home" })}
