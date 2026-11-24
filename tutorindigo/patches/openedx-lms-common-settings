@@ -46,8 +46,5 @@ ENROLLMENT_CODE_CARD = {
     "logo_url": "https://experience.edly.io/wp-content/uploads/2026/06/logo.svg",
     "links": [
         {"type": "website", "url": "https://experience.edly.io"},
-        {"type": "x", "url": "https://x.com/arbisoft"},
-        {"type": "facebook", "url": "https://www.facebook.com/arbisoft"},
-        {"type": "youtube", "url": "https://www.youtube.com/@Arbisoft_Official"},
     ],
 }

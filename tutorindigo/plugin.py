@@ -29,7 +29,7 @@ config: t.Dict[str, t.Dict[str, t.Any]] = {
     "defaults": {
         "VERSION": __version__,
         "WELCOME_MESSAGE": "The place for all your online learning",
-        "PRIMARY_COLOR": "#0A76DB",  # Arbisoft
+        "PRIMARY_COLOR": "#DD1F25",  # Edly red
         "ENABLE_DARK_TOGGLE": True,
         # Footer links are dictionaries with a "title" and "url"
         # To remove all links, run:
@@ -113,8 +113,8 @@ hooks.Filters.CONFIG_DEFAULTS.add_item(("PAT", ""))
 # undeclared variable fails the render outright.
 hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_FEATURES_RELEASE_TAG", "master"))
 # Visible platform name used by rwaq-features (see patches/openedx-common-settings).
-hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_PLATFORM_NAME", "Arbisoft"))
-hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_PLATFORM_NAME_AR", "أربيسوفت"))
+hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_PLATFORM_NAME", "Edly"))
+hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_PLATFORM_NAME_AR", "إيدلي"))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("RWAQ_DEFAULT_ORG_NAME", "Edly"))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("ENABLE_PROGRAMS", False))
 hooks.Filters.CONFIG_DEFAULTS.add_item(("ENABLE_INSTRUCTOR_MANAGEMENT", False))

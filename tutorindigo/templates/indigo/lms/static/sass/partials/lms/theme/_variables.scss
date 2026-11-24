@@ -1,9 +1,9 @@
 $primary: {{ INDIGO_PRIMARY_COLOR }};
-$primary-light: #E8F2FC;
+$primary-light: #F4F4F4;
 
 // Theme fonts
-$font-family-title: 'Roboto Slab', Georgia, serif;
-$font-family-body: 'Nunito', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font-family-title: 'IBM Plex Sans Arabic', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font-family-body: 'IBM Plex Sans Arabic', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $font-family-sans-serif: $font-family-body;
 $serif: $font-family-title;
 $f-sans-serif: $font-family-body;
@@ -13,41 +13,41 @@ $f-sans-serif: $font-family-body;
 
 // Introducing new variables
 
-$dark: #333333;
-$light-dark: #374151;
+$dark: #252525;
+$light-dark: #353535;
 $big-screen: 1200px;
 
 
 
 // Introducing dark-theme variables
 
-$primary-d: #AEC7F6;
+$primary-d: #FF6B70;
 $primary-light-d: #292A2C;
-$gray-light: #E5E7EB;
+$gray-light: #E7E7E7;
 $gray-lighter: #c8c8c8;
-$light-dark-d: #374151;
+$light-dark-d: #353535;
 $text-color-d: #F8F8F8;
 $text-color-primary: #DDDFE2;
 $border-color-d: #777792;
 $light-overlay-d: #36383B;
 $danger-d: #FFA07A;
-$success-d: #54CF5E;
-$btn-color-d: #0D3F8A;
+$success-d: #33C9B0;
+$btn-color-d: #0D0D0E;
 $body-bg-d: #0D0D0E;
-$footer-contact-bg: #0D3F8A;
-$footer-nav-bg: #0B3573;
-$footer-social-bg: #092B5E;
-$footer-copyright-bg: #092B5E;
-$footer-border-color: #364153;
+$footer-contact-bg: #252525;
+$footer-nav-bg: #252525;
+$footer-social-bg: #252525;
+$footer-copyright-bg: #252525;
+$footer-border-color: #353535;
 
 $instructor-input-border-color: $gray-lighter;
 $light-theme-switch-bg-color: $primary;
 $dark-theme-switch-bg-color: #717D8A;
 
-$warning-400: #FFC700;
-$brand-dark-blue: #0D3F8A;
-$brand-orange: #F37224;
-$brand-success: #17824A;
+$warning-400: #F59913;
+$brand-dark-blue: #0258ED;
+$brand-orange: #F59913;
+$brand-success: #00AD90;
 $warning-700: #9c4607;
 $warning-accent-700: #fffcf5;
 
