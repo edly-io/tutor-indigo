@@ -1,0 +1,1 @@
+- [Fix] MFE header logos now load through `/theming/asset/images/`, which redirects to a content-hashed file, so browsers that cached the old logo pick up the Edly one. Header link title and logo alt text say Edly instead of Open edX.

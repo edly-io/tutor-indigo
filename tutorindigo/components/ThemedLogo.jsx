@@ -17,9 +17,9 @@ const ThemedLogo = () => {
           }
         `}
       </style>
-      <a href={`${BASE_URL}/dashboard`} title="Open edX" className="logo">
-        <img className="logo-image" src={`${BASE_URL}/static/indigo/images/logo.png`} alt="Open edX" />
-        <img className="logo-image logo-white" src={`${BASE_URL}/static/indigo/images/logo-white.png`} alt="Open edX" />
+      <a href={`${BASE_URL}/dashboard`} title="Edly" className="logo">
+        <img className="logo-image" src={`${BASE_URL}/theming/asset/images/logo.png`} alt="Edly" />
+        <img className="logo-image logo-white" src={`${BASE_URL}/theming/asset/images/logo-white.png`} alt="Edly" />
       </a>
     </>
   );
