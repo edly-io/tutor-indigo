@@ -1,5 +1,5 @@
 const ThemedLogo = () => {
-  const BASE_URL = getConfig().LMS_BASE_URL;
+  const { LMS_BASE_URL: BASE_URL, SITE_NAME } = getConfig();
 
   return (
     <>
@@ -28,16 +28,16 @@ const ThemedLogo = () => {
           }
         `}
       </style>
-      <a href={`${BASE_URL}/dashboard`} title="Open edX" className="logo">
+      <a href={`${BASE_URL}/dashboard`} title={SITE_NAME} className="logo">
         <img
           className="logo-image"
           src={`${BASE_URL}/static/indigo/images/logo.png`}
-          alt="Open edX"
+          alt={SITE_NAME}
         />
         <img
           className="logo-image logo-white"
           src={`${BASE_URL}/static/indigo/images/logo-white.png`}
-          alt="Open edX"
+          alt={SITE_NAME}
         />
       </a>
     </>
